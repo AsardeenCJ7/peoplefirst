@@ -225,124 +225,6 @@ const newsData = [
 // ── ACHIEVERS ─────────────────────────────────────────────────────────────────
 const achieversData = [
   {
-    name: "Dr. Nilanthi Jayasinghe",
-    title: "Pioneer of Rural Tele-Health Diagnostics",
-    category: "Healthcare & Medicine",
-    location: "Badulla District",
-    year: "2018",
-    verified: true,
-    featured: true,
-    thumbnail: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80",
-    videoId: "dQw4w9WgXcQ",
-    bio: "Dr. Nilanthi Jayasinghe is a pioneering medical professional who revolutionized healthcare access in rural Sri Lanka. Born in Badulla, she dedicated three decades to serving underprivileged communities across the Uva Province.\n\nHer groundbreaking achievement was establishing a network of decentralized tele-health diagnostics, connecting over 400 rural clinics with specialist units in Colombo. This innovation allowed patients in the most remote areas to receive specialist consultations without traveling hundreds of kilometers.\n\nHer work has benefited over 2 million rural patients since 2018, significantly reducing maternal mortality rates by 67% in the regions she served.",
-    achievements: ["National Medical Excellence Award 2020", "Commonwealth Medical Innovation Prize 2022", "500+ Community Health Officers Trained", "67% reduction in maternal mortality", "2M+ rural patients served"],
-    tags: ["Healthcare", "Innovation", "Rural Development", "Women in Medicine"],
-    interviewSeries: [
-      { id: "ep-1-1", episode: 1, title: "Part 1: The Remote Diagnostic Vision & Early Days", videoId: "dQw4w9WgXcQ", duration: "18:24", date: "2026-01-15", description: "Dr. Nilanthi discusses the foundational hurdles of establishing tele-health kiosks in Badulla." },
-      { id: "ep-1-2", episode: 2, title: "Part 2: Overcoming Mountain Road Realities & Maternal Care", videoId: "9bZkp7q19f0", duration: "22:10", date: "2026-02-01", description: "In-depth insights into emergency maternal diagnostic systems in Uva Province." },
-      { id: "ep-1-3", episode: 3, title: "Part 3: The Rural Health Academy & Future Vision", videoId: "kJQP7kiw5Fk", duration: "15:45", date: "2026-03-05", description: "Training over 500 community officers and the roadmap to nationwide healthcare coverage." }
-    ],
-    biographyPages: [
-      { title: "Early Life & Beginnings", icon: "📖", paragraphs: ["Dr. Nilanthi Jayasinghe was born in 1972 in the verdant hills of Badulla, the heart of Sri Lanka's Uva Province. Growing up in a modest family of teachers, she witnessed firsthand the chronic lack of medical care that plagued rural communities.", "Her father, a village school principal, often walked five miles to fetch a doctor for ailing neighbours. That sight never left her. At the age of nine, she resolved to become a doctor — not to work in a city hospital, but to return to the people who needed her most.", "She excelled academically, earning a full scholarship to the University of Colombo Faculty of Medicine in 1990."] },
-      { title: "Journey & Contribution", icon: "🌟", paragraphs: ["After completing her medical degree and postgraduate specialisation in Internal Medicine, Dr. Jayasinghe made a decision that shocked her peers: she turned down a prestigious Colombo hospital offer and returned to Badulla.", "Over the next decade, she drove long mountain roads daily to reach remote clinics, often treating patients by lantern-light.", "In 2010, she began conceptualizing a tele-health network — a system that would use satellite internet and telemedicine kiosks to connect village clinics directly with specialist units at teaching hospitals."] },
-      { title: "Key Achievements", icon: "🏆", paragraphs: ["By 2018, Dr. Jayasinghe had successfully connected 400 rural clinics across the Uva Province to specialist units in Colombo.", "The results were transformative. Maternal mortality in connected regions dropped by 67% within three years.", "She was awarded the National Medical Excellence Award in 2020 by the Sri Lankan President."] },
-      { title: "Historical Impact & Legacy", icon: "🌍", paragraphs: ["Dr. Jayasinghe's work transcends medicine. In communities she served, school enrolment rates rose as families no longer needed to keep older children home to care for chronically ill parents.", "International health organisations from Bangladesh, Nepal, and three Sub-Saharan African nations have dispatched delegations to study her model.", "\"I did not invent technology,\" she has said. \"I simply refused to let geography be a death sentence. Every child in Badulla deserves the same doctor as every child in Colombo.\""] },
-      { title: "Public Tributes & Community Voice", icon: "💬", paragraphs: ["The communities Dr. Jayasinghe served have honoured her in ways no award could match. Villages across Badulla have named streets, schools, and clinics after her.", "Her story has been adapted into a Sinhala-language film and a children's educational graphic novel distributed free to all primary schools in the Uva Province.", "Share your tribute, memory, or message for Dr. Nilanthi Jayasinghe in the community comments below."] }
-    ]
-  },
-  {
-    name: "Prof. Shantha Wickramasinghe",
-    title: "Guardian of Ancient Palm-Leaf Manuscripts",
-    category: "Education & Heritage",
-    location: "Peradeniya, Kandy",
-    year: "2015",
-    verified: true,
-    featured: true,
-    thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
-    videoId: "9bZkp7q19f0",
-    bio: "Professor Shantha Wickramasinghe has dedicated his life to preserving Sri Lanka's ancient literary heritage. As a senior professor at the University of Peradeniya, he spearheaded the most ambitious digitization project in South Asian cultural history.\n\nOver 30 years, Prof. Wickramasinghe personally supervised the archiving of more than 12,000 ancient palm-leaf Ola manuscripts, converting them into high-resolution digital formats now accessible to scholars worldwide through open-access repositories.",
-    achievements: ["UNESCO Cultural Heritage Champion 2019", "12,000+ Manuscripts Digitized", "Peradeniya University Emeritus Professor", "45+ Countries Access His Archive", "Presidential Award for Cultural Preservation"],
-    tags: ["Heritage", "Education", "Digital Preservation", "Academia"],
-    interviewSeries: [
-      { id: "ep-2-1", episode: 1, title: "Part 1: The Vanishing Palm-Leaf Manuscripts of Peradeniya", videoId: "9bZkp7q19f0", duration: "24:10", date: "2026-01-18", description: "Prof. Shantha shares the thrilling discovery of thousands of Ola manuscripts preserved across ancient temple archives." }
-    ],
-    biographyPages: [
-      { title: "Early Life & Beginnings", icon: "📖", paragraphs: ["Professor Shantha Wickramasinghe was born in 1955 in the ancient city of Kandy, raised in the shadow of the Temple of the Tooth — a childhood steeped in centuries of living heritage.", "His passion for ancient literature led him to the University of Peradeniya, where he pursued a degree in Sinhala Literature before completing his doctorate in South Asian Manuscript Studies at Oxford.", "At the time, thousands of Ola leaf manuscripts in temple libraries and private collections across Sri Lanka were crumbling from humidity, insect damage, and neglect."] },
-      { title: "Journey & Contribution", icon: "🌟", paragraphs: ["In 1992, Prof. Wickramasinghe secured a landmark grant to begin systematic digitization of Sri Lanka's palm-leaf manuscript heritage.", "Over 30 years, his project expanded from a single university room to a fully-equipped digitization centre employing 45 researchers and conservators.", "He pioneered a unique crowd-sourcing method where village temples registered their collections online, enabling his team to reach locations that no formal survey had ever documented."] },
-      { title: "Key Achievements", icon: "🏆", paragraphs: ["UNESCO named Prof. Wickramasinghe a Cultural Heritage Champion in 2019, one of only seven individuals globally to receive the honour that year.", "His archive is now accessible to scholars in over 45 countries through an open-access online platform that receives over 120,000 academic visits annually.", "His team recovered 2,000 manuscripts previously believed destroyed in the catastrophic 1981 Jaffna Public Library fire."] },
-      { title: "Public Tributes & Community Voice", icon: "💬", paragraphs: ["Researchers, monks, historians, and ordinary Sri Lankans have written thousands of letters and messages to Prof. Wickramasinghe over the decades.", "The Peradeniya University campus has named its manuscript reading room the Wickramasinghe Hall.", "Leave your tribute or message for Prof. Shantha Wickramasinghe below."] }
-    ]
-  },
-  {
-    name: "Eng. Priyantha Dissanayake",
-    title: "Sri Lanka's Solar Energy Revolution Pioneer",
-    category: "Engineering & Technology",
-    location: "Colombo",
-    year: "2020",
-    verified: true,
-    featured: true,
-    thumbnail: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
-    videoId: "kJQP7kiw5Fk",
-    bio: "Engineer Priyantha Dissanayake is the visionary behind Sri Lanka's most ambitious renewable energy transformation. His innovative approach using locally manufactured solar panels reduced costs by 40% compared to imported alternatives, creating a thriving local solar industry that employs over 5,000 workers.",
-    achievements: ["ADB Green Energy Champion 2021", "150,000 Homes Electrified", "5,000+ Jobs Created", "Patent: Solar Water Pumping Technology", "Technology adopted in 12 countries"],
-    tags: ["Engineering", "Renewable Energy", "Innovation", "Environment"],
-    interviewSeries: [
-      { id: "ep-3-1", episode: 1, title: "Part 1: Designing Solar Tech for Off-Grid Rural Homes", videoId: "kJQP7kiw5Fk", duration: "21:15", date: "2026-01-22", description: "Eng. Priyantha explains the engineering behind affordable indigenous solar panels." }
-    ],
-    biographyPages: [
-      { title: "Early Life & Beginnings", icon: "📖", paragraphs: ["Priyantha Dissanayake grew up in a village without reliable electricity in Hambantota, where his childhood was marked by the contrast between the abundant sunshine and the absence of power.", "His determination to solve this paradox led him to study electrical engineering at the University of Moratuwa, where he graduated top of his class in 2002.", "After a brief career in industrial automation, he pivoted entirely to renewable energy — a decision that would transform Sri Lanka's energy landscape."] },
-      { title: "Journey & Contribution", icon: "🌟", paragraphs: ["His National Solar Grid Initiative, launched in 2016, was the most ambitious rural electrification programme in Sri Lankan history.", "Using locally manufactured panels he designed in collaboration with university labs, he reduced per-unit costs by 40% compared to imported alternatives.", "By 2020, 150,000 agrarian households across the Dry Zone had reliable electricity for the first time in their history."] },
-      { title: "Key Achievements", icon: "🏆", paragraphs: ["The Asian Development Bank named him a Green Energy Champion in 2021, citing the initiative as a model for developing nations.", "His patented solar water pumping technology has been adopted in 12 countries across South and Southeast Asia.", "His work prevents an estimated 2 million tons of CO2 emissions annually."] },
-      { title: "Public Tributes & Community Voice", icon: "💬", paragraphs: ["Farmers across the Dry Zone credit Dissanayake's solar pumps with tripling their crop yields through reliable irrigation.", "Village children who grew up studying by candlelight now charge tablets and access online education through the grids he built.", "Leave your tribute or message for Eng. Priyantha Dissanayake in the community comments below."] }
-    ]
-  },
-  {
-    name: "Mrs. Kamala Perera",
-    title: "Champion of Girl's Education & Women's Empowerment",
-    category: "Social Impact & Philanthropy",
-    location: "Gampaha District",
-    year: "2016",
-    verified: true,
-    featured: true,
-    thumbnail: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
-    videoId: "dQw4w9WgXcQ",
-    bio: "Mrs. Kamala Perera is a celebrated social entrepreneur who has transformed educational opportunities for girls in Sri Lanka's most vulnerable communities. Her organization, the Kamala Foundation, has guaranteed secondary education and university sponsorships for over 10,000 girls since 2016.",
-    achievements: ["UNICEF Social Champion Award 2022", "10,000+ Girls Educated", "National Woman of the Year 2021", "50 Schools Partnered", "International Women's Day Honoree 2023"],
-    tags: ["Education", "Women's Rights", "Social Impact", "Philanthropy"],
-    interviewSeries: [
-      { id: "ep-4-1", episode: 1, title: "Part 1: The Education Gap & Why It Must End", videoId: "dQw4w9WgXcQ", duration: "20:35", date: "2026-01-28", description: "Mrs. Kamala explains the systemic barriers keeping rural girls from school and how her foundation breaks them." }
-    ],
-    biographyPages: [
-      { title: "Early Life & Beginnings", icon: "📖", paragraphs: ["Kamala Perera was born in 1968 in a village near Gampaha, the eldest of six siblings in a farming family. As a girl, she had to fight her own family's reluctance to invest in a daughter's education.", "Determined to prove that education transforms lives, she earned a scholarship to the University of Kelaniya and later completed a Master's degree in Social Policy at the University of Colombo.", "After two decades in the corporate sector, she left her career in 2015 to confront the educational injustice she had personally overcome."] },
-      { title: "Journey & Contribution", icon: "🌟", paragraphs: ["The Kamala Foundation, established in 2016, began by sponsoring 12 girls in Gampaha District. Within five years, it had grown into a national programme with 50 partner schools and a waiting list of hundreds.", "Mrs. Perera developed a mentoring model pairing sponsored girls with professional women volunteers — providing not just financial support but career guidance and emotional mentorship.", "She successfully lobbied Parliament for the inclusion of female student retention metrics in school performance evaluation frameworks."] },
-      { title: "Key Achievements", icon: "🏆", paragraphs: ["Over 10,000 girls have received full secondary education sponsorships, with 3,200 going on to university — 92% of whom are the first university graduates in their families.", "UNICEF named Mrs. Perera a Social Champion in 2022, and she was honoured as National Woman of the Year in 2021 by the Ministry of Women's Affairs.", "Her model has been replicated in Bangladesh, Nepal, and Myanmar through partnerships with international development agencies."] },
-      { title: "Public Tributes & Community Voice", icon: "💬", paragraphs: ["Thousands of girls sponsored by the Kamala Foundation have written letters to their benefactor over the years, many describing her as the reason they dared to dream.", "Alumni of the programme now include doctors, engineers, teachers, and entrepreneurs serving communities across Sri Lanka.", "Leave your tribute or message for Mrs. Kamala Perera in the community comments below."] }
-    ]
-  },
-  {
-    name: "Ravi Jayawardena",
-    title: "National Athletics Coach & Youth Sports Pioneer",
-    category: "Sports & Athletics",
-    location: "Colombo",
-    year: "2019",
-    verified: true,
-    featured: false,
-    thumbnail: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80",
-    videoId: "dQw4w9WgXcQ",
-    bio: "Coach Ravi Jayawardena is a national legend in Sri Lankan athletics who has coached 14 athletes to Asian Games podium finishes over his 25-year career. His free sports camps for underprivileged school students have trained over 2,000 young athletes.",
-    achievements: ["National Sports Coach of the Year 2022", "14 Asian Games Medalists Trained", "2,000+ Youth Athletes Coached", "Commonwealth Games Delegation Coach 2022", "Sports Ministry Achievement Award"],
-    tags: ["Athletics", "Sports", "Youth Development", "Coaching"],
-    interviewSeries: [
-      { id: "ep-5-1", episode: 1, title: "Part 1: Building Champions from Nothing", videoId: "dQw4w9WgXcQ", duration: "17:50", date: "2026-02-05", description: "Coach Ravi shares stories of transforming raw talent in underprivileged youth into national champions." }
-    ],
-    biographyPages: [
-      { title: "Early Life & Beginnings", icon: "📖", paragraphs: ["Ravi Jayawardena was a national 400m sprinter in the 1990s who represented Sri Lanka at two Commonwealth Games before a knee injury ended his competitive career at 28.", "Rather than stepping away from athletics, he channelled his passion into coaching — initially volunteering at a school in Colombo where he noticed exceptional but untrained talent going to waste.", "His philosophy was simple: every child with heart and dedication deserves world-class coaching, regardless of their family's income."] },
-      { title: "Journey & Contribution", icon: "🌟", paragraphs: ["Over 25 years, Coach Jayawardena built one of Sri Lanka's most respected athletics academies — entirely funded through corporate partnerships and his own personal resources.", "His training methodology, blending indigenous physical conditioning techniques with modern biomechanics, produced athletes who consistently outperformed those from better-resourced programmes.", "He fought tirelessly for better facilities and stipends for national athletes, lobbying the Sports Ministry through multiple administrations."] },
-      { title: "Key Achievements", icon: "🏆", paragraphs: ["14 of his athletes have won podium medals at Asian Games, with three going on to Commonwealth Games representation.", "His free Saturday morning camps in Colombo's Sugathadasa Stadium have trained over 2,000 youth athletes, many from families below the poverty line.", "He was named National Sports Coach of the Year in 2022 and received the Sports Ministry's Lifetime Achievement Award in 2023."] },
-      { title: "Public Tributes & Community Voice", icon: "💬", paragraphs: ["His athletes describe him as a father figure who held them to standards they didn't believe they could meet.", "\"He saw something in me I couldn't see in myself,\" wrote one Asian Games medalist in an open letter published nationally.", "Leave your tribute or message for Coach Ravi Jayawardena in the community comments below."] }
-    ]
-  },
-  {
     name: "M. H. M. Ashraff",
     title: "Visionary Statesman, Founder of SLMC & Minister of Ports & Shipping",
     category: "Politics & Leadership",
@@ -364,9 +246,9 @@ const achieversData = [
     ],
     tags: ["SLMC", "Leadership", "Politics", "Eastern Province", "Ports", "Education", "SEUSL", "National Unity"],
     interviewSeries: [
-      { id: "ep-9-1", episode: 1, title: "Part 1: The Founding of SLMC & The Democratic Awakening in the East", videoId: "dQw4w9WgXcQ", duration: "28:45", date: "2026-01-10", description: "Archival historical documentary detailing the genesis of SLMC in Kattankudy and Kalmunai, and Ashraff's parliamentary leadership." },
-      { id: "ep-9-2", episode: 2, title: "Part 2: The Port of Colombo Revolution & The Oluvil University Vision", videoId: "9bZkp7q19f0", duration: "24:18", date: "2026-02-05", description: "In-depth historical coverage of Minister Ashraff's transformation of the Sri Lanka Ports Authority and building of South Eastern University." },
-      { id: "ep-9-3", episode: 3, title: "Part 3: The National Unity Alliance & The Poet Statesman ('Naan Ennum Nee')", videoId: "kJQP7kiw5Fk", duration: "31:10", date: "2026-03-01", description: "Reflections on his literary masterwork 'Naan Ennum Nee' and his vision for an undivided, pluralistic Sri Lanka." }
+      { id: "ep-1-1", episode: 1, title: "Part 1: The Founding of SLMC & The Democratic Awakening in the East", videoId: "dQw4w9WgXcQ", duration: "28:45", date: "2026-01-10", description: "Archival historical documentary detailing the genesis of SLMC in Kattankudy and Kalmunai, and Ashraff's parliamentary leadership." },
+      { id: "ep-1-2", episode: 2, title: "Part 2: The Port of Colombo Revolution & The Oluvil University Vision", videoId: "9bZkp7q19f0", duration: "24:18", date: "2026-02-05", description: "In-depth historical coverage of Minister Ashraff's transformation of the Sri Lanka Ports Authority and building of South Eastern University." },
+      { id: "ep-1-3", episode: 3, title: "Part 3: The National Unity Alliance & The Poet Statesman ('Naan Ennum Nee')", videoId: "kJQP7kiw5Fk", duration: "31:10", date: "2026-03-01", description: "Reflections on his literary masterwork 'Naan Ennum Nee' and his vision for an undivided, pluralistic Sri Lanka." }
     ],
     biographyPages: [
       {
@@ -424,32 +306,298 @@ const achieversData = [
         ]
       }
     ]
+  },
+  {
+    name: "Dr. C. W. W. Kannangara",
+    title: "Father of Free Education in Sri Lanka & First Minister of Education",
+    category: "Education & Heritage",
+    location: "Randomgoda, Galle District",
+    year: "1945",
+    verified: true,
+    featured: true,
+    thumbnail: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80",
+    videoId: "9bZkp7q19f0",
+    bio: "Dr. Christopher William Wijekoon Kannangara (1884 – 1969) is universally revered as the 'Father of Free Education' in Sri Lanka. As the Minister of Education in the State Council of Ceylon from 1931 to 1947, he authored and enacted the historic Free Education Bill of 1945, guaranteeing free education from kindergarten through university for every child regardless of wealth or social standing.\n\nHe established 54 Central Schools (Madhya Maha Vidyalayas) across rural Sri Lanka, providing underprivileged rural students with access to elite science, arts, and humanities education. His visionary reforms unlocked social mobility for millions of Sri Lankans, creating one of the highest literacy rates in Asia.",
+    achievements: [
+      "Father of Free Education in Sri Lanka",
+      "Enacted the Historic Free Education Bill of 1945",
+      "Founded 54 Central Schools (Madhya Maha Vidyalayas) Island-wide",
+      "First Minister of Education in the State Council of Ceylon (1931–1947)",
+      "Elevated Sri Lanka to Have Asia's Highest Public Literacy Rate (over 92%)"
+    ],
+    tags: ["Free Education", "Madhya Maha Vidyalaya", "Kannangara", "Galle", "Education Reform"],
+    interviewSeries: [
+      { id: "ep-2-1", episode: 1, title: "Part 1: The Great Free Education Bill of 1945", videoId: "9bZkp7q19f0", duration: "25:30", date: "2026-01-12", description: "Documentary on Dr. C.W.W. Kannangara's fierce parliamentary battle to make education free for every Sri Lankan child." }
+    ],
+    biographyPages: [
+      {
+        title: "Early Life & Academic Brilliance",
+        icon: "📖",
+        paragraphs: [
+          "C. W. W. Kannangara was born on October 18, 1884, in Randomgoda, Galle. Having lost his father at an early age, young Kannangara overcame immense poverty through sheer academic excellence.",
+          "He won a scholarship to Richmond College, Galle, where he excelled as a scholar and captain of the cricket team. He subsequently studied law and became a leading Proctor in Galle."
+        ]
+      },
+      {
+        title: "The Battle for Free Education",
+        icon: "🎓",
+        paragraphs: [
+          "Elected to the State Council in 1931, Kannangara served as Minister of Education for 16 pivotal years. He witnessed how colonial education favoured urban elites while rural children were left in poverty.",
+          "In 1945, despite fierce opposition from vested interest groups, Kannangara successfully passed the landmark Free Education Ordinance, declaring that education from kindergarten to university level should be provided completely free by the state."
+        ]
+      },
+      {
+        title: "Central Schools & Legacy",
+        icon: "🏛️",
+        paragraphs: [
+          "To ensure rural students received world-class instruction, Kannangara established 54 Central Schools (Madhya Maha Vidyalayas) equipped with laboratories, libraries, and dormitories.",
+          "His legacy remains the foundation of Sri Lanka's human capital development. Today, millions of Sri Lankan doctors, engineers, scholars, and leaders owe their education to the vision of Dr. C. W. W. Kannangara."
+        ]
+      }
+    ]
+  },
+  {
+    name: "Muttiah Muralitharan",
+    title: "Legendary Cricketer & World Record Holder (800 Test Wickets)",
+    category: "Sports",
+    location: "Kandy District",
+    year: "1996",
+    verified: true,
+    featured: true,
+    thumbnail: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=400&q=80",
+    videoId: "kJQP7kiw5Fk",
+    bio: "Deshabandu Muttiah Muralitharan is widely regarded as the greatest spin bowler in the history of international cricket. Born in Kandy, he captured an unprecedented 800 Test wickets and 534 One Day International (ODI) wickets, establishing a world record that remains unbroken.\n\nA key member of Sri Lanka's historic 1996 ICC Cricket World Cup winning team, Muralitharan played 133 Tests and 350 ODIs with unmatched wizardry. Beyond cricket, he co-founded the 'Foundation of Goodness', a humanitarian trust that has built schools, medical centers, sports complexes, and housing for over 35,000 tsunami and war-affected rural Sri Lankans.",
+    achievements: [
+      "World Record Holder: Most Wickets in Test Cricket (800 Wickets)",
+      "World Record Holder: Most Wickets in ODI Cricket (534 Wickets)",
+      "1996 ICC Cricket World Cup Champion",
+      "Inducted into ICC Cricket Hall of Fame",
+      "Founder of the 'Foundation of Goodness' Humanitarian Charity (35,000+ Beneficiaries)"
+    ],
+    tags: ["Cricket", "800 Wickets", "Kandy", "World Cup 1996", "Foundation of Goodness", "Sports Legend"],
+    interviewSeries: [
+      { id: "ep-3-1", episode: 1, title: "Part 1: The Road to 800 Wickets & 1996 World Cup Glory", videoId: "kJQP7kiw5Fk", duration: "26:40", date: "2026-01-20", description: "Muralitharan reflects on his extraordinary spin bowling journey, the 1996 victory, and overcoming adversity." }
+    ],
+    biographyPages: [
+      {
+        title: "Early Life in Kandy & St. Anthony's",
+        icon: "🏏",
+        paragraphs: [
+          "Muttiah Muralitharan was born on April 17, 1972, in Kandy. He attended St. Anthony's College, Katugastota, where he started as a medium-pace bowler before his coach advised him to switch to off-spin.",
+          "His natural wrist wrist-spin action and sharp turn quickly dominated school cricket, earning him a call-up to the Sri Lanka national team in 1992 at the age of 20."
+        ]
+      },
+      {
+        title: "The 800 Test Wickets & World Cup Victory",
+        icon: "🏆",
+        paragraphs: [
+          "Over two decades, Muralitharan revolutionized spin bowling. In 1996, he helped Sri Lanka lift the ICC Cricket World Cup in Lahore, bowling with economic precision.",
+          "In July 2010, at the Galle International Stadium, he took his 800th Test wicket with his final ball in Test cricket, leading Sri Lanka to victory against India."
+        ]
+      },
+      {
+        title: "Humanitarian Impact: Foundation of Goodness",
+        icon: "🤝",
+        paragraphs: [
+          "In 1999, Muralitharan partnered with Kushil Gunasekera to establish the Foundation of Goodness in Seenigama. Following the 2004 Tsunami, the foundation rebuilt the entire village with housing, schools, computer centers, and a sports academy.",
+          "Today, the Foundation of Goodness provides free education, vocational training, and sports coaching to thousands of rural youth across Sri Lanka."
+        ]
+      }
+    ]
+  },
+  {
+    name: "Dr. Ray Wijewardene",
+    title: "Iconic Engineer, Inventor of the Two-Wheel Hand Tractor & Renewable Energy Pioneer",
+    category: "Engineering & Technology",
+    location: "Colombo District",
+    year: "1955",
+    verified: true,
+    featured: true,
+    thumbnail: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
+    videoId: "fRh_vgS2dFE",
+    bio: "Dr. Philip Revatha \"Ray\" Wijewardene (1924 – 2010) was a world-renowned Sri Lankan engineer, aviator, agricultural innovator, and Olympic athlete. He gained international fame by inventing the 'Landmaster' two-wheel hand tractor in 1955, which revolutionized small-scale farming across Asia and Africa.\n\nA graduate of Cambridge University and Harvard Business School, Dr. Ray served as Chancellor of the University of Moratuwa and Chairman of the Tea Research Institute. He pioneered dendro-thermal power generation in Sri Lanka using fast-growing Gliricidia trees and represented Sri Lanka in sailing at the 1968 Mexico Olympics.",
+    achievements: [
+      "Inventor of the Landmaster Two-Wheel Hand Tractor (1955)",
+      "Chancellor of the University of Moratuwa",
+      "Pioneer of Dendro-Thermal Biomass Energy in Sri Lanka",
+      "Represented Sri Lanka in Sailing at the 1968 Mexico Olympics",
+      "FAO International Agricultural Engineering Consultant"
+    ],
+    tags: ["Engineering", "Landmaster", "Moratuwa", "Renewable Energy", "Aviation", "Agriculture"],
+    interviewSeries: [
+      { id: "ep-4-1", episode: 1, title: "Part 1: The Landmaster Invention & Dendro Energy Vision", videoId: "fRh_vgS2dFE", duration: "23:15", date: "2026-01-25", description: "Exploring Dr. Ray Wijewardene's ground-breaking mechanical inventions and sustainable energy research." }
+    ],
+    biographyPages: [
+      {
+        title: "Cambridge Scholar & The Landmaster Innovation",
+        icon: "⚙️",
+        paragraphs: [
+          "Ray Wijewardene was born in Colombo in 1924. He studied engineering and agriculture at Peterhouse, Cambridge University, followed by business studies at Harvard.",
+          "In 1955, recognizing that smallholder Asian farmers could not afford heavy 4-wheel tractors, he designed and patented the 'Landmaster' two-wheel tractor in Nottingham, selling over 300,000 units worldwide."
+        ]
+      },
+      {
+        title: "Dendro Power & Aviation Leadership",
+        icon: "✈️",
+        paragraphs: [
+          "Dr. Ray was an avid aviator who designed, built, and flew his own light aircraft and autogyros in Sri Lanka.",
+          "He championed Dendro-thermal power — generating electricity from biomass wood gasification using Gliricidia sepium — as a zero-carbon energy solution for Sri Lanka."
+        ]
+      }
+    ]
+  },
+  {
+    name: "Dr. Lester James Peries",
+    title: "Father of Sri Lankan Cinema & UNESCO Fellini Gold Medalist",
+    category: "Arts & Culture",
+    location: "Dehiwala, Colombo District",
+    year: "1956",
+    verified: true,
+    featured: false,
+    thumbnail: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&q=80",
+    videoId: "L_jWHffIx5E",
+    bio: "Dr. Lester James Peries (1919 – 2018) was the undisputed pioneer of authentic Sri Lankan cinema. His debut feature film 'Rekava' (Line of Destiny, 1956) revolutionized Sinhala filmmaking by breaking away from artificial studio sets and filming entirely on location in Sri Lankan villages.\n\nHis cinematic masterpiece 'Gamperaliya' (The Village Upheaval, 1963) won the Golden Peacock for Best Feature Film at the International Film Festival of India. In 2003, Peries was awarded the UNESCO Fellini Gold Medal for lifetime outstanding contribution to global cinema.",
+    achievements: [
+      "Father of Sri Lankan Cinema",
+      "Directed Landmark Masterpieces: Rekava (1956), Gamperaliya (1963), Nidhanaya (1972)",
+      "Winner of the Golden Peacock Award (IFFI 1965)",
+      "UNESCO Fellini Gold Medal Laureate (2003)",
+      "Sri Lankabhimanya Highest National Honor Awardee"
+    ],
+    tags: ["Cinema", "Gamperaliya", "Rekava", "Arts", "Culture", "UNESCO"],
+    interviewSeries: [
+      { id: "ep-5-1", episode: 1, title: "Part 1: Rekava & The Birth of Realistic Sinhala Cinema", videoId: "L_jWHffIx5E", duration: "27:10", date: "2026-02-02", description: "Retrospective on how Lester James Peries created authentic real-location Sri Lankan cinema." }
+    ],
+    biographyPages: [
+      {
+        title: "London Years & The Return to Ceylon",
+        icon: "🎬",
+        paragraphs: [
+          "Lester James Peries was born on April 5, 1919, in Dehiwala. He worked as a journalist in London in the late 1940s before returning to Ceylon to join the Government Film Unit (GFU).",
+          "In 1956, he left the GFU to direct 'Rekava', taking cameras into real village houses and rice fields for the first time in South Asian cinematic history."
+        ]
+      }
+    ]
+  },
+  {
+    name: "Deshamanya Dr. Christopher Weeramantry",
+    title: "Vice-President of the International Court of Justice (ICJ) & Global Jurist",
+    category: "Politics & Leadership",
+    location: "Colombo District",
+    year: "1991",
+    verified: true,
+    featured: false,
+    thumbnail: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80",
+    videoId: "QH2-TGUlwu4",
+    bio: "Deshamanya Dr. Christopher Gregory Weeramantry (1926 – 2017) was a world-renowned Sri Lankan jurist who served as Judge and Vice-President of the International Court of Justice (ICJ) in The Hague from 1991 to 2000.\n\nA former Justice of the Supreme Court of Sri Lanka and Professor of Law at Monash University, Dr. Weeramantry authored pioneering treatises on international law, human rights, and environmental protection. He received the UNESCO Prize for Peace Education in 2006 and the Right Livelihood Award (the 'Alternative Nobel Prize') for his lifetime dedication to global peace and nuclear disarmament.",
+    achievements: [
+      "Vice-President of the International Court of Justice (ICJ) at The Hague (1997–2000)",
+      "UNESCO Prize for Peace Education Laureate (2006)",
+      "Right Livelihood Award Winner ('Alternative Nobel Prize', 2007)",
+      "Justice of the Supreme Court of Sri Lanka",
+      "Sri Lankabhimanya Highest National Honor Awardee"
+    ],
+    tags: ["ICJ", "International Law", "Peace", "Human Rights", "The Hague", "Jurist"],
+    interviewSeries: [
+      { id: "ep-6-1", episode: 1, title: "Part 1: International Law, Nuclear Disarmament & World Peace", videoId: "QH2-TGUlwu4", duration: "29:00", date: "2026-02-10", description: "Dr. Weeramantry shares legal insights from his tenure at the International Court of Justice." }
+    ],
+    biographyPages: [
+      {
+        title: "From Colombo Courts to The Hague",
+        icon: "⚖️",
+        paragraphs: [
+          "Christopher Weeramantry was born in Colombo in 1926. He graduated from Royal College Colombo and the University of Ceylon, called to the Bar in 1948.",
+          "Elected to the ICJ in 1991, his landmark judicial opinions integrated traditional Asian, African, and indigenous jurisprudence into international environmental and human rights law."
+        ]
+      }
+    ]
+  },
+  {
+    name: "Otara Gunewardene",
+    title: "Entrepreneur, Founder of ODEL & Embark Animal Welfare Champion",
+    category: "Social Impact",
+    location: "Colombo District",
+    year: "1990",
+    verified: true,
+    featured: true,
+    thumbnail: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
+    videoId: "uelHwf8o7_U",
+    bio: "Otara Del Gunewardene is a celebrated Sri Lankan entrepreneur, fashion icon, and animal welfare advocate. In 1990, she founded ODEL, transforming a single boot-of-a-car clothing business into Sri Lanka's most iconic retail department store brand and the first fashion retailer to list on the Colombo Stock Exchange.\n\nIn 2007, Otara launched 'Embark', a pioneering social enterprise dedicated to rescuing, treating, vaccinating, and rehoming street dogs across Sri Lanka. Through Embark, she has facilitated the adoption of over 4,500 rescue dogs and vaccinated over 30,000 animals, while tirelessly advocating for environmental conservation and wildlife protection.",
+    achievements: [
+      "Founder of ODEL — Sri Lanka's Premier Retail Department Store Chain",
+      "Founder of Embark — 4,500+ Rescue Dog Adoptions & 30,000+ Vaccinations",
+      "First Female Entrepreneur to List a Fashion Retail Enterprise on the CSE",
+      "World Animal Day Country Ambassador for Sri Lanka",
+      "Stevie International Business Woman of the Year Awardee"
+    ],
+    tags: ["ODEL", "Embark", "Animal Welfare", "Women Entrepreneurs", "Social Enterprise", "Colombo"],
+    interviewSeries: [
+      { id: "ep-7-1", episode: 1, title: "Part 1: Building ODEL & The Mission of Embark", videoId: "uelHwf8o7_U", duration: "21:45", date: "2026-02-14", description: "Otara Gunewardene talks about her journey from fashion entrepreneurship to nationwide animal rescue leadership." }
+    ],
+    biographyPages: [
+      {
+        title: "The ODEL Journey",
+        icon: "🛍️",
+        paragraphs: [
+          "Otara Gunewardene was born in Colombo. After completing her degree in Biology at Bowling Green State University, USA, she returned to Sri Lanka in 1989 and started selling surplus apparel out of her car trunk.",
+          "Her passion for quality led to the opening of the flagship ODEL store in Alexandra Place, Colombo, which became a national landmark."
+        ]
+      },
+      {
+        title: "Embark & Animal Advocacy",
+        icon: "🐾",
+        paragraphs: [
+          "In 2007, inspired by a rescued street dog named Niko, Otara launched Embark to change societal attitudes towards street dogs in Sri Lanka.",
+          "Embark has conducted hundreds of free sterilisation and vaccination clinics, saving thousands of lives and promoting compassionate living."
+        ]
+      }
+    ]
+  },
+  {
+    name: "Sanath Jayasuriya",
+    title: "Master Blaster, 1996 World Cup MVP & Cricket Revolutionary",
+    category: "Sports",
+    location: "Matara District",
+    year: "1996",
+    verified: true,
+    featured: false,
+    thumbnail: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80",
+    videoId: "YR5ApYxkU-U",
+    bio: "Sanath Teriran Jayasuriya is a Sri Lankan cricket legend whose explosive batting revolutionized One Day International (ODI) cricket worldwide during the 1996 World Cup. Born in Matara, Jayasuriya was named Most Valuable Player of the 1996 ICC Cricket World Cup for his devastating opening partnerships with Romesh Kaluwitharana.\n\nOver a glittering 22-year international career, he scored 13,430 ODI runs and took 323 ODI wickets, making him one of the greatest all-rounders in cricket history. He holds the record for the highest individual score by a Sri Lankan in ODIs (189 vs India) and scored 340 in a Test match against India.",
+    achievements: [
+      "Most Valuable Player (MVP) of the 1996 ICC Cricket World Cup",
+      "13,430 ODI Runs & 323 ODI Wickets",
+      "Highest Individual ODI Score by a Sri Lankan (189 runs vs India)",
+      "Test Triple Century (340 vs India at R. Premadasa Stadium)",
+      "Former Sri Lanka National Cricket Captain & Chief Selector"
+    ],
+    tags: ["Sanath Jayasuriya", "Matara", "Cricket", "World Cup 1996", "Master Blaster", "Sports"],
+    interviewSeries: [
+      { id: "ep-8-1", episode: 1, title: "Part 1: The Matara Marauder & The 1996 World Cup Revolution", videoId: "YR5ApYxkU-U", duration: "24:50", date: "2026-02-18", description: "Sanath Jayasuriya discusses how Sri Lanka changed global ODI cricket in 1996." }
+    ],
+    biographyPages: [
+      {
+        title: "From St. Servatius Matara to World Champion",
+        icon: "🏏",
+        paragraphs: [
+          "Sanath Jayasuriya was born on June 30, 1969, in Matara. Educated at St. Servatius' College Matara, his natural hand-eye coordination and left-handed power hitting made him a standout talent.",
+          "Selected for Sri Lanka in 1989, his pinch-hitting strategy in the first 15 overs of ODIs permanently changed how international teams approached limited-overs cricket."
+        ]
+      }
+    ]
   }
 ];
 
 // ── AWARDS ────────────────────────────────────────────────────────────────────
 const awardsData = [
-  { title: "National Healthcare Pioneer Award 2026", category: "Healthcare", nominee: "Dr. Nilanthi Jayasinghe", description: "For revolutionary contributions to rural healthcare access through tele-medicine clinics in Uva province.", status: "Nominee", year: 2026, presenter: "College of Community Physicians Sri Lanka", thumbnail: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80", votes: 0, icon: "🏆" },
-  { title: "Community Child Health Award", category: "Healthcare", nominee: "Dr. Rohan Abeyratne", description: "Pioneered mobile diagnostic vans screening 45,000 rural children for congenital cardiac and eye diseases.", status: "Nominee", year: 2026, presenter: "Sri Lanka Paediatric Association", thumbnail: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80", votes: 0, icon: "🩺" },
-  { title: "Distinguished Public Health & Epidemiology Laureate", category: "Healthcare", nominee: "Dr. Anula Wijesundera", description: "Spearheaded national dengue containment strategies and mobile diagnostic clinical labs serving over 60,000 plantation workers.", status: "Nominee", year: 2026, presenter: "Sri Lanka Medical Association", thumbnail: "https://images.unsplash.com/photo-1594824813576-90f70a7f14b6?w=400&q=80", votes: 0, icon: "🩺" },
-  { title: "Cultural Heritage Preservation Award", category: "Arts & Culture", nominee: "Prof. Shantha Wickramasinghe", description: "Lifetime achievement in digital preservation of 12,000 ancient Sri Lankan palm-leaf ola manuscripts.", status: "Nominee", year: 2026, presenter: "Ministry of Cultural Affairs & Heritage", thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80", votes: 0, icon: "🎖️" },
-  { title: "Traditional Arts Revitalization Prize", category: "Arts & Culture", nominee: "Kalasuri Rohana Baddegama", description: "Preserved Sabaragamuwa folk rituals and founded free training academies for over 3,000 rural youth.", status: "Nominee", year: 2026, presenter: "Arts Council of Sri Lanka", thumbnail: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80", votes: 0, icon: "🎭" },
-  { title: "Indigenous Performing Arts & Dance Master", category: "Arts & Culture", nominee: "Heshma Wignaraja", description: "Global ambassador for Sri Lankan classical Kandyan dance theater, mentoring young dancers across 20 international cultural tours.", status: "Nominee", year: 2026, presenter: "Chitrasena Cultural Foundation & UNESCO Sri Lanka", thumbnail: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80", votes: 0, icon: "💃" },
-  { title: "Green Innovation Pioneer Award", category: "Environment & Technology", nominee: "Eng. Priyantha Dissanayake", description: "Engineered micro-solar power solutions powering 150,000 off-grid agrarian households across the Dry Zone.", status: "Nominee", year: 2026, presenter: "Sri Lanka Sustainable Energy Authority", thumbnail: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80", votes: 0, icon: "⚡" },
-  { title: "Marine Ecology Restoration Award", category: "Environment & Technology", nominee: "Chamari Senaratne", description: "Developed biodegradable coral-reef seeding matrices restoring 40 kilometers of southern coastal reef ecosystems.", status: "Nominee", year: 2026, presenter: "National Aquatic Resources Agency (NARA)", thumbnail: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80", votes: 0, icon: "🌊" },
-  { title: "Biodiversity & Wildlife Conservation Fellowship", category: "Environment & Technology", nominee: "Dr. Sumith Pilapitiya", description: "Architect of community-based human-elephant conflict mitigation fences protecting 45 agrarian villages across the North Central Province.", status: "Nominee", year: 2026, presenter: "Wildlife and Nature Protection Society (WNPS)", thumbnail: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80", votes: 0, icon: "🐘" },
-  { title: "Social Impact Champion Award", category: "Social Service", nominee: "Mrs. Kamala Perera", description: "Guaranteed secondary education and university sponsorships for 10,000+ girls in vulnerable communities.", status: "Nominee", year: 2026, presenter: "National Commission for Women", thumbnail: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80", votes: 0, icon: "💛" },
-  { title: "Elder Care & Dignity Honor", category: "Social Service", nominee: "Ven. Ananda Thero", description: "Established 8 community hospices and elder shelters providing compassionate dignity care without fee.", status: "Nominee", year: 2026, presenter: "National Social Services Council", thumbnail: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80", votes: 0, icon: "🕊️" },
-  { title: "Grassroots Community Empowerment Prize", category: "Social Service", nominee: "K. Rathnasingham", description: "Rebuilt 32 village water irrigation reservoirs and community micro-credit banks supporting over 8,000 war-affected families.", status: "Nominee", year: 2026, presenter: "National Council for Voluntary Social Services", thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80", votes: 0, icon: "🌱" },
-  { title: "Sports Excellence & Mentorship Award", category: "Sports", nominee: "Ravi Jayawardena", description: "Coached 14 national athletes to Asian Games podiums and runs free sports camps for underprivileged schools.", status: "Nominee", year: 2026, presenter: "Sri Lanka Sports Ministry & Olympic Committee", thumbnail: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80", votes: 0, icon: "🥇" },
-  { title: "Para-Athletics Trailblazer Award", category: "Sports", nominee: "Dilani Fernando", description: "Paralympic archery medalist advocating and creating adaptive sports training facilities island-wide.", status: "Nominee", year: 2026, presenter: "National Paralympic Committee", thumbnail: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80", votes: 0, icon: "🎯" },
-  { title: "Youth Athletics & Olympic Promise Honor", category: "Sports", nominee: "Tharushi Karunarathne", description: "Asian Games 800m Gold Medalist inspiring a generation of schoolgirl athletes from rural schools to compete on world athletic stages.", status: "Nominee", year: 2026, presenter: "Athletics Association of Sri Lanka", thumbnail: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80", votes: 0, icon: "🏃‍♀️" },
-  { title: "Humanitarian Service Leadership Award", category: "Humanitarian Service", nominee: "Maj. Gen. (Ret.) Arjuna Silva", description: "Led humanitarian mine-clearing of 15,000 hectares, enabling 80,000 displaced citizens to rebuild their lives in peace.", status: "Nominee", year: 2026, presenter: "United Nations Human Rights Council & Sri Lanka Office", thumbnail: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80", votes: 0, icon: "🌟" },
-  { title: "Disaster Relief Vanguard Honor", category: "Humanitarian Service", nominee: "Sister Mary Bernadette", description: "Coordinated emergency flood and landslide rescue feeding stations serving 200,000 meals during monsoon emergencies.", status: "Nominee", year: 2026, presenter: "Sri Lanka Red Cross Society", thumbnail: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=400&q=80", votes: 0, icon: "🤝" },
-  { title: "Crisis Response & Resettlement Fellowship", category: "Humanitarian Service", nominee: "Dr. Kasun Pathirana", description: "Directed volunteer doctors network providing 24/7 trauma and emergency surgeries across drought and flood disaster corridors.", status: "Nominee", year: 2026, presenter: "Disaster Management Center & WHO Sri Lanka", thumbnail: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80", votes: 0, icon: "🕊️" },
-  { title: "National Education Vanguard & STEM Leadership Award", category: "Education", nominee: "Prof. Malik Ranasinghe", description: "Transformed digital engineering education and university research incubation, graduating 15,000 modern IT and engineering innovators.", status: "Nominee", year: 2026, presenter: "National Science Foundation Sri Lanka", thumbnail: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80", votes: 0, icon: "🎓" },
-  { title: "Rural Schools Literacy & Digital Access Prize", category: "Education", nominee: "Sandamali Jayakody", description: "Equipped 120 remote rural schools with off-grid solar computer labs and digital Sinhala/Tamil multimedia libraries.", status: "Nominee", year: 2026, presenter: "Ministry of Education & NIE Sri Lanka", thumbnail: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80", votes: 0, icon: "📚" },
-  { title: "Inclusive Special Needs Education Laureate", category: "Education", nominee: "K. Sivalingam", description: "Pioneered trilingual braille and sign-language learning frameworks integrated into over 200 mainstream secondary schools.", status: "Nominee", year: 2026, presenter: "Sri Lanka Special Education Teachers Guild", thumbnail: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80", votes: 0, icon: "📖" }
+  { title: "National Statesmanship & Public Service Laureate 2026", category: "Politics & Leadership", nominee: "M. H. M. Ashraff", description: "For transformative leadership in founding SLMC, modernizing Colombo Port, and establishing South Eastern University at Oluvil.", status: "Nominee", year: 2026, presenter: "National Governance & Leadership Council", thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80", votes: 0, icon: "🏛️" },
+  { title: "National Education Vanguard Honor", category: "Education & Heritage", nominee: "Dr. C. W. W. Kannangara", description: "For authoring the historic 1945 Free Education Bill and establishing 54 Central Schools island-wide.", status: "Nominee", year: 2026, presenter: "Ministry of Education & National Heritage", thumbnail: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80", votes: 0, icon: "🎓" },
+  { title: "Global Sports Legend & Humanitarian Award", category: "Sports", nominee: "Muttiah Muralitharan", description: "For capturing a world-record 800 Test wickets and building the Foundation of Goodness empowering 35,000+ rural citizens.", status: "Nominee", year: 2026, presenter: "Sri Lanka Sports Ministry & Olympic Committee", thumbnail: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=400&q=80", votes: 0, icon: "🏏" },
+  { title: "Green Engineering & Agricultural Innovation Prize", category: "Engineering & Technology", nominee: "Dr. Ray Wijewardene", description: "For inventing the Landmaster two-wheel tractor and pioneering renewable dendro-thermal power generation.", status: "Nominee", year: 2026, presenter: "Institution of Engineers Sri Lanka", thumbnail: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80", votes: 0, icon: "⚡" },
+  { title: "Cultural Cinema Masterpiece Fellowship", category: "Arts & Culture", nominee: "Dr. Lester James Peries", description: "Lifetime achievement in realistic Sri Lankan cinema, directing Rekava, Gamperaliya, and Nidhanaya.", status: "Nominee", year: 2026, presenter: "National Film Corporation & UNESCO Sri Lanka", thumbnail: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&q=80", votes: 0, icon: "🎬" },
+  { title: "International Justice & Human Rights Laureate", category: "Politics & Leadership", nominee: "Deshamanya Dr. Christopher Weeramantry", description: "For distinguished international jurisprudence as Vice-President of the ICJ at The Hague and peace education leadership.", status: "Nominee", year: 2026, presenter: "Sri Lanka Bar Association & ICJ Fellowship", thumbnail: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80", votes: 0, icon: "⚖️" },
+  { title: "Social Enterprise & Animal Welfare Pioneer Award", category: "Social Impact", nominee: "Otara Gunewardene", description: "For building ODEL and founding Embark, rescuing and vaccinating thousands of street dogs across Sri Lanka.", status: "Nominee", year: 2026, presenter: "National Social Services Council", thumbnail: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80", votes: 0, icon: "🐾" },
+  { title: "Cricket Revolution & Master Blaster Trophy", category: "Sports", nominee: "Sanath Jayasuriya", description: "1996 World Cup MVP who revolutionized international ODI batting and scored 13,000+ runs for Sri Lanka.", status: "Nominee", year: 2026, presenter: "Sri Lanka Cricket Board", thumbnail: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80", votes: 0, icon: "🏃‍♂️" }
 ];
 
 // ── TEST USERS ────────────────────────────────────────────────────────────────

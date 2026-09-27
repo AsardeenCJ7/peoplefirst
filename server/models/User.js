@@ -67,6 +67,8 @@ const userSchema = new mongoose.Schema(
     verificationTokenExpires: Date,
     resetPasswordToken: String,
     resetPasswordExpires: Date,
+    otpCode: String,
+    otpExpires: Date,
     authProvider: {
       type: String,
       default: 'local',

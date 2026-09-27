@@ -189,6 +189,12 @@ export default function AchieverDetail() {
                 <h1 className="font-manrope font-black text-2xl sm:text-3xl lg:text-4xl text-white">
                   {achiever.name}
                 </h1>
+                <span
+                  style={{ fontFamily: "'Noto Sans Tamil', 'Latha', serif", letterSpacing: '0.04em' }}
+                  className="inline-block text-sm text-primary/80 font-bold mt-1"
+                >
+                  முதுசங்கள்
+                </span>
                 <p className="text-primary font-semibold text-base sm:text-lg mt-1">
                   {achiever.title}
                 </p>

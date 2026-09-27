@@ -57,7 +57,13 @@ export default function AchieverCard({ achiever, index = 0 }) {
             <h3 className="font-manrope font-bold text-text-primary text-base leading-snug group-hover:text-primary transition-colors">
               {achiever.name}
             </h3>
-            <p className="text-text-muted text-xs mt-1 line-clamp-2 leading-relaxed">
+            <span
+              style={{ fontFamily: "'Noto Sans Tamil', 'Latha', serif", letterSpacing: '0.03em' }}
+              className="inline-block text-[10px] text-primary/70 font-semibold mt-0.5 mb-0.5"
+            >
+              முதுசங்கள்
+            </span>
+            <p className="text-text-muted text-xs mt-0.5 line-clamp-2 leading-relaxed">
               {achiever.title}
             </p>
           </div>

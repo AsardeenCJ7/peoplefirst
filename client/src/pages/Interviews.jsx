@@ -554,7 +554,7 @@ export default function Interviews() {
               className="btn-secondary text-xs px-3 sm:px-4 py-2 sm:py-2.5 flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed bg-dark-300 hover:bg-dark-400 border border-surface-border text-white font-semibold"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
-              <span className="hidden xs:inline">Previous</span>
+              <span className="hidden sm:inline">Previous</span>
             </button>
 
             {/* Page Numbers */}
@@ -579,7 +579,7 @@ export default function Interviews() {
               disabled={currentPage === totalPages}
               className="btn-secondary text-xs px-3 sm:px-4 py-2 sm:py-2.5 flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed bg-dark-300 hover:bg-dark-400 border border-surface-border text-white font-semibold"
             >
-              <span className="hidden xs:inline">Next</span>
+              <span className="hidden sm:inline">Next</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>

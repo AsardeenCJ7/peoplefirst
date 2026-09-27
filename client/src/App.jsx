@@ -6,6 +6,7 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import AuthModal from './components/ui/AuthModal';
 import RecommendModal from './components/ui/RecommendModal';
+import RequireWhatsappModal from './components/ui/RequireWhatsappModal';
 import IntroAnimation from './components/ui/IntroAnimation';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import AdminRoute from './components/layout/AdminRoute';
@@ -91,6 +92,7 @@ function AppLayout() {
       {!isAdmin && <Footer />}
       {/* AuthModal must render everywhere — admin gate also uses it */}
       <AuthModal />
+      <RequireWhatsappModal />
       {!isAdmin && <RecommendModal />}
     </div>
   );

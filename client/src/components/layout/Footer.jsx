@@ -127,7 +127,7 @@ export default function Footer() {
           <p className="text-text-muted text-xs">
             {t('allRightsReserved')}
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             <Link to="/privacy" className="text-text-muted hover:text-text-secondary text-xs transition-colors">
               {t('privacyPolicy')}
             </Link>
@@ -135,7 +135,7 @@ export default function Footer() {
               {t('termsOfUse')}
             </Link>
             <span className="text-text-muted text-xs">
-              {t('madeWithLove')}
+              Developed by <span className="text-primary font-bold">InxcodeCoder</span>
             </span>
           </div>
         </div>

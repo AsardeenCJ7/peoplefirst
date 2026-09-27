@@ -61,11 +61,14 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // ── REGISTER ─────────────────────────────────────────────────────────────────
   const register = async ({ name, email, password, whatsapp, district, address }) => {
     try {
       const res = await api.post('/auth/register', { name, email, password, whatsapp, district, address });
       if (!res.success) return { success: false, message: res.message };
+
+      if (res.requiresOtp) {
+        return { success: true, requiresOtp: true, email: res.email, message: res.message };
+      }
 
       if (res.token && res.user) {
         setToken(res.token);
@@ -155,8 +158,11 @@ export function AuthProvider({ children }) {
   const updateUserProfile = async (updatedFields) => {
     try {
       const res = await api.put('/users/profile', updatedFields);
-      if (res.success) _persistUser({ ...user, ...res.user });
-      return { success: res.success, message: res.message };
+      if (res.success && res.user) {
+        _persistUser(res.user);
+        return { success: true, message: res.message, user: res.user };
+      }
+      return { success: false, message: res.message || 'Profile update failed.' };
     } catch (err) {
       return { success: false, message: err.message || 'Profile update failed.' };
     }
@@ -172,6 +178,59 @@ export function AuthProvider({ children }) {
       return { success: res.success, avatarUrl: res.avatarUrl, message: res.message };
     } catch (err) {
       return { success: false, message: err.message || 'Avatar upload failed.' };
+    }
+  };
+
+  // ── OTP & PASSWORD RESET ──────────────────────────────────────────────────
+  const requestOtp = async (email) => {
+    try {
+      const res = await api.post('/auth/send-otp', { email });
+      return { success: res.success, message: res.message, otp: res.otp };
+    } catch (err) {
+      return { success: false, message: err.message || 'Could not send OTP code.' };
+    }
+  };
+
+  const confirmOtp = async (email, otp) => {
+    try {
+      const res = await api.post('/auth/verify-otp', { email, otp });
+      if (!res.success) return { success: false, message: res.message };
+
+      if (res.token && res.user) {
+        setToken(res.token);
+        _persistUser(res.user);
+        setIsAuthModalOpen(false);
+        _redirectForRole(res.user.role);
+      }
+      return { success: true, message: res.message, user: res.user };
+    } catch (err) {
+      return { success: false, message: err.message || 'OTP verification failed.' };
+    }
+  };
+
+  const forgotPassword = async (email) => {
+    try {
+      const res = await api.post('/auth/forgot-password', { email });
+      return { success: res.success, message: res.message, otp: res.otp };
+    } catch (err) {
+      return { success: false, message: err.message || 'Password reset request failed.' };
+    }
+  };
+
+  const resetPassword = async ({ email, otp, newPassword }) => {
+    try {
+      const res = await api.post('/auth/reset-password', { email, otp, newPassword });
+      if (!res.success) return { success: false, message: res.message };
+
+      if (res.token && res.user) {
+        setToken(res.token);
+        _persistUser(res.user);
+        setIsAuthModalOpen(false);
+        _redirectForRole(res.user.role);
+      }
+      return { success: true, message: res.message };
+    } catch (err) {
+      return { success: false, message: err.message || 'Reset password failed.' };
     }
   };
 
@@ -224,6 +283,10 @@ export function AuthProvider({ children }) {
         verifyEmail,
         resendVerificationEmail,
         loginWithGoogle,
+        requestOtp,
+        confirmOtp,
+        forgotPassword,
+        resetPassword,
         updateUserProfile,
         uploadAvatar,
         changePassword,

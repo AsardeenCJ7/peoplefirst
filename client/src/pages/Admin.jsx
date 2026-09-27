@@ -869,7 +869,7 @@ export default function Admin() {
                 title="Sign Out of Admin Console"
               >
                 <LogOut className="w-3.5 h-3.5" />
-                <span className="hidden xs:inline sm:inline">Logout</span>
+                <span className="hidden sm:inline">Logout</span>
               </button>
             </div>
           </div>

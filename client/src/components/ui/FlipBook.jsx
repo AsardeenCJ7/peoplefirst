@@ -373,7 +373,7 @@ export default function FlipBook({ achiever }) {
       {/* Actions */}
       <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
         {!user && (
-          <span className="hidden xs:flex items-center gap-1 px-2 py-1 rounded-md border border-amber-800/30 bg-amber-900/20 text-amber-500 text-[10px] font-semibold">
+          <span className="hidden sm:flex items-center gap-1 px-2 py-1 rounded-md border border-amber-800/30 bg-amber-900/20 text-amber-500 text-[10px] font-semibold">
             <Lock className="w-2.5 h-2.5" />{FREE_PAGE_LIMIT} Free Pages
           </span>
         )}

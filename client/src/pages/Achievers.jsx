@@ -409,10 +409,17 @@ export default function Achievers() {
           </div>
         </div>
 
-        {/* STATS HEADER */}
         <div className="flex flex-wrap items-center justify-between gap-2 mb-6 text-xs sm:text-sm text-text-muted">
-          <div>
-            Showing <strong className="text-white font-bold">{filtered.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}</strong>–<strong className="text-white font-bold">{Math.min(currentPage * itemsPerPage, filtered.length)}</strong> of <strong className="text-primary font-bold">{filtered.length}</strong> Achievers
+          <div className="flex items-center gap-2 flex-wrap">
+            Showing <strong className="text-white font-bold">{filtered.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}</strong>–<strong className="text-white font-bold">{Math.min(currentPage * itemsPerPage, filtered.length)}</strong> of <strong className="text-primary font-bold">{filtered.length}</strong>
+            <span className="text-white font-bold">Achievers</span>
+            <span className="text-surface-border">|</span>
+            <span
+              style={{ fontFamily: "'Noto Sans Tamil', 'Latha', serif", letterSpacing: '0.04em' }}
+              className="text-primary font-bold text-xs"
+            >
+              முதுசங்கள்
+            </span>
           </div>
           {(search || selectedCategory !== 'All' || selectedDistrict !== 'All') && (
             <button
@@ -489,11 +496,19 @@ export default function Achievers() {
                 <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3 sm:space-y-4">
                   <div className="space-y-1.5 sm:space-y-2">
                     <div className="flex items-start justify-between gap-2">
-                      <h3 className="font-manrope font-bold text-base sm:text-lg text-white group-hover:text-primary transition-colors">
-                        <Link to={`/achiever/${achiever.id || achiever._id}`}>
-                          {achiever.name}
-                        </Link>
-                      </h3>
+                      <div>
+                        <h3 className="font-manrope font-bold text-base sm:text-lg text-white group-hover:text-primary transition-colors">
+                          <Link to={`/achiever/${achiever.id || achiever._id}`}>
+                            {achiever.name}
+                          </Link>
+                        </h3>
+                        <span
+                          style={{ fontFamily: "'Noto Sans Tamil', 'Latha', serif", letterSpacing: '0.03em' }}
+                          className="inline-block text-[10px] text-primary/70 font-semibold"
+                        >
+                          முதுசங்கள்
+                        </span>
+                      </div>
                       {achiever.verified && (
                         <CheckCircle className="w-4 h-4 text-success shrink-0 mt-0.5" title="Verified Sri Lankan Icon" />
                       )}
@@ -565,6 +580,12 @@ export default function Achievers() {
                         <p className={`font-semibold text-xs sm:text-sm truncate ${selectedAchiever?.id === achiever.id ? 'text-primary font-bold' : 'text-text-primary'}`}>
                           {achiever.name}
                         </p>
+                        <span
+                          style={{ fontFamily: "'Noto Sans Tamil', 'Latha', serif" }}
+                          className="text-[9px] text-primary/60 font-semibold"
+                        >
+                          முதுசங்கள்
+                        </span>
                         <p className="text-text-muted text-[11px] truncate">{achiever.category}</p>
                         <div className="flex items-center gap-1 text-text-muted text-[10px] mt-0.5 truncate">
                           <MapPin className="w-2.5 h-2.5 text-primary shrink-0" />
@@ -666,7 +687,7 @@ export default function Achievers() {
               className="btn-secondary text-xs px-3 sm:px-4 py-2 sm:py-2.5 flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed bg-dark-300 hover:bg-dark-400 border border-surface-border text-white font-semibold"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
-              <span className="hidden xs:inline">Previous</span>
+              <span className="hidden sm:inline">Previous</span>
             </button>
 
             {/* Page Numbers */}
@@ -691,7 +712,7 @@ export default function Achievers() {
               disabled={currentPage === totalPages}
               className="btn-secondary text-xs px-3 sm:px-4 py-2 sm:py-2.5 flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed bg-dark-300 hover:bg-dark-400 border border-surface-border text-white font-semibold"
             >
-              <span className="hidden xs:inline">Next</span>
+              <span className="hidden sm:inline">Next</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
