@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import logo from '../../assets/logo.jpeg';
 
@@ -76,15 +76,6 @@ export default function IntroAnimation({ onComplete }) {
     };
   }, [onComplete]);
 
-  const handleSkip = () => {
-    setPhase(3);
-    setTimeout(() => {
-      setVisible(false);
-      setPhase(4);
-      onComplete?.();
-    }, 600);
-  };
-
   useEffect(() => {
     const handleCustomTrigger = () => {
       startAnimation();
@@ -114,7 +105,7 @@ export default function IntroAnimation({ onComplete }) {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] pointer-events-none overflow-hidden select-none w-screen h-screen"
+      className="fixed inset-0 z-[9999] pointer-events-none overflow-hidden select-none w-screen h-[100dvh] touch-none"
       style={{ pointerEvents: isParting ? 'none' : 'auto' }}
     >
       {/* ── THEATRICAL TOP VALANCE / DRAPERY SWAG (FULLY RESPONSIVE) ──────── */}
@@ -156,7 +147,7 @@ export default function IntroAnimation({ onComplete }) {
           ease: [0.65, 0.05, 0.36, 1],
         }}
         style={{ originX: 0 }}
-        className="absolute top-0 bottom-0 left-0 w-1/2 z-10 overflow-hidden"
+        className="absolute top-0 bottom-0 left-0 w-1/2 z-10 overflow-hidden will-change-transform"
       >
         {/* Deep Ruby Velvet Cloth Base */}
         <div
@@ -216,7 +207,7 @@ export default function IntroAnimation({ onComplete }) {
           ease: [0.65, 0.05, 0.36, 1],
         }}
         style={{ originX: 1 }}
-        className="absolute top-0 bottom-0 right-0 w-1/2 z-10 overflow-hidden"
+        className="absolute top-0 bottom-0 right-0 w-1/2 z-10 overflow-hidden will-change-transform"
       >
         {/* Deep Ruby Velvet Cloth Base */}
         <div
@@ -291,7 +282,7 @@ export default function IntroAnimation({ onComplete }) {
       >
         {/* Ambient Backlight Halo */}
         <div
-          className="absolute w-72 sm:w-96 md:w-[540px] h-72 sm:h-96 md:h-[540px] rounded-full pointer-events-none -z-10"
+          className="absolute w-64 sm:w-96 md:w-[540px] h-64 sm:h-96 md:h-[540px] rounded-full pointer-events-none -z-10"
           style={{
             background:
               'radial-gradient(circle, rgba(200, 16, 46, 0.35) 0%, rgba(244, 169, 0, 0.18) 45%, transparent 75%)',
@@ -306,13 +297,13 @@ export default function IntroAnimation({ onComplete }) {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: [1, 1.22, 1], opacity: [0.35, 0.7, 0.35] }}
             transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute w-36 sm:w-48 h-36 sm:h-48 rounded-full border border-primary/40 pointer-events-none"
+            className="absolute w-32 sm:w-48 h-32 sm:h-48 rounded-full border border-primary/40 pointer-events-none"
           />
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: [1.1, 1.35, 1.1], opacity: [0.2, 0.5, 0.2] }}
             transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
-            className="absolute w-44 sm:w-60 h-44 sm:h-60 rounded-full border border-gold/30 pointer-events-none"
+            className="absolute w-40 sm:w-60 h-40 sm:h-60 rounded-full border border-gold/30 pointer-events-none"
           />
 
           {/* Logo Frame */}
@@ -330,7 +321,7 @@ export default function IntroAnimation({ onComplete }) {
               <img
                 src={logo}
                 alt="PeopleFirst Media Channel"
-                className="w-20 h-20 sm:w-28 sm:h-28 rounded-full object-cover ring-4 ring-[#140306]"
+                className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full object-cover ring-4 ring-[#140306]"
               />
 
               {/* Slow orbital rings */}
@@ -357,7 +348,7 @@ export default function IntroAnimation({ onComplete }) {
               transition={{ duration: 0.6, ease: 'easeOut' }}
               className="mt-4 sm:mt-6 text-center max-w-full px-2"
             >
-              <h1 className="font-manrope font-black text-2xl sm:text-4xl md:text-5xl tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
+              <h1 className="font-manrope font-black text-2xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
                 People<span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-primary to-gold">First</span>
               </h1>
               <div className="flex items-center justify-center gap-2 mt-1.5">
@@ -389,7 +380,7 @@ export default function IntroAnimation({ onComplete }) {
         </AnimatePresence>
 
         {/* Slow Progress Indicator */}
-        <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 sm:gap-2 w-full max-w-[240px] px-4">
+        <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 sm:gap-2 w-full max-w-[200px] sm:max-w-[260px] px-4">
           <div className="w-full h-1 sm:h-1.5 bg-black/60 rounded-full overflow-hidden p-0.5 border border-gold/20 shadow-inner">
             <motion.div
               initial={{ width: '0%' }}
@@ -405,20 +396,7 @@ export default function IntroAnimation({ onComplete }) {
           </span>
         </div>
       </motion.div>
-
-      {/* ── SKIP BUTTON (RESPONSIVE) ───────────────────────────────────────── */}
-      {!isParting && (
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          onClick={handleSkip}
-          className="absolute top-4 sm:top-6 right-4 sm:right-6 z-40 pointer-events-auto px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-black/70 hover:bg-black/90 border border-gold/30 hover:border-gold/60 text-gray-200 hover:text-white text-[11px] sm:text-xs font-bold tracking-wider uppercase transition-all backdrop-blur-md flex items-center gap-1.5 shadow-2xl group"
-        >
-          <span>Skip</span>
-          <ArrowRight className="w-3 sm:w-3.5 h-3 sm:h-3.5 group-hover:translate-x-1 transition-transform text-gold" />
-        </motion.button>
-      )}
     </div>
   );
 }
+
