@@ -223,29 +223,6 @@ export default function FlipBook({ achiever }) {
     return ctxRef.current;
   };
 
-  // Dismiss gate on login
-  useEffect(() => { if (user) setGate(false); }, [user]);
-
-  // Keyboard nav
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === 'Escape' && maximized) setMaximized(false);
-      if (e.key === 'ArrowRight' && !flipping && spread < totalSpreads - 1) doDesktopNext();
-      if (e.key === 'ArrowLeft'  && !flipping && spread > 0)                doDesktopPrev();
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  });
-
-  // Bookmark load
-  useEffect(() => {
-    if (!user) { setBookmarked(false); setBmPage(null); return; }
-    const key   = `bm_${achiever.id}_${user.email}`;
-    const saved = localStorage.getItem(key);
-    if (saved != null) { setBookmarked(true); setBmPage(parseInt(saved, 10)); }
-    else               { setBookmarked(false); setBmPage(null); }
-  }, [user, achiever.id]);
-
   // Core flip — reads flippingRef (not state) to avoid stale closures
   const doFlip = useCallback((dir, cb) => {
     if (flippingRef.current) return;
@@ -269,6 +246,42 @@ export default function FlipBook({ achiever }) {
   const doDesktopPrev = useCallback(() => {
     if (spread > 0) doFlip('prev', () => setSpread(s => s - 1));
   }, [spread, doFlip]);
+
+  // Dismiss gate on login
+  useEffect(() => { if (user) setGate(false); }, [user]);
+
+  // Lock body scroll when maximized
+  useEffect(() => {
+    if (maximized) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [maximized]);
+
+  // Keyboard nav
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape' && maximized) setMaximized(false);
+      if (e.key === 'ArrowRight' && !flipping && spread < totalSpreads - 1) doDesktopNext();
+      if (e.key === 'ArrowLeft'  && !flipping && spread > 0)                doDesktopPrev();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [maximized, flipping, spread, totalSpreads, doDesktopNext, doDesktopPrev]);
+
+  // Bookmark load
+  useEffect(() => {
+    if (!user) { setBookmarked(false); setBmPage(null); return; }
+    const achieverKeyId = achiever?.id || achiever?._id;
+    const key   = `bm_${achieverKeyId}_${user.email}`;
+    const saved = localStorage.getItem(key);
+    if (saved != null) { setBookmarked(true); setBmPage(parseInt(saved, 10)); }
+    else               { setBookmarked(false); setBmPage(null); }
+  }, [user, achiever]);
 
   const jumpSpread = useCallback((idx) => {
     if (flippingRef.current || idx === spread) return;
@@ -355,7 +368,7 @@ export default function FlipBook({ achiever }) {
       {/* Title */}
       <div className="flex items-center gap-1.5 font-serif font-bold min-w-0 flex-1">
         <BookOpen className="w-4 h-4 text-amber-400 shrink-0" />
-        <span className="text-xs sm:text-sm truncate">{achiever.name} — Biography</span>
+        <span className="text-xs sm:text-sm truncate">{achiever.name} — Biography Manuscript</span>
       </div>
       {/* Actions */}
       <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
@@ -385,13 +398,18 @@ export default function FlipBook({ achiever }) {
         >
           {soundOn ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
         </button>
-        {/* Maximize (desktop only) */}
+        {/* Maximize / Fullscreen toggle button (available on both Mobile and Desktop) */}
         <button
           onClick={() => setMaximized(m => !m)}
-          title={max ? 'Exit fullscreen' : 'Fullscreen'}
-          className="hidden sm:flex items-center px-2.5 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/30 border border-amber-800/40 text-amber-400 font-semibold transition-all text-xs"
+          title={max ? 'Exit fullscreen lock mode (Esc)' : 'Lock screen in full 3D reader display'}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border font-bold text-xs transition-all ${
+            max
+              ? 'bg-amber-400 text-stone-950 border-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.5)]'
+              : 'bg-amber-500/20 hover:bg-amber-500/30 border-amber-700/60 text-amber-300'
+          }`}
         >
           {max ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+          <span>{max ? 'Exit Full Display' : 'Full Display'}</span>
         </button>
       </div>
     </div>
@@ -399,7 +417,7 @@ export default function FlipBook({ achiever }) {
 
   // ── Mobile view ────────────────────────────────────────────────────────────
   const MobileView = () => (
-    <div className="block md:hidden">
+    <div className="block md:hidden relative">
       {/* Book card — touchAction pan-y allows inner scroll while outer card handles horizontal swipe */}
       <div
         className="relative rounded-2xl bg-gradient-to-b from-[#130e08] via-[#211a10] to-[#130e08] border-2 border-amber-800/60 shadow-2xl overflow-hidden"
@@ -412,10 +430,34 @@ export default function FlipBook({ achiever }) {
           <div key={i} className={`absolute w-3.5 h-3.5 border-amber-600/60 ${c} z-10 pointer-events-none`} />
         ))}
 
-        {/* Page area — responsive height so content never gets cut off */}
+        {/* Floating Side Arrows on Mobile */}
+        {page > 0 && (
+          <button
+            type="button"
+            onClick={() => doMobilePrev(page)}
+            disabled={flipping}
+            className="absolute left-1.5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-black/75 border border-amber-500/60 text-amber-400 flex items-center justify-center shadow-lg active:scale-90"
+            title="Previous Page"
+          >
+            <ChevronLeft className="w-4 h-4 -ml-0.5" />
+          </button>
+        )}
+        {page < totalPages - 1 && (
+          <button
+            type="button"
+            onClick={() => doMobileNext(page)}
+            disabled={flipping}
+            className="absolute right-1.5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-black/75 border border-amber-500/60 text-amber-400 flex items-center justify-center shadow-lg active:scale-90"
+            title="Next Page"
+          >
+            <ChevronRight className="w-4 h-4 -mr-0.5" />
+          </button>
+        )}
+
+        {/* Page area — compact default height */}
         <div
-          className="relative bg-[#0e0c09] border border-amber-800/30 rounded-xl m-2.5 p-3 sm:p-5 overflow-hidden"
-          style={{ minHeight: 'min(500px, 65vh)' }}
+          className="relative bg-[#0e0c09] border border-amber-800/30 rounded-xl m-2 sm:m-2.5 p-3 sm:p-4 overflow-hidden"
+          style={{ minHeight: maximized ? 'min(580px, 72vh)' : '380px' }}
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -424,8 +466,8 @@ export default function FlipBook({ achiever }) {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: flipDir === 'next' ? -30 : 30 }}
               transition={{ duration: 0.22, ease: 'easeOut' }}
-              className="flex flex-col pb-7"
-              style={{ minHeight: 'min(460px, 60vh)' }}
+              className="flex flex-col pb-6"
+              style={{ minHeight: maximized ? 'min(540px, 66vh)' : '340px' }}
             >
               <PageContent
                 page={pages[page]}
@@ -452,11 +494,11 @@ export default function FlipBook({ achiever }) {
       </div>
 
       {/* Mobile nav bar */}
-      <div className="mt-2.5 bg-[#1a1610] border border-amber-800/50 rounded-xl p-2 sm:p-2.5 flex items-center justify-between gap-2">
+      <div className="mt-2 bg-[#1a1610] border border-amber-800/50 rounded-xl p-2 sm:p-2.5 flex items-center justify-between gap-2">
         <button
           onClick={() => doMobilePrev(page)}
           disabled={page === 0 || flipping}
-          className={`flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold select-none transition-all ${
+          className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold select-none transition-all ${
             page === 0 || flipping
               ? 'opacity-30 cursor-not-allowed bg-stone-900 text-stone-600 border border-stone-800'
               : 'bg-amber-500/15 text-amber-400 border border-amber-700/50 active:scale-95'
@@ -490,7 +532,7 @@ export default function FlipBook({ achiever }) {
         <button
           onClick={() => doMobileNext(page)}
           disabled={page === totalPages - 1 || flipping}
-          className={`flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold select-none transition-all ${
+          className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold select-none transition-all ${
             page === totalPages - 1 || flipping
               ? 'opacity-30 cursor-not-allowed bg-stone-900 text-stone-600 border border-stone-800'
               : isGated(page + 2)
@@ -502,46 +544,84 @@ export default function FlipBook({ achiever }) {
         </button>
       </div>
 
-      <p className="text-center text-[10px] text-amber-700/60 mt-1.5">
-        Tip: Swipe left/right to turn pages &middot; Scroll inside to read full biography
+      <p className="text-center text-[10px] text-amber-700/60 mt-1">
+        Tip: Tap side arrows or swipe left/right to turn pages
       </p>
     </div>
   );
 
   // ── Desktop spread ─────────────────────────────────────────────────────────
   const DesktopSpread = () => (
-    <div style={{ perspective: '2000px' }}>
-      <div className="relative rounded-2xl bg-gradient-to-r from-[#130e08] via-[#211a10] to-[#130e08] border-4 border-amber-800/60 ring-2 ring-amber-900/30 shadow-2xl p-4 lg:p-6">
+    <div style={{ perspective: '2000px' }} className="relative px-2">
+      {/* ── Left Side Floating Arrow Button ────────────────────────────── */}
+      <button
+        type="button"
+        onClick={doDesktopPrev}
+        disabled={spread === 0 || flipping}
+        className={`absolute -left-3 lg:-left-5 top-1/2 -translate-y-1/2 z-30 w-10 h-10 lg:w-11 lg:h-11 rounded-full border flex items-center justify-center transition-all duration-200 shadow-2xl ${
+          spread === 0
+            ? 'opacity-0 pointer-events-none'
+            : 'bg-[#181208]/95 hover:bg-amber-500 text-amber-400 hover:text-stone-950 border-amber-600/70 hover:scale-110 shadow-[0_0_15px_rgba(251,191,36,0.35)]'
+        }`}
+        title="Previous Page (Turn Back)"
+      >
+        <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6 -ml-0.5" />
+      </button>
+
+      {/* ── Right Side Floating Arrow Button ───────────────────────────── */}
+      <button
+        type="button"
+        onClick={doDesktopNext}
+        disabled={spread === totalSpreads - 1 || flipping}
+        className={`absolute -right-3 lg:-right-5 top-1/2 -translate-y-1/2 z-30 w-10 h-10 lg:w-11 lg:h-11 rounded-full border flex items-center justify-center transition-all duration-200 shadow-2xl ${
+          spread === totalSpreads - 1
+            ? 'opacity-0 pointer-events-none'
+            : isGated(rNum + 1)
+            ? 'bg-amber-950/90 hover:bg-amber-800 text-amber-400 border-amber-600/60 hover:scale-110'
+            : 'bg-[#181208]/95 hover:bg-amber-500 text-amber-400 hover:text-stone-950 border-amber-600/70 hover:scale-110 shadow-[0_0_15px_rgba(251,191,36,0.35)]'
+        }`}
+        title="Next Page (Turn Page)"
+      >
+        {isGated(rNum + 1) ? <Lock className="w-4 h-4" /> : <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6 -mr-0.5" />}
+      </button>
+
+      <div className={`relative rounded-2xl bg-gradient-to-r from-[#130e08] via-[#211a10] to-[#130e08] border-4 border-amber-800/60 ring-2 ring-amber-900/30 shadow-2xl p-3.5 lg:p-5 transition-all ${
+        maximized ? 'shadow-[0_0_50px_rgba(0,0,0,0.9)]' : ''
+      }`}>
         {['top-2 left-2 border-t-2 border-l-2','top-2 right-2 border-t-2 border-r-2','bottom-2 left-2 border-b-2 border-l-2','bottom-2 right-2 border-b-2 border-r-2'].map((c, i) => (
           <div key={i} className={`absolute w-4 h-4 border-amber-600/70 ${c}`} />
         ))}
         <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-4 bg-gradient-to-r from-black/70 via-amber-900/40 to-black/70 z-20 pointer-events-none" />
 
-        <div className="grid grid-cols-2 gap-4 lg:gap-6 relative">
+        <div className="grid grid-cols-2 gap-3.5 lg:gap-5 relative">
           {/* Left page */}
-          <div className="bg-[#0e0c09] border border-amber-800/30 rounded-l-xl p-5 lg:p-6 shadow-inner flex flex-col h-[520px] lg:h-[560px]">
+          <div className={`bg-[#0e0c09] border border-amber-800/30 rounded-l-xl p-4 lg:p-5 shadow-inner flex flex-col transition-all ${
+            maximized ? 'h-[66vh] lg:h-[72vh] max-h-[820px] min-h-[480px]' : 'h-[400px] lg:h-[440px]'
+          }`}>
             <div className="flex-1 min-h-0">
               <PageContent page={lPage} pageNum={lNum} totalPages={totalPages} achiever={achiever} isFinal={lIdx === totalPages - 1} />
             </div>
-            <div className="mt-2 pt-2 border-t border-amber-800/20 text-center text-[10px] text-amber-600/60 font-mono shrink-0">— {lNum} —</div>
+            <div className="mt-1.5 pt-1.5 border-t border-amber-800/20 text-center text-[10px] text-amber-600/60 font-mono shrink-0">— {lNum} —</div>
           </div>
 
           {/* Right page */}
-          <div className="bg-[#0e0c09] border border-amber-800/30 rounded-r-xl p-5 lg:p-6 shadow-inner flex flex-col h-[520px] lg:h-[560px]">
+          <div className={`bg-[#0e0c09] border border-amber-800/30 rounded-r-xl p-4 lg:p-5 shadow-inner flex flex-col transition-all ${
+            maximized ? 'h-[66vh] lg:h-[72vh] max-h-[820px] min-h-[480px]' : 'h-[400px] lg:h-[440px]'
+          }`}>
             <div className="flex-1 min-h-0">
               {rPage ? (
                 <PageContent page={rPage} pageNum={rNum} totalPages={totalPages} achiever={achiever} isFinal={rIdx === totalPages - 1} />
               ) : (
                 <div className="h-full flex flex-col items-center justify-center gap-3 text-amber-600/40">
-                  <BookOpen className="w-12 h-12 opacity-30" />
-                  <p className="font-serif italic text-base">End of Biographical Manuscript</p>
+                  <BookOpen className="w-10 h-10 opacity-30" />
+                  <p className="font-serif italic text-sm sm:text-base">End of Biographical Manuscript</p>
                   <p className="text-xs text-amber-700/60 text-center px-4">
                     Thank you for reading {achiever.name}&apos;s story.
                   </p>
                 </div>
               )}
             </div>
-            <div className="mt-2 pt-2 border-t border-amber-800/20 text-center text-[10px] text-amber-600/60 font-mono shrink-0">
+            <div className="mt-1.5 pt-1.5 border-t border-amber-800/20 text-center text-[10px] text-amber-600/60 font-mono shrink-0">
               {rPage ? `— ${rNum} —` : '— Fin —'}
             </div>
           </div>
@@ -608,7 +688,7 @@ export default function FlipBook({ achiever }) {
               className={`rounded-full transition-all duration-300 ${
                 spread === idx ? 'w-8 h-2.5 bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.4)]'
                 : locked       ? 'w-2.5 h-2.5 bg-stone-800 border border-amber-900/40'
-                               : 'w-2.5 h-2.5 bg-stone-700 hover:bg-amber-700/50'
+                                : 'w-2.5 h-2.5 bg-stone-700 hover:bg-amber-700/50'
               }`}
               title={locked ? `Page ${t1}+ — Sign in to read` : `Pages ${t1} & ${t1 + 1}`}
             />
@@ -638,12 +718,18 @@ export default function FlipBook({ achiever }) {
   );
 
   return (
-    <div className="relative">
-      <Toolbar max={maximized} />
-      <MobileView />
-      <div className="hidden md:block">
-        <DesktopSpread />
-        <DesktopNav />
+    <div className={
+      maximized
+        ? "fixed inset-0 z-[9999] bg-[#0a0805]/98 backdrop-blur-3xl p-2 sm:p-4 md:p-6 flex flex-col justify-between overflow-y-auto"
+        : "relative w-full"
+    }>
+      <div className={maximized ? "max-w-7xl w-full mx-auto my-auto flex flex-col min-h-full justify-between py-2" : "w-full"}>
+        <Toolbar max={maximized} />
+        <MobileView />
+        <div className="hidden md:block flex-1 flex flex-col justify-center">
+          <DesktopSpread />
+          <DesktopNav />
+        </div>
       </div>
 
       {/* Bookmark Toast */}
@@ -653,7 +739,7 @@ export default function FlipBook({ achiever }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-6 right-6 z-50 bg-amber-500 text-stone-950 px-4 py-2.5 rounded-xl font-bold text-xs shadow-2xl flex items-center gap-2"
+            className="fixed bottom-6 right-6 z-[10000] bg-amber-500 text-stone-950 px-4 py-2.5 rounded-xl font-bold text-xs shadow-2xl flex items-center gap-2"
           >
             <BookmarkCheck className="w-4 h-4" />
             Bookmarked on Page {bmPage}!

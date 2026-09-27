@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Search, Globe, ChevronDown, Award, Sparkles, ShieldCheck, LogIn, LogOut, User as UserIcon, LayoutDashboard } from 'lucide-react';
+import { Menu, X, Search, Globe, ChevronDown, Award, Sparkles, ShieldCheck, LogIn, LogOut, User as UserIcon, LayoutDashboard, Settings } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import logo from '../../assets/logo.jpeg';
@@ -197,17 +197,33 @@ export default function Navbar() {
                       >
                         <div className="px-3 py-2 border-b border-surface-border">
                           <p className="font-bold text-xs text-white">{user.name}</p>
-                          <p className="text-[10px] text-primary flex items-center gap-1">
-                            <Sparkles className="w-3 h-3" /> {user.district} District
-                          </p>
+                          <p className="text-[10px] text-text-muted truncate">{user.email}</p>
+                          <span className={`inline-block mt-1 text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${
+                            user.role === 'admin'
+                              ? 'bg-yellow-500/20 text-yellow-400'
+                              : 'bg-primary/10 text-primary'
+                          }`}>
+                            {user.role === 'admin' ? '⚡ Admin' : '👤 Member'}
+                          </span>
                         </div>
+                        {/* Dashboard route */}
                         <Link
-                          to="/profile"
+                          to={user.role === 'admin' ? '/admin' : '/dashboard'}
                           onClick={() => setUserMenuOpen(false)}
                           className="w-full text-left flex items-center gap-2 px-3 py-2 text-xs text-white hover:bg-dark-300 rounded-lg transition-colors font-semibold"
                         >
-                          <UserIcon className="w-3.5 h-3.5 text-primary" /> My Dashboard
+                          <UserIcon className="w-3.5 h-3.5 text-primary" />
+                          {user.role === 'admin' ? 'Admin Dashboard' : 'My Dashboard'}
                         </Link>
+                        {user.role !== 'admin' && (
+                          <Link
+                            to="/dashboard?tab=settings"
+                            onClick={() => setUserMenuOpen(false)}
+                            className="w-full text-left flex items-center gap-2 px-3 py-2 text-xs text-text-secondary hover:text-white hover:bg-dark-300 rounded-lg transition-colors font-medium"
+                          >
+                            <Settings className="w-3.5 h-3.5 text-text-muted" /> Settings & Profile
+                          </Link>
+                        )}
                         <button
                           onClick={() => {
                             openRecommendModal();
@@ -217,15 +233,6 @@ export default function Navbar() {
                         >
                           <Award className="w-3.5 h-3.5 text-gold" /> Suggest Achiever
                         </button>
-                        {user.role === 'admin' && (
-                          <Link
-                            to="/admin"
-                            onClick={() => setUserMenuOpen(false)}
-                            className="w-full text-left flex items-center gap-2 px-3 py-2 text-xs text-gold hover:bg-gold/10 rounded-lg transition-colors font-semibold"
-                          >
-                            <ShieldCheck className="w-3.5 h-3.5" /> Admin Dashboard
-                          </Link>
-                        )}
                         <button
                           onClick={() => {
                             logout();
@@ -328,19 +335,38 @@ export default function Navbar() {
                         <img src={user.avatar} alt={user.name} className="w-9 h-9 rounded-full object-cover ring-1 ring-primary" />
                         <div>
                           <div className="text-xs font-bold text-white">{user.name}</div>
-                          <div className="text-[10px] text-primary">{user.district} District</div>
+                          <div className="text-[10px] text-text-muted truncate max-w-[150px]">{user.email}</div>
+                          <span className={`inline-block text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded mt-0.5 ${
+                            user.role === 'admin'
+                              ? 'bg-yellow-500/20 text-yellow-400'
+                              : 'bg-primary/10 text-primary'
+                          }`}>
+                            {user.role === 'admin' ? '⚡ Admin' : '👤 Member'}
+                          </span>
                         </div>
                       </div>
                       <button onClick={logout} className="text-xs text-red-400 font-semibold hover:underline">Logout</button>
                     </div>
-                    <Link
-                      to="/profile"
-                      onClick={() => setMobileOpen(false)}
-                      className="w-full flex items-center justify-center gap-2 bg-primary/15 hover:bg-primary/25 border border-primary/30 text-primary font-bold text-xs py-2 rounded-lg transition-all"
-                    >
-                      <UserIcon className="w-3.5 h-3.5" />
-                      My User Dashboard
-                    </Link>
+                    <div className="grid grid-cols-1 gap-1.5">
+                      <Link
+                        to={user.role === 'admin' ? '/admin' : '/dashboard'}
+                        onClick={() => setMobileOpen(false)}
+                        className="w-full flex items-center justify-center gap-2 bg-primary/15 hover:bg-primary/25 border border-primary/30 text-primary font-bold text-xs py-2 rounded-lg transition-all"
+                      >
+                        <UserIcon className="w-3.5 h-3.5" />
+                        {user.role === 'admin' ? 'Admin Dashboard' : 'My Dashboard'}
+                      </Link>
+                      {user.role !== 'admin' && (
+                        <Link
+                          to="/dashboard?tab=settings"
+                          onClick={() => setMobileOpen(false)}
+                          className="w-full flex items-center justify-center gap-2 bg-dark-300 hover:bg-dark-400 border border-surface-border text-text-secondary hover:text-white font-medium text-xs py-2 rounded-lg transition-all"
+                        >
+                          <Settings className="w-3.5 h-3.5 text-text-muted" />
+                          Settings & Profile
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 )}
 

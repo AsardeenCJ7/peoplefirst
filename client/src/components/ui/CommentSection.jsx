@@ -1,45 +1,45 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, MessageCircle, Send, User } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-
-const initialComments = [
-  {
-    id: 1,
-    user: 'Sanjeewa Perera',
-    initials: 'SP',
-    comment: 'Truly inspiring! Their dedication to serving the community is unmatched. We need more people like this.',
-    time: '2 hours ago',
-    likes: 24,
-    liked: false,
-  },
-  {
-    id: 2,
-    user: 'Nirmala Krishnan',
-    initials: 'NK',
-    comment: 'An amazing story that deserves to be known globally. PeopleFirst is doing great work preserving these stories!',
-    time: '5 hours ago',
-    likes: 18,
-    liked: false,
-  },
-  {
-    id: 3,
-    user: 'Thilak Jayawardena',
-    initials: 'TJ',
-    comment: 'I had the honour of meeting this person at a community event. Truly a humble and great soul.',
-    time: '1 day ago',
-    likes: 31,
-    liked: false,
-  },
-];
+import api from '../../services/api';
 
 export default function CommentSection({ achieverId }) {
   const { user, openAuthModal } = useAuth();
 
-  const [comments, setComments] = useState(initialComments);
+  const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [newComment, setNewComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  const loadFeedback = useCallback(async () => {
+    if (!achieverId) return;
+    try {
+      setLoading(true);
+      const res = await api.get(`/achievers/feedback/achiever/${achieverId}`);
+      if (res.success && Array.isArray(res.data)) {
+        const mapped = res.data.map(c => ({
+          id: c._id || c.id,
+          user: c.author || 'Anonymous',
+          initials: (c.author || 'A').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2),
+          comment: c.text,
+          time: c.createdAt ? new Date(c.createdAt).toLocaleDateString('en-GB') : 'Recently',
+          likes: c.rating || 0,
+          liked: false,
+        }));
+        setComments(mapped);
+      }
+    } catch (err) {
+      console.warn('Could not fetch real feedback for achiever:', err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [achieverId]);
+
+  useEffect(() => {
+    loadFeedback();
+  }, [loadFeedback]);
 
   const handleLikeComment = (id) => {
     if (!user) {
@@ -50,7 +50,7 @@ export default function CommentSection({ achieverId }) {
     setComments((prev) =>
       prev.map((c) =>
         c.id === id
-          ? { ...c, liked: !c.liked, likes: c.liked ? c.likes - 1 : c.likes + 1 }
+          ? { ...c, liked: !c.liked, likes: c.liked ? Math.max(0, c.likes - 1) : c.likes + 1 }
           : c
       )
     );
@@ -65,25 +65,27 @@ export default function CommentSection({ achieverId }) {
 
     if (!newComment.trim()) return;
     setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 600));
 
-    setComments((prev) => [
-      {
-        id: Date.now(),
-        user: user.name,
-        initials: user.name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2),
-        comment: newComment,
-        time: 'Just now',
-        likes: 0,
-        liked: false,
-      },
-      ...prev,
-    ]);
+    try {
+      const res = await api.post('/achievers/feedback', {
+        achieverId: String(achieverId),
+        text: newComment,
+        author: user.name,
+        email: user.email,
+        rating: 5,
+      });
 
-    setNewComment('');
-    setSubmitting(false);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+      if (res.success) {
+        setNewComment('');
+        setSubmitted(true);
+        await loadFeedback();
+        setTimeout(() => setSubmitted(false), 3000);
+      }
+    } catch (err) {
+      console.error('Failed to post comment to database:', err);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -102,7 +104,7 @@ export default function CommentSection({ achieverId }) {
           {user ? (
             <>
               <img src={user.avatar} alt={user.name} className="w-7 h-7 rounded-full object-cover ring-1 ring-primary" />
-              <span className="text-xs font-bold text-white">Commenting as {user.name} ({user.district} District)</span>
+              <span className="text-xs font-bold text-white">Commenting as {user.name} ({user.district || 'National'})</span>
             </>
           ) : (
             <span className="text-xs font-semibold text-amber-400/90 flex items-center gap-1.5">
@@ -126,7 +128,7 @@ export default function CommentSection({ achieverId }) {
           />
           <div className="flex items-center justify-between">
             <p className="text-text-muted text-[11px]">
-              Your feedback will be displayed publicly in the biography roll.
+              Your feedback will be stored live in the database and reviewed by administrators.
             </p>
             <button
               type="submit"
@@ -149,7 +151,7 @@ export default function CommentSection({ achieverId }) {
                 exit={{ opacity: 0 }}
                 className="text-success text-xs font-medium"
               >
-                ✓ Your tribute has been recorded on the biography manuscript!
+                ✓ Your tribute has been saved to the live database!
               </motion.p>
             )}
           </AnimatePresence>
@@ -157,39 +159,47 @@ export default function CommentSection({ achieverId }) {
       </div>
 
       {/* Comments List */}
-      <div className="space-y-3">
-        {comments.map((comment, i) => (
-          <motion.div
-            key={comment.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.05 }}
-            className="card p-4 flex gap-3 bg-dark-200/90"
-          >
-            <div className="shrink-0">
-              <div className="w-9 h-9 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center font-bold text-primary text-xs">
-                {comment.initials || <User className="w-4 h-4" />}
+      {loading ? (
+        <div className="text-center py-6 text-text-muted text-xs">Loading live feedback...</div>
+      ) : comments.length === 0 ? (
+        <div className="card p-6 text-center text-text-muted text-xs bg-dark-200/50">
+          No feedback posted yet. Be the first to leave a tribute!
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {comments.map((comment, i) => (
+            <motion.div
+              key={comment.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              className="card p-4 flex gap-3 bg-dark-200/90"
+            >
+              <div className="shrink-0">
+                <div className="w-9 h-9 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center font-bold text-primary text-xs">
+                  {comment.initials || <User className="w-4 h-4" />}
+                </div>
               </div>
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between gap-2 mb-1">
-                <span className="font-bold text-text-primary text-xs">{comment.user}</span>
-                <span className="text-text-muted text-[10px] shrink-0">{comment.time}</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <span className="font-bold text-text-primary text-xs">{comment.user}</span>
+                  <span className="text-text-muted text-[10px] shrink-0">{comment.time}</span>
+                </div>
+                <p className="text-text-secondary text-xs leading-relaxed">{comment.comment}</p>
+                <button
+                  onClick={() => handleLikeComment(comment.id)}
+                  className={`mt-2 flex items-center gap-1 text-[11px] font-medium transition-colors ${
+                    comment.liked ? 'text-primary font-bold' : 'text-text-muted hover:text-primary'
+                  }`}
+                >
+                  <Heart className={`w-3.5 h-3.5 ${comment.liked ? 'fill-primary' : ''}`} />
+                  <span>{comment.likes}</span>
+                </button>
               </div>
-              <p className="text-text-secondary text-xs leading-relaxed">{comment.comment}</p>
-              <button
-                onClick={() => handleLikeComment(comment.id)}
-                className={`mt-2 flex items-center gap-1 text-[11px] font-medium transition-colors ${
-                  comment.liked ? 'text-primary font-bold' : 'text-text-muted hover:text-primary'
-                }`}
-              >
-                <Heart className={`w-3.5 h-3.5 ${comment.liked ? 'fill-primary' : ''}`} />
-                <span>{comment.likes}</span>
-              </button>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

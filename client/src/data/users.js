@@ -1,6 +1,10 @@
-// ── Users & Feedback Data Helper ─────────────────────────────────────────────
+import api from '../services/api';
+
+// ── Users & Feedback Data Helper (syncs with MongoDB backend) ───────────────
 const USERS_KEY = 'pf_admin_users';
 const FEEDBACK_KEY_PREFIX = 'pf_comments_';
+let inMemoryUsers = null;
+let inMemoryFeedback = null;
 
 const seedUsers = [
   { id: 'u1', name: 'Dilshan Perera',    email: 'dilshan@gmail.com',  district: 'Colombo',    role: 'reader', status: 'active',    joined: '2026-08-01', avatar: 'https://i.pravatar.cc/150?img=11' },
@@ -16,6 +20,7 @@ function getStoredUsers() {
 }
 
 function initUsers() {
+  if (inMemoryUsers && inMemoryUsers.length > 0) return inMemoryUsers;
   const stored = getStoredUsers();
   if (!stored) { localStorage.setItem(USERS_KEY, JSON.stringify(seedUsers)); return seedUsers; }
   return stored;
@@ -23,34 +28,67 @@ function initUsers() {
 
 export function getAllUsers() { return initUsers(); }
 
-export function saveUser(user) {
+export async function fetchUsersFromApi() {
+  try {
+    const res = await api.get('/users');
+    if (res.success && Array.isArray(res.users)) {
+      const normalized = res.users.map(u => ({
+        ...u,
+        id: u._id || u.id,
+      }));
+      inMemoryUsers = normalized;
+      localStorage.setItem(USERS_KEY, JSON.stringify(normalized));
+      return normalized;
+    }
+  } catch (err) {
+    console.warn('API fetch for users failed, using cache:', err.message);
+  }
+  return getAllUsers();
+}
+
+export async function saveUser(user) {
   try {
     const current = initUsers();
-    const idx = current.findIndex(u => u.id === user.id);
-    const updated = idx >= 0 ? current.map(u => u.id === user.id ? { ...u, ...user } : u) : [user, ...current];
+    const isEdit = user._id || (typeof user.id === 'string' && user.id.length === 24);
+    if (isEdit) {
+      // User updates via profile or status endpoint
+    }
+    const idx = current.findIndex(u => u.id === user.id || u._id === user._id);
+    const updated = idx >= 0 ? current.map(u => (u.id === user.id || u._id === user._id) ? { ...u, ...user } : u) : [user, ...current];
+    inMemoryUsers = updated;
     localStorage.setItem(USERS_KEY, JSON.stringify(updated));
     return user;
   } catch (e) { console.error(e); return null; }
 }
 
-export function deleteUser(userId) {
+export async function deleteUser(userId) {
   try {
-    const filtered = initUsers().filter(u => u.id !== userId);
-    localStorage.setItem(USERS_KEY, JSON.stringify(filtered));
-  } catch (e) { console.error(e); }
+    if (typeof userId === 'string' && userId.length === 24) {
+      await api.delete(`/users/${userId}`);
+    }
+  } catch (e) { console.warn('Error deleting user via API:', e.message); }
+  const filtered = initUsers().filter(u => u.id !== userId && u._id !== userId);
+  inMemoryUsers = filtered;
+  localStorage.setItem(USERS_KEY, JSON.stringify(filtered));
+  return filtered;
 }
 
-export function toggleUserStatus(userId) {
+export async function toggleUserStatus(userId) {
   try {
-    const updated = initUsers().map(u =>
-      u.id === userId ? { ...u, status: u.status === 'active' ? 'suspended' : 'active' } : u
-    );
-    localStorage.setItem(USERS_KEY, JSON.stringify(updated));
-    return updated;
-  } catch (e) { console.error(e); return []; }
+    if (typeof userId === 'string' && userId.length === 24) {
+      await api.put(`/users/${userId}/status`);
+    }
+  } catch (e) { console.warn('Error toggling user status via API:', e.message); }
+  const updated = initUsers().map(u =>
+    (u.id === userId || u._id === userId) ? { ...u, status: u.status === 'active' ? 'suspended' : 'active' } : u
+  );
+  inMemoryUsers = updated;
+  localStorage.setItem(USERS_KEY, JSON.stringify(updated));
+  return updated;
 }
 
 export function getAllFeedback() {
+  if (inMemoryFeedback && inMemoryFeedback.length > 0) return inMemoryFeedback;
   const feedback = [];
   try {
     for (let i = 0; i < localStorage.length; i++) {
@@ -63,6 +101,19 @@ export function getAllFeedback() {
     }
   } catch (e) { console.error(e); }
   return feedback.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+}
+
+export async function fetchFeedbackFromApi() {
+  try {
+    const res = await api.get('/achievers/feedback');
+    if (res.success && Array.isArray(res.data)) {
+      inMemoryFeedback = res.data;
+      return res.data;
+    }
+  } catch (err) {
+    console.warn('API fetch feedback failed:', err.message);
+  }
+  return getAllFeedback();
 }
 
 export function deleteFeedback(achieverId, commentId) {
@@ -82,3 +133,4 @@ export function updateFeedbackStatus(achieverId, commentId, status) {
     localStorage.setItem(key, JSON.stringify(JSON.parse(raw).map(c => c.id === commentId ? { ...c, status } : c)));
   } catch (e) { console.error(e); }
 }
+

@@ -16,14 +16,14 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { getAllNews, fetchNewsFromApi, newsCategories } from '../data/news';
 import NewsCard from '../components/ui/NewsCard';
-import { getAllNews, newsCategories } from '../data/news';
 
 const PAGE_SIZE = 16;
 
 export default function News() {
   const { t } = useLanguage();
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState(() => getAllNews());
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [search, setSearch] = useState('');
   const [sortOrder, setSortOrder] = useState('newest'); // 'newest' | 'oldest' | 'title'
@@ -33,8 +33,7 @@ export default function News() {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    // Load dynamically (including custom admin-added news)
-    setArticles(getAllNews());
+    fetchNewsFromApi().then(data => data && setArticles(data));
   }, []);
 
   // Reset to page 1 whenever filters change
@@ -53,10 +52,14 @@ export default function News() {
 
         // 2. Search filter
         const matchSearch =
-          article.title.toLowerCase().includes(search.toLowerCase()) ||
-          article.summary.toLowerCase().includes(search.toLowerCase()) ||
+          (article.title || '').toLowerCase().includes(search.toLowerCase()) ||
+          (article.summary || '').toLowerCase().includes(search.toLowerCase()) ||
           (article.category && article.category.toLowerCase().includes(search.toLowerCase())) ||
-          (article.tags && article.tags.some((t) => t.toLowerCase().includes(search.toLowerCase())));
+          (Array.isArray(article.tags)
+            ? article.tags.some((t) => (t || '').toLowerCase().includes(search.toLowerCase()))
+            : typeof article.tags === 'string'
+              ? article.tags.toLowerCase().includes(search.toLowerCase())
+              : false);
 
         // 3. Date-wise filter
         let matchDate = true;

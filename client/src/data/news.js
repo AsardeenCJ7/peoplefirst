@@ -411,15 +411,18 @@ export function sortArticlesByDateTime(articles, order = 'desc') {
   });
 }
 
-// Storage helpers to load and persist custom uploaded news
+import api from '../services/api';
+
+// Storage helpers to load and persist news (syncs with MongoDB backend)
 const STORAGE_KEY = 'peoplefirst_custom_news';
+let inMemoryNews = null;
 
 export function getStoredNews() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed)) {
+      if (Array.isArray(parsed) && parsed.length > 0) {
         return parsed;
       }
     }
@@ -430,14 +433,63 @@ export function getStoredNews() {
 }
 
 export function getAllNews() {
-  const custom = getStoredNews();
-  const all = [...custom, ...defaultNewsArticles];
-  return sortArticlesByDateTime(all, 'desc');
+  if (inMemoryNews && inMemoryNews.length > 0) {
+    return inMemoryNews;
+  }
+  const stored = getStoredNews();
+  if (stored.length > 0) {
+    inMemoryNews = stored;
+    return stored;
+  }
+  return sortArticlesByDateTime(defaultNewsArticles, 'desc');
 }
 
-export function saveNewsArticle(articleData) {
+export async function fetchNewsFromApi(params = {}) {
   try {
-    const current = getStoredNews();
+    const query = new URLSearchParams(params).toString();
+    const res = await api.get(`/news${query ? `?${query}` : ''}`);
+    if (res.success && Array.isArray(res.data)) {
+      const normalized = res.data.map(item => ({
+        ...item,
+        id: item._id || item.id,
+      }));
+      const sorted = sortArticlesByDateTime(normalized, 'desc');
+      inMemoryNews = sorted;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(sorted));
+      return sorted;
+    }
+  } catch (err) {
+    console.warn('API fetch for news failed, using cache:', err.message);
+  }
+  return getAllNews();
+}
+
+export async function saveNewsArticle(articleData) {
+  try {
+    const isEdit = articleData._id || (typeof articleData.id === 'string' && articleData.id.length === 24);
+    let resultArticle;
+    
+    if (isEdit) {
+      const id = articleData._id || articleData.id;
+      const res = await api.put(`/news/${id}`, articleData);
+      resultArticle = res.data ? { ...res.data, id: res.data._id || id } : articleData;
+    } else {
+      const res = await api.post('/news', articleData);
+      resultArticle = res.data ? { ...res.data, id: res.data._id } : { ...articleData, id: Date.now() };
+    }
+
+    const current = getAllNews();
+    const updated = [
+      resultArticle,
+      ...current.filter(item => item.id !== resultArticle.id && item._id !== resultArticle._id)
+    ];
+    const sorted = sortArticlesByDateTime(updated, 'desc');
+    inMemoryNews = sorted;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(sorted));
+    return resultArticle;
+  } catch (e) {
+    console.error('Error saving news via API, saving to local cache', e);
+    const current = getAllNews();
     const newArticle = {
       ...articleData,
       id: articleData.id || Date.now(),
@@ -445,21 +497,35 @@ export function saveNewsArticle(articleData) {
       time: articleData.time || new Date().toTimeString().slice(0, 5),
     };
     const updated = [newArticle, ...current.filter((item) => item.id !== newArticle.id)];
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    const sorted = sortArticlesByDateTime(updated, 'desc');
+    inMemoryNews = sorted;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(sorted));
     return newArticle;
-  } catch (e) {
-    console.error('Error saving news', e);
-    return null;
   }
 }
 
-export function deleteNewsArticle(id) {
+export async function deleteNewsArticle(id) {
   try {
-    const current = getStoredNews();
-    const filtered = current.filter((item) => item.id !== id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+    if (typeof id === 'string' && id.length === 24) {
+      await api.delete(`/news/${id}`);
+    }
   } catch (e) {
-    console.error('Error deleting news', e);
+    console.warn('Error deleting news via API:', e.message);
+  }
+  const current = getAllNews();
+  const filtered = current.filter((item) => item.id !== id && item._id !== id);
+  inMemoryNews = filtered;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+  return filtered;
+}
+
+export async function toggleLikeNewsArticle(id) {
+  try {
+    const res = await api.post(`/news/${id}/like`);
+    return res;
+  } catch (e) {
+    console.warn('Error liking news article:', e.message);
+    return null;
   }
 }
 
@@ -467,3 +533,4 @@ export function deleteNewsArticle(id) {
 export const newsArticles = sortArticlesByDateTime(defaultNewsArticles, 'desc');
 
 export const newsCategories = ["All", "Local", "International", "Sports", "Education", "Health", "Environment", "Arts"];
+

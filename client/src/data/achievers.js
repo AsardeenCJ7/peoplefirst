@@ -737,11 +737,121 @@ export const achievers = [
         ]
       }
     ]
+  },
+  {
+    id: 9,
+    name: "M. H. M. Ashraff",
+    title: "Visionary Statesman, Founder of SLMC & Minister of Ports & Shipping",
+    category: "Politics & Leadership",
+    location: "Kalmunai, Ampara District",
+    year: "1989",
+    verified: true,
+    featured: true,
+    thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+    videoId: "dQw4w9WgXcQ",
+    bio: `Mohammed Hussain Mohamed Ashraff (1948 – 2000), affectionately known as 'Marhoom Ashraff', was one of Sri Lanka's most charismatic political visionaries, senior legal counsels, and acclaimed literary figures. Born in Sammanthurai and rooted in Kalmunai in the Ampara District, he founded the Sri Lanka Muslim Congress (SLMC) and later the National Unity Alliance (NUA), completely reshaping the democratic representation of minority communities in Sri Lanka.\n\nAs Cabinet Minister of Ports, Shipping, Rehabilitation and Reconstruction from 1994 until his untimely demise in 2000, Ashraff spearheaded a golden era of national infrastructure development. He revolutionized the Port of Colombo with the expansion of the Queen Elizabeth Quay into a world-class global transshipment hub and envisioned the strategic Oluvil Port development project in the Eastern Province.\n\nA staunch champion of higher education, Ashraff founded the South Eastern University of Sri Lanka (SEUSL) at Oluvil, bringing university education directly to underserved rural youth in the East. Under his rehabilitation ministry, over 100,000 conflict-displaced families across the Northern and Eastern provinces were resettled with permanent housing and livelihoods.\n\nBeyond politics, Ashraff was a distinguished Senior Attorney-at-Law and a celebrated Tamil poet whose anthology 'Naan Ennum Nee' remains a landmark of contemporary Sri Lankan literature. His legacy as a bridge-builder, champion of pluralism, and visionary regional developer continues to inspire generations.`,
+    achievements: [
+      "Founder Leader of Sri Lanka Muslim Congress (SLMC) & National Unity Alliance (NUA)",
+      "Cabinet Minister of Ports, Shipping, Rehabilitation & Reconstruction (1994–2000)",
+      "Founder of the South Eastern University of Sri Lanka (SEUSL) at Oluvil",
+      "Modernized Colombo Port into a World-Class Global Transshipment Container Hub",
+      "Visionary Architect of the Oluvil Port & Lighthouse Maritime Infrastructure",
+      "Senior Counsel of the Supreme Court of Sri Lanka & Celebrated Tamil Poet ('Naan Ennum Nee')",
+      "Resettled & Rehabilitated 100,000+ Conflict-Displaced Families across North & East"
+    ],
+    tags: ["SLMC", "Leadership", "Politics", "Eastern Province", "Ports", "Education", "SEUSL", "National Unity"],
+    social: { facebook: "#", twitter: "#", youtube: "#" },
+    interviewSeries: [
+      {
+        id: "ep-9-1",
+        episode: 1,
+        title: "Part 1: The Founding of SLMC & The Democratic Awakening in the East",
+        videoId: "dQw4w9WgXcQ",
+        duration: "28:45",
+        date: "2026-01-10",
+        description: "Archival historical documentary detailing the genesis of SLMC in Kattankudy and Kalmunai, and Ashraff's parliamentary leadership."
+      },
+      {
+        id: "ep-9-2",
+        episode: 2,
+        title: "Part 2: The Port of Colombo Revolution & The Oluvil University Vision",
+        videoId: "9bZkp7q19f0",
+        duration: "24:18",
+        date: "2026-02-05",
+        description: "In-depth historical coverage of Minister Ashraff's transformation of the Sri Lanka Ports Authority and building of South Eastern University."
+      },
+      {
+        id: "ep-9-3",
+        episode: 3,
+        title: "Part 3: The National Unity Alliance & The Poet Statesman ('Naan Ennum Nee')",
+        videoId: "kJQP7kiw5Fk",
+        duration: "31:10",
+        date: "2026-03-01",
+        description: "Reflections on his literary masterwork 'Naan Ennum Nee' and his vision for an undivided, pluralistic Sri Lanka."
+      }
+    ],
+    biographyPages: [
+      {
+        title: "Early Life, Roots in the East & Legal Brilliance",
+        icon: "📖",
+        paragraphs: [
+          "Mohammed Hussain Mohamed Ashraff was born on October 23, 1948, in the historic town of Sammanthurai in the Ampara District of Sri Lanka's Eastern Province. Raised in Kalmunai in a cultured and deeply principled family, young Ashraff displayed exceptional intellectual prowess and literary eloquence from his early schooling at Wesley High School, Kalmunai.",
+          "He pursued legal studies at the Sri Lanka Law College, excelling with first-class honors, and was admitted to the Bar as an Advocate in 1974. He later completed his Master of Laws (LL.M) degree from the University of Colombo with research focused on constitutional safeguards and minority rights.",
+          "As a Senior Attorney-at-Law and State Counsel, Ashraff earned universal respect in the legal fraternity for his forensic precision, spellbinding oratory, and unwavering defense of fundamental human rights before the Supreme Court."
+        ]
+      },
+      {
+        title: "Political Awakening & The Genesis of SLMC",
+        icon: "🌟",
+        paragraphs: [
+          "During the turbulent socio-political shifts of the late 1970s and 1980s, the Muslim community of the Northern and Eastern provinces faced severe geopolitical marginalization, caught between escalating armed militancy and state apathy.",
+          "Recognizing the urgent necessity for a distinct, democratic political identity, Ashraff alongside dedicated community leaders founded the Sri Lanka Muslim Congress (SLMC) in Kattankudy in 1981, formally launching it as a national political party in 1986 with its iconic 'Tree' symbol.",
+          "In the 1989 Parliamentary General Elections, under Ashraff's charismatic leadership, the SLMC achieved a historic breakthrough by securing 4 parliamentary seats, elevating the voice of the Eastern Province directly into the national legislature."
+        ]
+      },
+      {
+        title: "Ministerial Mastery: Ports, Shipping & SEUSL",
+        icon: "⚓",
+        paragraphs: [
+          "In 1994, following the election of the People's Alliance government, Ashraff was appointed Cabinet Minister of Ports, Shipping, Rehabilitation and Reconstruction. His six-year tenure at the helm of the Ports Authority is widely heralded as a golden era in Sri Lankan maritime history.",
+          "He revolutionized container terminal throughput at the Port of Colombo, commissioning the Queen Elizabeth Quay expansion, introducing modern gantry cranes, and establishing performance-linked worker welfare schemes that catapulted Colombo into the top 30 container ports globally.",
+          "Believing passionately that higher education was the ultimate catalyst for regional empowerment, Ashraff founded the South Eastern University of Sri Lanka (SEUSL) at Oluvil in 1995. Today, SEUSL stands as a thriving national academic institution educating thousands of students across engineering, management, technology, and arts."
+        ]
+      },
+      {
+        title: "Reconstruction, Pluralism & National Unity Alliance",
+        icon: "🏛️",
+        paragraphs: [
+          "As Minister of Rehabilitation and Reconstruction, Ashraff oversaw the monumental task of rebuilding war-ravaged communities across the North and East. Over 100,000 displaced families were provided with permanent housing, drinking water schemes, rural road networks, and livelihood grants without ethnic discrimination.",
+          "Driven by a profound vision for an inclusive Sri Lanka, Ashraff founded the National Unity Alliance (NUA) in 1999 under the slogan 'Sri Lankan First'. His goal was to build a broad multi-ethnic coalition uniting Muslims, Tamils, and Sinhalese under a single democratic platform.",
+          "He articulated a vision of shared sovereignty, democratic decentralization, and harmonious coexistence, arguing that true national security could only be achieved through social justice and equal dignity for all communities."
+        ]
+      },
+      {
+        title: "The Poet-Statesman ('Naan Ennum Nee') & Enduring Legacy",
+        icon: "📜",
+        paragraphs: [
+          "Beyond his political and legal achievements, Ashraff was a gifted Tamil poet and philosopher. His celebrated poetic anthology 'Naan Ennum Nee' (I and You) is revered for its profound spiritual metaphors, social consciousness, and lyrical beauty.",
+          "On September 16, 2000, tragedy struck when the Sri Lanka Air Force Mi-17 helicopter carrying Minister Ashraff crashed into the Bible Rock mountain in Aranayake, claiming his life and the lives of 14 companions on the eve of general elections.",
+          "The nation went into profound mourning. Ashraff's legacy lives on in the institutions he built — the South Eastern University of Sri Lanka, the modern Colombo Port, and the enduring democratic voice of the Eastern Province. He remains forever etched in the annals of Sri Lankan history as a leader of the people."
+        ]
+      },
+      {
+        title: "Public Tributes & National Voice",
+        icon: "💬",
+        paragraphs: [
+          "Statues, memorial halls, and academic chairs honoring M. H. M. Ashraff stand across Kalmunai, Sammanthurai, Oluvil, Colombo, and universities islandwide.",
+          "Every year, citizens from all ethnic and religious communities gather to pay homage to the visionary leader who proved that regional development and national unity go hand in hand.",
+          "Leave your heartfelt tributes, memories, and reflections on the life and monumental contributions of Marhoom M. H. M. Ashraff below."
+        ]
+      }
+    ]
   }
 ];
 
 export const categories = [
   "All",
+  "Politics & Leadership",
   "Healthcare & Medicine",
   "Education & Heritage",
   "Engineering & Technology",
@@ -769,14 +879,66 @@ export function getStoredAchievers() {
   return [];
 }
 
+import api from '../services/api';
+
+let inMemoryAchievers = null;
+
 export function getAllAchievers() {
+  if (inMemoryAchievers && inMemoryAchievers.length > 0) {
+    return inMemoryAchievers;
+  }
   const custom = getStoredAchievers();
-  return [...custom, ...achievers];
+  if (custom.length > 0) {
+    inMemoryAchievers = custom;
+    return custom;
+  }
+  return achievers;
 }
 
-export function saveAchiever(achieverData) {
+export async function fetchAchieversFromApi(params = {}) {
   try {
-    const current = getStoredAchievers();
+    const query = new URLSearchParams(params).toString();
+    const res = await api.get(`/achievers${query ? `?${query}` : ''}`);
+    if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+      const normalized = res.data.map(item => ({
+        ...item,
+        id: item._id || item.id,
+      }));
+      inMemoryAchievers = normalized;
+      localStorage.setItem(ACHIEVERS_STORAGE_KEY, JSON.stringify(normalized));
+      return normalized;
+    }
+  } catch (err) {
+    console.warn('API fetch for achievers failed, using cache:', err.message);
+  }
+  return getAllAchievers();
+}
+
+export async function saveAchiever(achieverData) {
+  try {
+    const isEdit = achieverData._id || (typeof achieverData.id === 'string' && achieverData.id.length === 24);
+    let resultAchiever;
+
+    if (isEdit) {
+      const id = achieverData._id || achieverData.id;
+      const res = await api.put(`/achievers/${id}`, achieverData);
+      resultAchiever = res.data ? { ...res.data, id: res.data._id || id } : achieverData;
+    } else {
+      const res = await api.post('/achievers', achieverData);
+      resultAchiever = res.data ? { ...res.data, id: res.data._id } : { ...achieverData, id: Date.now() };
+    }
+
+    const current = getAllAchievers();
+    const updated = [
+      resultAchiever,
+      ...current.filter(item => item.id !== resultAchiever.id && item._id !== resultAchiever._id)
+    ];
+    inMemoryAchievers = updated;
+    localStorage.setItem(ACHIEVERS_STORAGE_KEY, JSON.stringify(updated));
+    return resultAchiever;
+  } catch (e) {
+    console.error('Error saving achiever via API, saving to local cache', e);
+    const current = getAllAchievers();
     const newAchiever = {
       ...achieverData,
       id: achieverData.id || Date.now(),
@@ -784,22 +946,25 @@ export function saveAchiever(achieverData) {
       featured: achieverData.featured ?? false,
     };
     const updated = [newAchiever, ...current.filter((item) => item.id !== newAchiever.id)];
+    inMemoryAchievers = updated;
     localStorage.setItem(ACHIEVERS_STORAGE_KEY, JSON.stringify(updated));
     return newAchiever;
-  } catch (e) {
-    console.error('Error saving achiever', e);
-    return null;
   }
 }
 
-export function deleteAchiever(id) {
+export async function deleteAchiever(id) {
   try {
-    const current = getStoredAchievers();
-    const filtered = current.filter((item) => item.id !== id);
-    localStorage.setItem(ACHIEVERS_STORAGE_KEY, JSON.stringify(filtered));
+    if (typeof id === 'string' && id.length === 24) {
+      await api.delete(`/achievers/${id}`);
+    }
   } catch (e) {
-    console.error('Error deleting achiever', e);
+    console.warn('Error deleting achiever via API:', e.message);
   }
+  const current = getAllAchievers();
+  const filtered = current.filter((item) => item.id !== id && item._id !== id);
+  inMemoryAchievers = filtered;
+  localStorage.setItem(ACHIEVERS_STORAGE_KEY, JSON.stringify(filtered));
+  return filtered;
 }
 
 export function getAchieverInterviewSeries(achiever) {

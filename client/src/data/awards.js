@@ -14,7 +14,7 @@ const seedAwards = [
     year: 2026,
     presenter: "College of Community Physicians Sri Lanka",
     thumbnail: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80",
-    votes: 12450,
+    votes: 0,
     icon: "🏆"
   },
   {
@@ -28,7 +28,7 @@ const seedAwards = [
     year: 2026,
     presenter: "Sri Lanka Paediatric Association",
     thumbnail: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80",
-    votes: 11820,
+    votes: 0,
     icon: "🩺"
   },
   {
@@ -42,7 +42,7 @@ const seedAwards = [
     year: 2026,
     presenter: "Sri Lanka Medical Association",
     thumbnail: "https://images.unsplash.com/photo-1594824813576-90f70a7f14b6?w=400&q=80",
-    votes: 10940,
+    votes: 0,
     icon: "🩺"
   },
   {
@@ -56,7 +56,7 @@ const seedAwards = [
     year: 2026,
     presenter: "Ministry of Cultural Affairs & Heritage",
     thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
-    votes: 9876,
+    votes: 0,
     icon: "🎖️"
   },
   {
@@ -70,7 +70,7 @@ const seedAwards = [
     year: 2026,
     presenter: "Arts Council of Sri Lanka",
     thumbnail: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80",
-    votes: 9410,
+    votes: 0,
     icon: "🎭"
   },
   {
@@ -84,7 +84,7 @@ const seedAwards = [
     year: 2026,
     presenter: "Chitrasena Cultural Foundation & UNESCO Sri Lanka",
     thumbnail: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80",
-    votes: 8930,
+    votes: 0,
     icon: "💃"
   },
   {
@@ -98,7 +98,7 @@ const seedAwards = [
     year: 2026,
     presenter: "Sri Lanka Sustainable Energy Authority",
     thumbnail: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
-    votes: 8234,
+    votes: 0,
     icon: "⚡"
   },
   {
@@ -112,7 +112,7 @@ const seedAwards = [
     year: 2026,
     presenter: "National Aquatic Resources Agency (NARA)",
     thumbnail: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
-    votes: 8490,
+    votes: 0,
     icon: "🌊"
   },
   {
@@ -126,7 +126,7 @@ const seedAwards = [
     year: 2026,
     presenter: "Wildlife and Nature Protection Society (WNPS)",
     thumbnail: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80",
-    votes: 8110,
+    votes: 0,
     icon: "🐘"
   },
   {
@@ -140,7 +140,7 @@ const seedAwards = [
     year: 2026,
     presenter: "National Commission for Women",
     thumbnail: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
-    votes: 7543,
+    votes: 0,
     icon: "💛"
   },
   {
@@ -154,7 +154,7 @@ const seedAwards = [
     year: 2026,
     presenter: "National Social Services Council",
     thumbnail: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80",
-    votes: 7890,
+    votes: 0,
     icon: "🕊️"
   },
   {
@@ -168,7 +168,7 @@ const seedAwards = [
     year: 2026,
     presenter: "National Council for Voluntary Social Services",
     thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
-    votes: 7350,
+    votes: 0,
     icon: "🌱"
   },
   {
@@ -182,7 +182,7 @@ const seedAwards = [
     year: 2026,
     presenter: "Sri Lanka Sports Ministry & Olympic Committee",
     thumbnail: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80",
-    votes: 6890,
+    votes: 0,
     icon: "🥇"
   },
   {
@@ -196,7 +196,7 @@ const seedAwards = [
     year: 2026,
     presenter: "National Paralympic Committee",
     thumbnail: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80",
-    votes: 7120,
+    votes: 0,
     icon: "🎯"
   },
   {
@@ -210,7 +210,7 @@ const seedAwards = [
     year: 2026,
     presenter: "Athletics Association of Sri Lanka",
     thumbnail: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
-    votes: 6980,
+    votes: 0,
     icon: "🏃‍♀️"
   },
   {
@@ -224,7 +224,7 @@ const seedAwards = [
     year: 2026,
     presenter: "United Nations Human Rights Council & Sri Lanka Office",
     thumbnail: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80",
-    votes: 11230,
+    votes: 0,
     icon: "🌟"
   },
   {
@@ -238,7 +238,7 @@ const seedAwards = [
     year: 2026,
     presenter: "Sri Lanka Red Cross Society",
     thumbnail: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=400&q=80",
-    votes: 10840,
+    votes: 0,
     icon: "🤝"
   },
   {
@@ -252,7 +252,7 @@ const seedAwards = [
     year: 2026,
     presenter: "Disaster Management Center & WHO Sri Lanka",
     thumbnail: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80",
-    votes: 10420,
+    votes: 0,
     icon: "🕊️"
   },
   {
@@ -266,7 +266,7 @@ const seedAwards = [
     year: 2026,
     presenter: "National Science Foundation Sri Lanka",
     thumbnail: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80",
-    votes: 8750,
+    votes: 0,
     icon: "🎓"
   },
   {
@@ -280,7 +280,7 @@ const seedAwards = [
     year: 2026,
     presenter: "Ministry of Education & NIE Sri Lanka",
     thumbnail: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
-    votes: 8320,
+    votes: 0,
     icon: "📚"
   },
   {
@@ -294,7 +294,7 @@ const seedAwards = [
     year: 2026,
     presenter: "Sri Lanka Special Education Teachers Guild",
     thumbnail: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
-    votes: 7940,
+    votes: 0,
     icon: "📖"
   }
 ];
@@ -311,7 +311,7 @@ function getDefaultVotingConfig() {
     isActive: true,
     autoDecideWinners: true,
     lastResolvedAt: null,
-    totalVoters: 58490,
+    totalVoters: 0,
   };
 }
 
@@ -423,10 +423,17 @@ function initAwards() {
     return seedAwards;
   }
 
-  // Ensure all seed awards exist in stored (auto-merge to guarantee 3+ awards per category)
+  // Ensure all seed awards exist in stored and clean legacy mock vote counts (>1000)
   const existingIds = new Set(stored.map(a => a.id));
   let modified = false;
-  const merged = [...stored];
+  const merged = stored.map(item => {
+    // Reset legacy mock counts (>1000) from previous hardcoded seeds
+    if (typeof item.votes === 'number' && item.votes > 1000) {
+      modified = true;
+      return { ...item, votes: 0 };
+    }
+    return item;
+  });
 
   seedAwards.forEach(seed => {
     if (!existingIds.has(seed.id)) {
@@ -442,8 +449,27 @@ function initAwards() {
   return merged;
 }
 
+import api from '../services/api';
+
+let inMemoryAwards = null;
+
+export function setCachedAwards(awardsList) {
+  if (Array.isArray(awardsList)) {
+    inMemoryAwards = awardsList;
+    try {
+      localStorage.setItem(AWARDS_KEY, JSON.stringify(awardsList));
+    } catch (e) {
+      console.error('Error caching awards:', e);
+    }
+  }
+}
+
 export function getAllAwards() {
+  if (inMemoryAwards && inMemoryAwards.length > 0) {
+    return inMemoryAwards;
+  }
   const awards = initAwards();
+  inMemoryAwards = awards;
   // Auto-check if deadline expired and resolve winners if active
   const cfg = getVotingConfig();
   if (cfg.isActive && cfg.autoDecideWinners && Date.now() >= new Date(cfg.deadline).getTime()) {
@@ -453,63 +479,108 @@ export function getAllAwards() {
   return awards;
 }
 
-export function saveAward(awardData) {
+export async function fetchAwardsFromApi(params = {}) {
   try {
+    const query = new URLSearchParams(params).toString();
+    const res = await api.get(`/awards${query ? `?${query}` : ''}`);
+    if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+      const normalized = res.data.map(item => ({
+        ...item,
+        id: item._id || item.id,
+      }));
+      inMemoryAwards = normalized;
+      localStorage.setItem(AWARDS_KEY, JSON.stringify(normalized));
+      return normalized;
+    }
+  } catch (err) {
+    console.warn('API fetch for awards failed, using cache:', err.message);
+  }
+  return getAllAwards();
+}
+
+export async function saveAward(awardData) {
+  try {
+    const isEdit = awardData._id || (typeof awardData.id === 'string' && awardData.id.length === 24);
+    let resultAward;
+
+    if (isEdit) {
+      const id = awardData._id || awardData.id;
+      const res = await api.put(`/awards/${id}`, awardData);
+      resultAward = res.data ? { ...res.data, id: res.data._id || id } : awardData;
+    } else {
+      const res = await api.post('/awards', awardData);
+      resultAward = res.data ? { ...res.data, id: res.data._id } : { ...awardData, id: Date.now() };
+    }
+
+    const current = getAllAwards();
+    const updated = [
+      resultAward,
+      ...current.filter(a => a.id !== resultAward.id && a._id !== resultAward._id)
+    ];
+    inMemoryAwards = updated;
+    localStorage.setItem(AWARDS_KEY, JSON.stringify(updated));
+    return resultAward;
+  } catch (e) {
+    console.error('Error saving award via API, saving to local cache', e);
     const current = initAwards();
     const award = { ...awardData, id: awardData.id || Date.now() };
     const updated = [award, ...current.filter(a => a.id !== award.id)];
+    inMemoryAwards = updated;
     localStorage.setItem(AWARDS_KEY, JSON.stringify(updated));
     return award;
-  } catch (e) {
-    console.error('Error saving award', e);
-    return null;
   }
 }
 
 // ── USER NOMINATION / SUGGESTION ──────────────────────────────────────────
-export function nominateCandidate(nominationData) {
+export async function nominateCandidate(nominationData) {
+  const newAwardData = {
+    title: nominationData.title || `${nominationData.category} Community Laureate 2026`,
+    category: nominationData.category || 'Social Service',
+    nominee: nominationData.nominee,
+    nomineeId: nominationData.nomineeId || '',
+    description: nominationData.description || 'Nominated by community member for distinguished national contributions.',
+    status: 'Nominee',
+    year: 2026,
+    presenter: nominationData.presenter || `Nominated by ${nominationData.nominatorName || 'Community Member'} (${nominationData.nominatorDistrict || 'Sri Lanka'})`,
+    thumbnail: nominationData.thumbnail || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80',
+    votes: 1,
+    icon: nominationData.icon || '🏅',
+  };
+
   try {
-    const current = initAwards();
-    const newAward = {
-      id: Date.now(),
-      title: nominationData.title || `${nominationData.category} Community Laureate 2026`,
-      category: nominationData.category || 'Social Service',
-      nominee: nominationData.nominee,
-      nomineeId: nominationData.nomineeId || null,
-      description: nominationData.description || 'Nominated by community member for distinguished national contributions.',
-      status: 'Nominee',
-      year: 2026,
-      presenter: nominationData.presenter || `Nominated by ${nominationData.nominatorName || 'Community Member'} (${nominationData.nominatorDistrict || 'Sri Lanka'})`,
-      thumbnail: nominationData.thumbnail || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80',
-      votes: 1, // initial voter
-      icon: nominationData.icon || '🏅',
-      nominatorEmail: nominationData.nominatorEmail || null,
-      nominatorName: nominationData.nominatorName || null,
-      nominatedAt: new Date().toISOString()
-    };
-
-    const updated = [newAward, ...current];
-    localStorage.setItem(AWARDS_KEY, JSON.stringify(updated));
-
-    // Also ensure category is added to custom categories if not already present
-    if (newAward.category) {
-      addAwardCategory(newAward.category);
+    const saved = await saveAward(newAwardData);
+    if (newAwardData.category) {
+      addAwardCategory(newAwardData.category);
     }
-
-    return newAward;
+    return saved;
   } catch (e) {
     console.error('Error adding nomination', e);
     return null;
   }
 }
 
-export function deleteAward(id) {
+export async function deleteAward(id) {
   try {
-    const current = initAwards();
-    const filtered = current.filter(a => a.id !== id);
-    localStorage.setItem(AWARDS_KEY, JSON.stringify(filtered));
+    if (typeof id === 'string' && id.length === 24) {
+      await api.delete(`/awards/${id}`);
+    }
   } catch (e) {
-    console.error('Error deleting award', e);
+    console.warn('Error deleting award via API:', e.message);
+  }
+  const current = getAllAwards();
+  const filtered = current.filter(a => a.id !== id && a._id !== id);
+  inMemoryAwards = filtered;
+  localStorage.setItem(AWARDS_KEY, JSON.stringify(filtered));
+  return filtered;
+}
+
+export async function voteForAwardApi(id) {
+  try {
+    const res = await api.post(`/awards/${id}/vote`);
+    return res;
+  } catch (e) {
+    console.warn('Error voting for award via API:', e.message);
+    return null;
   }
 }
 

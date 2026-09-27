@@ -1,22 +1,25 @@
 // ── User Activity & Persistence Helpers (Likes, Votes, Saves, Profile) ─────
 import { getAllNews } from './news';
-import { getAllAwards, saveAward } from './awards';
+import { getAllAwards, saveAward, voteForAwardApi, setCachedAwards } from './awards';
+
+import { getAllAchievers } from './achievers';
 
 const USER_ACTIVITY_PREFIX = 'pf_user_activity_';
+const ITEM_LIKES_PREFIX = 'pf_item_likes_';
 
 function getUserActivityKey(email) {
   return `${USER_ACTIVITY_PREFIX}${email ? email.toLowerCase().trim() : 'guest'}`;
 }
 
 export function getUserActivity(email) {
-  if (!email) return { likedNewsIds: [], votedAwardIds: [], savedNewsIds: [], profile: {} };
+  if (!email) return { likedNewsIds: [], likedAchieverIds: [], votedAwardIds: [], savedNewsIds: [], profile: {} };
   try {
     const key = getUserActivityKey(email);
     const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : { likedNewsIds: [], votedAwardIds: [], savedNewsIds: [], profile: {} };
+    return data ? JSON.parse(data) : { likedNewsIds: [], likedAchieverIds: [], votedAwardIds: [], savedNewsIds: [], profile: {} };
   } catch (e) {
     console.error('Error reading user activity', e);
-    return { likedNewsIds: [], votedAwardIds: [], savedNewsIds: [], profile: {} };
+    return { likedNewsIds: [], likedAchieverIds: [], votedAwardIds: [], savedNewsIds: [], profile: {} };
   }
 }
 
@@ -30,23 +33,42 @@ export function saveUserActivity(email, activity) {
   }
 }
 
-// ── Likes ──────────────────────────────────────────────────────────────────
+// ── Likes Count Persistence ───────────────────────────────────────────────
+export function getItemLikesCount(itemKey, defaultCount = 0) {
+  try {
+    const val = localStorage.getItem(`${ITEM_LIKES_PREFIX}${itemKey}`);
+    return val !== null ? parseInt(val, 10) : defaultCount;
+  } catch {
+    return defaultCount;
+  }
+}
+
+export function setItemLikesCount(itemKey, count) {
+  try {
+    localStorage.setItem(`${ITEM_LIKES_PREFIX}${itemKey}`, String(Math.max(0, count)));
+  } catch (e) {
+    console.error('Error saving item likes count', e);
+  }
+}
+
+// ── News Likes ─────────────────────────────────────────────────────────────
 export function isNewsLiked(email, newsId) {
   if (!email || !newsId) return false;
   const act = getUserActivity(email);
-  return act.likedNewsIds.includes(Number(newsId)) || act.likedNewsIds.includes(String(newsId));
+  return (act.likedNewsIds || []).some(id => String(id) === String(newsId));
 }
 
 export function toggleLikeNews(email, newsId) {
   if (!email || !newsId) return false;
   const act = getUserActivity(email);
+  act.likedNewsIds = act.likedNewsIds || [];
   const numericId = Number(newsId);
   const exists = act.likedNewsIds.some(id => String(id) === String(newsId));
   
   if (exists) {
     act.likedNewsIds = act.likedNewsIds.filter(id => String(id) !== String(newsId));
   } else {
-    act.likedNewsIds = [numericId, ...act.likedNewsIds];
+    act.likedNewsIds = [numericId || newsId, ...act.likedNewsIds];
   }
   
   saveUserActivity(email, act);
@@ -57,8 +79,41 @@ export function getUserLikedNews(email) {
   if (!email) return [];
   const act = getUserActivity(email);
   const allNews = getAllNews();
-  return act.likedNewsIds
-    .map(id => allNews.find(n => String(n.id) === String(id)))
+  return (act.likedNewsIds || [])
+    .map(id => allNews.find(n => String(n.id) === String(id) || String(n._id) === String(id)))
+    .filter(Boolean);
+}
+
+// ── Achiever Likes ─────────────────────────────────────────────────────────
+export function isAchieverLiked(email, achieverId) {
+  if (!email || !achieverId) return false;
+  const act = getUserActivity(email);
+  return (act.likedAchieverIds || []).some(id => String(id) === String(achieverId));
+}
+
+export function toggleLikeAchiever(email, achieverId) {
+  if (!email || !achieverId) return false;
+  const act = getUserActivity(email);
+  act.likedAchieverIds = act.likedAchieverIds || [];
+  const numericId = Number(achieverId);
+  const exists = act.likedAchieverIds.some(id => String(id) === String(achieverId));
+  
+  if (exists) {
+    act.likedAchieverIds = act.likedAchieverIds.filter(id => String(id) !== String(achieverId));
+  } else {
+    act.likedAchieverIds = [numericId || achieverId, ...act.likedAchieverIds];
+  }
+  
+  saveUserActivity(email, act);
+  return !exists; // returns new liked state
+}
+
+export function getUserLikedAchievers(email) {
+  if (!email) return [];
+  const act = getUserActivity(email);
+  const allAchievers = getAllAchievers();
+  return (act.likedAchieverIds || [])
+    .map(id => allAchievers.find(a => String(a.id) === String(id) || String(a._id) === String(id)))
     .filter(Boolean);
 }
 
@@ -98,7 +153,14 @@ export function getUserSavedNews(email) {
 export function isAwardVoted(email, awardId) {
   if (!email || !awardId) return false;
   const act = getUserActivity(email);
-  return (act.votedAwardIds || []).some(id => String(id) === String(awardId));
+  const allAwards = getAllAwards();
+  const targetAward = allAwards.find(
+    a => String(a.id) === String(awardId) || String(a._id) === String(awardId)
+  );
+  const idsToCheck = [String(awardId)];
+  if (targetAward?.id != null) idsToCheck.push(String(targetAward.id));
+  if (targetAward?._id != null) idsToCheck.push(String(targetAward._id));
+  return (act.votedAwardIds || []).some(id => idsToCheck.includes(String(id)));
 }
 
 // Check which candidate the user voted for in a specific category (if any)
@@ -106,68 +168,71 @@ export function getUserCategoryVote(email, category) {
   if (!email || !category) return null;
   const act = getUserActivity(email);
   const allAwards = getAllAwards();
-  const votedId = (act.votedAwardIds || []).find(id => {
-    const a = allAwards.find(item => String(item.id) === String(id));
-    return a && a.category === category;
+  const votedAward = allAwards.find(a => {
+    if (a.category !== category) return false;
+    const aId = String(a.id);
+    const a_Id = String(a._id);
+    return (act.votedAwardIds || []).some(id => String(id) === aId || String(id) === a_Id);
   });
-  return votedId ? allAwards.find(item => String(item.id) === String(votedId)) : null;
+  return votedAward || null;
 }
 
 export function toggleVoteAward(email, awardId) {
-  if (!email || !awardId) return { voted: false, count: 0 };
+  if (!email || !awardId) return { voted: false, count: 0, awards: getAllAwards() };
   const act = getUserActivity(email);
-  const allAwards = getAllAwards();
-  const targetAward = allAwards.find(a => String(a.id) === String(awardId));
-  if (!targetAward) return { voted: false, count: 0 };
+  act.votedAwardIds = act.votedAwardIds || [];
+  const allAwards = [...getAllAwards()];
+  const targetAward = allAwards.find(
+    a => String(a.id) === String(awardId) || String(a._id) === String(awardId)
+  );
+  if (!targetAward) return { voted: false, count: 0, awards: allAwards };
 
-  const isAlreadyVoted = (act.votedAwardIds || []).some(id => String(id) === String(awardId));
+  const idsToCheck = [String(awardId)];
+  if (targetAward.id != null) idsToCheck.push(String(targetAward.id));
+  if (targetAward._id != null) idsToCheck.push(String(targetAward._id));
 
-  if (isAlreadyVoted) {
-    // Retract vote
-    act.votedAwardIds = act.votedAwardIds.filter(id => String(id) !== String(awardId));
-    const newCount = Math.max(0, (targetAward.votes || 0) - 1);
-    saveAward({ ...targetAward, votes: newCount });
-    saveUserActivity(email, act);
+  // Check if user already voted in this category
+  const categoryVotedAward = allAwards.find(a => {
+    if (a.category !== targetAward.category) return false;
+    const aId = String(a.id);
+    const a_Id = String(a._id);
+    return act.votedAwardIds.some(id => String(id) === aId || String(id) === a_Id);
+  });
+
+  if (categoryVotedAward) {
+    const isSameCandidate = String(categoryVotedAward.id) === String(targetAward.id) || String(categoryVotedAward._id) === String(targetAward._id);
     return {
-      voted: false,
-      count: newCount,
+      voted: isSameCandidate,
+      locked: true,
+      count: targetAward.votes || 0,
       category: targetAward.category,
-      message: `Your vote for ${targetAward.nominee} was retracted.`
+      awards: allAwards,
+      message: isSameCandidate
+        ? `Your vote for ${targetAward.nominee} in ${targetAward.category} is locked and final.`
+        : `You have already cast your vote for ${categoryVotedAward.nominee} in ${targetAward.category}. Category votes are final.`
     };
   }
 
-  // Enforce ONE vote per category: check if user already voted in this category
-  let switchedFrom = null;
-  const previousVoteId = (act.votedAwardIds || []).find(id => {
-    if (String(id) === String(awardId)) return false;
-    const prevAward = allAwards.find(a => String(a.id) === String(id));
-    return prevAward && prevAward.category === targetAward.category;
-  });
-
-  if (previousVoteId) {
-    const prevAward = allAwards.find(a => String(a.id) === String(previousVoteId));
-    if (prevAward) {
-      switchedFrom = prevAward.nominee;
-      const prevCount = Math.max(0, (prevAward.votes || 0) - 1);
-      saveAward({ ...prevAward, votes: prevCount });
-    }
-    act.votedAwardIds = act.votedAwardIds.filter(id => String(id) !== String(previousVoteId));
+  // Cast single permanent vote for target nominee
+  const targetId = targetAward._id || targetAward.id;
+  if (typeof targetId === 'string' && targetId.length === 24) {
+    voteForAwardApi(targetId).catch(() => {});
   }
 
-  // Cast vote for target nominee
-  act.votedAwardIds = [Number(awardId), ...(act.votedAwardIds || [])];
+  const voteIdToStore = targetAward._id || targetAward.id || awardId;
+  act.votedAwardIds = [voteIdToStore, ...act.votedAwardIds];
   const newCount = (targetAward.votes || 0) + 1;
-  saveAward({ ...targetAward, votes: newCount });
+  targetAward.votes = newCount;
   saveUserActivity(email, act);
+  setCachedAwards(allAwards);
 
   return {
     voted: true,
+    locked: true,
     count: newCount,
-    switchedFrom,
     category: targetAward.category,
-    message: switchedFrom
-      ? `Vote switched from ${switchedFrom} to ${targetAward.nominee} in ${targetAward.category} (1 vote per category).`
-      : `Your vote for ${targetAward.nominee} in ${targetAward.category} was recorded!`
+    awards: allAwards,
+    message: `Your vote for ${targetAward.nominee} in ${targetAward.category} was successfully registered and locked!`
   };
 }
 
@@ -175,7 +240,16 @@ export function getUserVotedAwards(email) {
   if (!email) return [];
   const act = getUserActivity(email);
   const allAwards = getAllAwards();
-  return (act.votedAwardIds || [])
-    .map(id => allAwards.find(a => String(a.id) === String(id)))
-    .filter(Boolean);
+  const seenCategories = new Set();
+  const result = [];
+
+  // Iterate over voted IDs, taking the unique nominee for each category
+  for (const id of (act.votedAwardIds || [])) {
+    const award = allAwards.find(a => String(a.id) === String(id) || String(a._id) === String(id));
+    if (award && !seenCategories.has(award.category)) {
+      seenCategories.add(award.category);
+      result.push(award);
+    }
+  }
+  return result;
 }

@@ -2,20 +2,40 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { isNewsLiked, toggleLikeNews } from '../../data/userActivity';
+import {
+  isNewsLiked,
+  toggleLikeNews,
+  isAchieverLiked,
+  toggleLikeAchiever,
+  getItemLikesCount,
+  setItemLikesCount,
+} from '../../data/userActivity';
 
-export default function LikeButton({ initialLikes = 0, size = 'md', newsId = null }) {
+export default function LikeButton({ initialLikes = 0, size = 'md', newsId = null, achieverId = null }) {
   const { user, openAuthModal } = useAuth();
 
+  const itemKey = newsId ? `news_${newsId}` : achieverId ? `achiever_${achieverId}` : null;
   const [liked, setLiked] = useState(false);
-  const [count, setCount] = useState(initialLikes);
+  const [count, setCount] = useState(() => (itemKey ? getItemLikesCount(itemKey, initialLikes) : initialLikes));
   const [burst, setBurst] = useState(false);
 
   useEffect(() => {
-    if (user?.email && newsId) {
-      setLiked(isNewsLiked(user.email, newsId));
+    if (itemKey) {
+      setCount(getItemLikesCount(itemKey, initialLikes));
     }
-  }, [user, newsId]);
+  }, [itemKey, initialLikes]);
+
+  useEffect(() => {
+    if (user?.email) {
+      if (newsId) {
+        setLiked(isNewsLiked(user.email, newsId));
+      } else if (achieverId) {
+        setLiked(isAchieverLiked(user.email, achieverId));
+      }
+    } else {
+      setLiked(false);
+    }
+  }, [user, newsId, achieverId]);
 
   const handleLike = () => {
     if (!user) {
@@ -23,24 +43,25 @@ export default function LikeButton({ initialLikes = 0, size = 'md', newsId = nul
       return;
     }
 
+    let isNowLiked = false;
     if (newsId) {
-      const isNowLiked = toggleLikeNews(user.email, newsId);
-      setLiked(isNowLiked);
-      setCount((c) => (isNowLiked ? c + 1 : Math.max(0, c - 1)));
-      if (isNowLiked) {
-        setBurst(true);
-        setTimeout(() => setBurst(false), 600);
-      }
+      isNowLiked = toggleLikeNews(user.email, newsId);
+    } else if (achieverId) {
+      isNowLiked = toggleLikeAchiever(user.email, achieverId);
     } else {
-      if (!liked) {
-        setLiked(true);
-        setCount((c) => c + 1);
-        setBurst(true);
-        setTimeout(() => setBurst(false), 600);
-      } else {
-        setLiked(false);
-        setCount((c) => Math.max(0, c - 1));
-      }
+      isNowLiked = !liked;
+    }
+
+    setLiked(isNowLiked);
+    setCount((prev) => {
+      const newCount = isNowLiked ? prev + 1 : Math.max(0, prev - 1);
+      if (itemKey) setItemLikesCount(itemKey, newCount);
+      return newCount;
+    });
+
+    if (isNowLiked) {
+      setBurst(true);
+      setTimeout(() => setBurst(false), 600);
     }
   };
 

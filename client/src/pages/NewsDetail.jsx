@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
-import { getAllNews } from '../data/news';
+import { getAllNews, fetchNewsFromApi } from '../data/news';
 import { isNewsSaved, toggleSaveNews } from '../data/userActivity';
 import CommentSection from '../components/ui/CommentSection';
 import LikeButton from '../components/ui/LikeButton';
@@ -78,13 +78,14 @@ export default function NewsDetail() {
   const navigate = useNavigate();
   const { user, openAuthModal } = useAuth();
   const [copied, setCopied] = useState(false);
-  const [allNews, setAllNews] = useState([]);
+  const [allNews, setAllNews] = useState(() => getAllNews());
   const [readingHistory, setReadingHistory] = useState([]);
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    const newsData = getAllNews();
-    setAllNews(newsData);
+    fetchNewsFromApi().then(data => {
+      if (data && data.length > 0) setAllNews(data);
+    });
 
     if (user?.email && id) {
       setSaved(isNewsSaved(user.email, id));
@@ -93,15 +94,16 @@ export default function NewsDetail() {
     // Track reading history in localStorage
     try {
       const savedHistory = JSON.parse(localStorage.getItem(READ_HISTORY_KEY) || '[]');
-      const articleId = parseInt(id) || id;
+      const articleId = id;
       const filtered = savedHistory.filter((savedId) => String(savedId) !== String(articleId));
       const updatedHistory = [articleId, ...filtered].slice(0, 8);
       localStorage.setItem(READ_HISTORY_KEY, JSON.stringify(updatedHistory));
 
+      const newsData = getAllNews();
       // Resolve history items (excluding current article)
       const resolved = updatedHistory
         .filter((savedId) => String(savedId) !== String(articleId))
-        .map((savedId) => newsData.find((n) => String(n.id) === String(savedId)))
+        .map((savedId) => newsData.find((n) => String(n.id) === String(savedId) || String(n._id) === String(savedId)))
         .filter(Boolean)
         .slice(0, 4);
 
@@ -120,7 +122,7 @@ export default function NewsDetail() {
     setSaved(isNowSaved);
   };
 
-  const article = allNews.find((a) => String(a.id) === String(id));
+  const article = allNews.find((a) => String(a.id) === String(id) || String(a._id) === String(id));
 
   if (!article) {
     return (
@@ -342,7 +344,7 @@ export default function NewsDetail() {
                 {t('allHeadlines')}
               </Link>
               <div className="h-6 w-px bg-surface-border hidden sm:block" />
-              <LikeButton newsId={article.id} initialLikes={124} size="sm" />
+              <LikeButton newsId={article.id || article._id} initialLikes={article.likes || 86} size="sm" />
               <button
                 onClick={handleToggleSave}
                 className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-all border ${saved

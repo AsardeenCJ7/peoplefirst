@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Trophy, ChevronRight, Users, CheckCircle2, ThumbsUp, Sparkles, RefreshCw, Lock } from 'lucide-react';
+import { Trophy, ChevronRight, Users, CheckCircle2, ThumbsUp, Sparkles, RefreshCw, Lock, AlertTriangle, X, ShieldCheck } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { isAwardVoted, toggleVoteAward } from '../../data/userActivity';
 
@@ -19,44 +19,54 @@ export default function AwardCard({
   userVotedInThisCategory = null,
 }) {
   const { user, openAuthModal } = useAuth();
-  const [hasVoted, setHasVoted] = useState(false);
-  const [voteCount, setVoteCount] = useState(award.votes || 0);
+  
+  const targetAwardId = award?.id || award?._id;
+  const isCurrentlyVoted = user?.email && targetAwardId ? isAwardVoted(user.email, targetAwardId) : false;
+  
+  const [hasVoted, setHasVoted] = useState(isCurrentlyVoted);
+  const [voteCount, setVoteCount] = useState(award?.votes || 0);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   useEffect(() => {
-    if (user?.email && award?.id) {
-      setHasVoted(isAwardVoted(user.email, award.id));
+    if (user?.email && targetAwardId) {
+      setHasVoted(isAwardVoted(user.email, targetAwardId));
     } else {
       setHasVoted(false);
     }
-  }, [user, award]);
+  }, [user, targetAwardId, award]);
 
   useEffect(() => {
-    setVoteCount(award.votes || 0);
-  }, [award.votes]);
+    setVoteCount(award?.votes || 0);
+  }, [award?.votes]);
 
-  const handleVote = (e) => {
+  const handleVoteClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (!isVotingActive) return;
+    if (!isVotingActive || hasVoted || (userVotedInThisCategory && String(userVotedInThisCategory.id || userVotedInThisCategory._id) !== String(targetAwardId))) return;
 
     if (!user) {
       openAuthModal('login');
       return;
     }
 
-    const result = toggleVoteAward(user.email, award.id);
+    setShowConfirmModal(true);
+  };
+
+  const confirmVote = () => {
+    setShowConfirmModal(false);
+    const result = toggleVoteAward(user.email, targetAwardId);
     setHasVoted(result.voted);
     setVoteCount(result.count);
 
     if (onVoteChange) {
-      onVoteChange(award.id, result.voted, result.count, result);
+      onVoteChange(targetAwardId, result.voted, result.count, result);
     }
   };
 
-  const isCategoryOtherVoted = userVotedInThisCategory && String(userVotedInThisCategory.id) !== String(award.id);
+  const isCategoryOtherVoted = userVotedInThisCategory && String(userVotedInThisCategory.id || userVotedInThisCategory._id) !== String(targetAwardId);
   const votePercentage = categoryTotalVotes > 0 ? Math.round((voteCount / categoryTotalVotes) * 100) : 0;
-  const isWinner = award.status === 'Winner';
+  const isWinner = award?.status === 'Winner';
 
   return (
     <motion.div
@@ -151,14 +161,14 @@ export default function AwardCard({
                 <span>Category Vote Share</span>
               </span>
               <span className="font-mono font-bold text-gold">
-                {votePercentage}% ({voteCount.toLocaleString()} votes)
+                {categoryTotalVotes > 0 ? `${votePercentage}%` : '0%'} ({voteCount} {voteCount === 1 ? 'vote' : 'votes'})
               </span>
             </div>
 
             <div className="w-full h-2 rounded-full bg-dark-400 overflow-hidden border border-surface-border">
               <motion.div
                 initial={{ width: 0 }}
-                animate={{ width: `${Math.min(100, Math.max(4, votePercentage))}%` }}
+                animate={{ width: `${Math.min(100, Math.max(0, votePercentage))}%` }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
                 className={`h-full rounded-full ${
                   isWinner
@@ -177,26 +187,29 @@ export default function AwardCard({
           <span className="font-mono text-xs font-black text-white">
             {voteCount.toLocaleString()}
           </span>
-          <span className="text-[10px] text-text-muted ml-1 uppercase">votes</span>
+          <span className="text-[10px] text-text-muted ml-1 uppercase">
+            {voteCount === 1 ? 'vote' : 'votes'}
+          </span>
         </div>
 
         <div className="flex items-center gap-2">
           {/* Voting Action Button */}
           {isVotingActive ? (
             <button
-              onClick={handleVote}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border active:scale-95 ${
+              onClick={handleVoteClick}
+              disabled={hasVoted || isCategoryOtherVoted}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border ${
                 hasVoted
-                  ? 'bg-gold text-dark-100 border-gold shadow-glow-gold'
+                  ? 'bg-gold text-dark-100 border-gold shadow-glow-gold cursor-default'
                   : isCategoryOtherVoted
-                  ? 'bg-dark-300 text-gold hover:bg-gold hover:text-dark-100 border-gold/40'
-                  : 'bg-primary/20 text-white hover:bg-primary border-primary/40 shadow-sm'
+                  ? 'bg-dark-400 text-text-muted border-surface-border opacity-70 cursor-not-allowed'
+                  : 'bg-primary/20 text-white hover:bg-primary border-primary/40 shadow-sm active:scale-95'
               }`}
               title={
                 hasVoted
-                  ? 'Click to remove vote'
+                  ? `Your vote for ${award.nominee} is locked and recorded.`
                   : isCategoryOtherVoted
-                  ? `Switch vote from ${userVotedInThisCategory.nominee} to ${award.nominee} (1 vote per category)`
+                  ? `You have already voted for ${userVotedInThisCategory?.nominee || 'another candidate'} in ${award.category}. Category votes are locked once cast.`
                   : 'Click to vote for this candidate'
               }
             >
@@ -207,8 +220,8 @@ export default function AwardCard({
                 </>
               ) : isCategoryOtherVoted ? (
                 <>
-                  <RefreshCw className="w-3.5 h-3.5" />
-                  <span>Switch Vote</span>
+                  <Lock className="w-3.5 h-3.5 text-gold" />
+                  <span>Vote Locked</span>
                 </>
               ) : (
                 <>
@@ -235,6 +248,89 @@ export default function AwardCard({
           )}
         </div>
       </div>
+
+      {/* ── VOTE CONFIRMATION MODAL ───────────────────────────────────── */}
+      <AnimatePresence>
+        {showConfirmModal && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="w-full max-w-md bg-dark-200 border-2 border-gold/40 rounded-3xl p-6 shadow-2xl space-y-5 text-left relative overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={() => setShowConfirmModal(false)}
+                className="absolute top-4 right-4 p-1.5 rounded-full text-text-muted hover:text-white hover:bg-dark-300 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-gold/15 text-gold border border-gold/30 flex items-center justify-center shrink-0">
+                  <Trophy className="w-6 h-6 animate-pulse" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold text-gold uppercase tracking-wider">
+                    Confirm Ballot Selection
+                  </span>
+                  <h3 className="font-manrope font-black text-white text-lg leading-tight">
+                    Lock Vote for {award.nominee}?
+                  </h3>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 bg-dark-300 p-3 rounded-2xl border border-surface-border">
+                <img
+                  src={award.thumbnail}
+                  alt={award.nominee}
+                  className="w-12 h-12 rounded-full object-cover ring-2 ring-gold shrink-0"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="text-white font-bold text-sm truncate">{award.nominee}</p>
+                  <p className="text-gold text-xs font-semibold truncate">{award.category} Category</p>
+                </div>
+              </div>
+
+              <div className="p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-2xl text-amber-300 space-y-1 text-xs">
+                <div className="font-bold flex items-center gap-1.5 text-amber-400">
+                  <AlertTriangle className="w-4 h-4 shrink-0" />
+                  <span>Important Voting Rule</span>
+                </div>
+                <p className="leading-relaxed text-[11px] text-amber-200/90">
+                  You are permitted <strong>1 vote only</strong> in the {award.category} category. Once you confirm, your vote will be registered and <strong>locked permanently</strong>. You will not be able to change or undo this vote later.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmModal(false)}
+                  className="flex-1 py-3 rounded-xl bg-dark-300 hover:bg-dark-400 border border-surface-border text-text-secondary hover:text-white font-bold text-xs transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={confirmVote}
+                  className="flex-1 py-3 rounded-xl bg-gold hover:bg-yellow-400 text-dark-100 font-extrabold text-xs shadow-glow-gold flex items-center justify-center gap-1.5 transition-all"
+                >
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Confirm & Lock Vote</span>
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

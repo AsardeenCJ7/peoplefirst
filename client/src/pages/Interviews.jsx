@@ -6,15 +6,25 @@ import {
   Share2, ArrowRight, Video, Award, ExternalLink, UserCheck, Eye, Layers
 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { getAllAchievers, categories } from '../data/achievers';
+import { getAllAchievers, fetchAchieversFromApi, categories } from '../data/achievers';
 import { useLanguage } from '../context/LanguageContext';
+import { extractYouTubeId } from '../utils/youtube';
 
 export default function Interviews() {
   const { t } = useLanguage();
   const [searchParams] = useSearchParams();
   const initialQuery = searchParams.get('search') || '';
 
-  const allInterviews = useMemo(() => getAllAchievers(), []);
+  const [allInterviews, setAllInterviews] = useState(() => getAllAchievers());
+
+  useEffect(() => {
+    fetchAchieversFromApi().then(data => {
+      if (data && data.length > 0) {
+        setAllInterviews(data);
+        setSpotlightAchiever(prev => prev || data[0]);
+      }
+    });
+  }, []);
 
   const [search, setSearch] = useState(initialQuery);
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -23,7 +33,7 @@ export default function Interviews() {
   const [cinemaVideo, setCinemaVideo] = useState(null);
 
   // Active Achiever Spotlight state (Coordinates Achiever details with Video Interview)
-  const [spotlightAchiever, setSpotlightAchiever] = useState(allInterviews[0]);
+  const [spotlightAchiever, setSpotlightAchiever] = useState(() => allInterviews[0]);
 
   // Featured Slides
   const featuredInterviews = useMemo(() => {
@@ -233,7 +243,7 @@ export default function Interviews() {
                     Play Video Interview
                   </button>
                   <Link
-                    to={`/achiever/${spotlightAchiever.id}`}
+                    to={`/achiever/${spotlightAchiever.id || spotlightAchiever._id}`}
                     className="btn-gold text-xs sm:text-sm px-4 sm:px-5 py-2.5 sm:py-3 font-bold flex items-center gap-2"
                   >
                     <BookOpen className="w-4 h-4" />
@@ -249,7 +259,7 @@ export default function Interviews() {
                   onClick={() => setCinemaVideo(spotlightAchiever)}
                 >
                   <img
-                    src={`https://img.youtube.com/vi/${spotlightAchiever.videoId}/hqdefault.jpg`}
+                    src={`https://img.youtube.com/vi/${extractYouTubeId(spotlightAchiever.videoId)}/hqdefault.jpg`}
                     alt={spotlightAchiever.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     onError={(e) => { e.target.src = spotlightAchiever.thumbnail; }}
@@ -410,7 +420,7 @@ export default function Interviews() {
               {/* Thumbnail with Video Play Trigger */}
               <div className="relative aspect-video overflow-hidden bg-dark-300">
                 <img
-                  src={`https://img.youtube.com/vi/${interview.videoId}/mqdefault.jpg`}
+                  src={`https://img.youtube.com/vi/${extractYouTubeId(interview.videoId)}/mqdefault.jpg`}
                   alt={interview.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   onError={(e) => { e.target.src = interview.thumbnail; }}
@@ -501,7 +511,7 @@ export default function Interviews() {
                     Play Video
                   </button>
                   <Link
-                    to={`/achiever/${interview.id}`}
+                    to={`/achiever/${interview.id || interview._id}`}
                     className="btn-gold text-xs py-2 px-2.5 justify-center font-bold flex items-center gap-1"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
@@ -638,7 +648,7 @@ export default function Interviews() {
               <div className="px-3 sm:px-5">
                 <div className="video-wrapper rounded-xl sm:rounded-2xl overflow-hidden shadow-card border border-surface-border">
                   <iframe
-                    src={`https://www.youtube.com/embed/${cinemaVideo.videoId}?autoplay=1&modestbranding=1&rel=0`}
+                    src={`https://www.youtube.com/embed/${extractYouTubeId(cinemaVideo.videoId)}?autoplay=1&modestbranding=1&rel=0`}
                     title={cinemaVideo.title}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -657,7 +667,7 @@ export default function Interviews() {
                 </div>
                 <div className="flex items-center gap-2">
                   <a
-                    href={`https://youtube.com/watch?v=${cinemaVideo.videoId}`}
+                    href={`https://youtube.com/watch?v=${extractYouTubeId(cinemaVideo.videoId)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-secondary text-xs px-3 sm:px-4 py-2 bg-dark-300 hover:bg-dark-400 border border-surface-border text-white flex items-center gap-1.5"
@@ -666,7 +676,7 @@ export default function Interviews() {
                     YouTube
                   </a>
                   <Link
-                    to={`/achiever/${cinemaVideo.id}`}
+                    to={`/achiever/${cinemaVideo.id || cinemaVideo._id}`}
                     onClick={() => setCinemaVideo(null)}
                     className="btn-gold text-xs px-3.5 sm:px-4 py-2 font-bold flex items-center gap-1.5"
                   >

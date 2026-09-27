@@ -6,22 +6,31 @@ import {
 } from 'lucide-react';
 import AwardCard from '../components/ui/AwardCard';
 import NominateModal from '../components/ui/NominateModal';
-import { getAllAwards, awardCategories, getVotingConfig, checkAndResolveWinners } from '../data/awards';
-import { getUserCategoryVote, isAwardVoted } from '../data/userActivity';
-import { Link } from 'react-router-dom';
+import { getAllAwards, fetchAwardsFromApi, awardCategories, getVotingConfig, checkAndResolveWinners } from '../data/awards';
+import { getUserCategoryVote } from '../data/userActivity';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function Awards() {
   const { user, openAuthModal } = useAuth();
   const { t } = useLanguage();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState(() => searchParams.get('category') || 'All');
   const [search, setSearch] = useState('');
-  const [awards, setAwards] = useState([]);
+  const [awards, setAwards] = useState(() => getAllAwards());
   const [votingConfig, setVotingConfig] = useState(getVotingConfig());
   const [isNominateModalOpen, setIsNominateModalOpen] = useState(false);
   const [voteToast, setVoteToast] = useState('');
+
+  // Sync category param with selectedCategory if URL changes
+  useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+    }
+  }, [searchParams]);
 
   // Countdown timer state
   const [timeLeft, setTimeLeft] = useState({
@@ -32,11 +41,16 @@ export default function Awards() {
     isExpired: false,
   });
 
-  const loadData = () => {
-    // Check if auto winner resolution is needed
+  const loadData = async () => {
     checkAndResolveWinners();
     setAwards(getAllAwards());
     setVotingConfig(getVotingConfig());
+    try {
+      const freshAwards = await fetchAwardsFromApi();
+      if (freshAwards) setAwards(freshAwards);
+    } catch (err) {
+      console.warn('Live awards fetch:', err);
+    }
   };
 
   useEffect(() => {
@@ -86,8 +100,8 @@ export default function Awards() {
     return awards.filter((award) => {
       const matchCat = selectedCategory === 'All' || award.category === selectedCategory;
       const matchSearch =
-        award.nominee.toLowerCase().includes(search.toLowerCase()) ||
-        award.title.toLowerCase().includes(search.toLowerCase());
+        (award.nominee || '').toLowerCase().includes(search.toLowerCase()) ||
+        (award.title || '').toLowerCase().includes(search.toLowerCase());
       return matchCat && matchSearch;
     });
   }, [awards, selectedCategory, search]);
@@ -120,7 +134,11 @@ export default function Awards() {
   const activeCategoriesCount = awardCategories.filter((c) => c !== 'All').length;
 
   const handleVoteChange = (awardId, voted, count, result) => {
-    setAwards(getAllAwards());
+    if (result?.awards && Array.isArray(result.awards)) {
+      setAwards([...result.awards]);
+    } else {
+      setAwards([...getAllAwards()]);
+    }
     if (result?.message) {
       setVoteToast(result.message);
       setTimeout(() => setVoteToast(''), 4500);
@@ -188,13 +206,6 @@ export default function Awards() {
                 <PlusCircle className="w-4 h-4" />
                 <span>Nominate a Candidate</span>
               </button>
-              <Link
-                to="/admin"
-                className="btn-secondary px-4 py-3 rounded-xl text-xs font-bold bg-dark-300 hover:bg-dark-400 border border-surface-border text-text-secondary hover:text-white flex items-center justify-center gap-2"
-              >
-                <ShieldCheck className="w-4 h-4 text-gold" />
-                <span>Admin Console</span>
-              </Link>
             </div>
           </div>
 
@@ -346,7 +357,7 @@ export default function Awards() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {winners.map((award, i) => (
                 <AwardCard
-                  key={award.id}
+                  key={award._id || award.id || `win-${i}`}
                   award={award}
                   index={i}
                   onVoteChange={handleVoteChange}
@@ -389,7 +400,7 @@ export default function Awards() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {nominees.map((award, i) => (
                 <AwardCard
-                  key={award.id}
+                  key={award._id || award.id || `nom-${i}`}
                   award={award}
                   index={i}
                   onVoteChange={handleVoteChange}

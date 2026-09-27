@@ -6,22 +6,32 @@ import {
   Calendar, Eye, Volume2, Share2, Layers
 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { achievers, categories, getAllAchievers } from '../data/achievers';
+import { achievers, categories, getAllAchievers, fetchAchieversFromApi } from '../data/achievers';
 import { useLanguage } from '../context/LanguageContext';
+import { extractYouTubeId } from '../utils/youtube';
 
 export default function Achievers() {
   const { t } = useLanguage();
   const [searchParams] = useSearchParams();
   const initialQuery = searchParams.get('search') || '';
 
-  const allAchieversList = useMemo(() => getAllAchievers(), []);
+  const [allAchieversList, setAllAchieversList] = useState(() => getAllAchievers());
+
+  useEffect(() => {
+    fetchAchieversFromApi().then(data => {
+      if (data && data.length > 0) {
+        setAllAchieversList(data);
+        setSelectedAchiever(prev => prev || data[0]);
+      }
+    });
+  }, []);
 
   const [search, setSearch] = useState(initialQuery);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedDistrict, setSelectedDistrict] = useState('All');
   const [sortBy, setSortBy] = useState('featured');
   const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'split'
-  const [selectedAchiever, setSelectedAchiever] = useState(allAchieversList[0] || achievers[0]);
+  const [selectedAchiever, setSelectedAchiever] = useState(() => allAchieversList[0] || achievers[0]);
   const [videoModalAchiever, setVideoModalAchiever] = useState(null);
 
   // Slides / Carousel state
@@ -190,7 +200,7 @@ export default function Achievers() {
                       {/* Action Buttons */}
                       <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1 sm:pt-2">
                         <Link
-                          to={`/achiever/${slide.id}`}
+                          to={`/achiever/${slide.id || slide._id}`}
                           className="btn-gold px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold shadow-glow-gold flex items-center gap-2"
                         >
                           <BookOpen className="w-4 h-4" />
@@ -480,7 +490,7 @@ export default function Achievers() {
                   <div className="space-y-1.5 sm:space-y-2">
                     <div className="flex items-start justify-between gap-2">
                       <h3 className="font-manrope font-bold text-base sm:text-lg text-white group-hover:text-primary transition-colors">
-                        <Link to={`/achiever/${achiever.id}`}>
+                        <Link to={`/achiever/${achiever.id || achiever._id}`}>
                           {achiever.name}
                         </Link>
                       </h3>
@@ -506,7 +516,7 @@ export default function Achievers() {
                     {/* Actions */}
                     <div className="grid grid-cols-2 gap-2 pt-1">
                       <Link
-                        to={`/achiever/${achiever.id}`}
+                        to={`/achiever/${achiever.id || achiever._id}`}
                         className="btn-gold text-xs py-2 px-2.5 justify-center font-bold flex items-center gap-1"
                       >
                         <BookOpen className="w-3.5 h-3.5" />
@@ -574,7 +584,7 @@ export default function Achievers() {
                 <div className="space-y-6">
                   <div className="video-wrapper rounded-2xl overflow-hidden shadow-card-hover border border-surface-border">
                     <iframe
-                      src={`https://www.youtube.com/embed/${selectedAchiever.videoId}?modestbranding=1&rel=0`}
+                      src={`https://www.youtube.com/embed/${extractYouTubeId(selectedAchiever.videoId)}?modestbranding=1&rel=0`}
                       title={selectedAchiever.title}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
@@ -593,7 +603,7 @@ export default function Achievers() {
                         )}
                       </div>
                       <Link
-                        to={`/achiever/${selectedAchiever.id}`}
+                        to={`/achiever/${selectedAchiever.id || selectedAchiever._id}`}
                         className="btn-gold text-xs py-2 px-3.5 gap-1.5"
                       >
                         <BookOpen className="w-3.5 h-3.5" />
@@ -732,7 +742,7 @@ export default function Achievers() {
               <div className="px-3 sm:px-5">
                 <div className="video-wrapper rounded-xl sm:rounded-2xl overflow-hidden shadow-card border border-surface-border">
                   <iframe
-                    src={`https://www.youtube.com/embed/${videoModalAchiever.videoId}?autoplay=1&modestbranding=1&rel=0`}
+                    src={`https://www.youtube.com/embed/${extractYouTubeId(videoModalAchiever.videoId)}?autoplay=1&modestbranding=1&rel=0`}
                     title={videoModalAchiever.title}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -751,7 +761,7 @@ export default function Achievers() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Link
-                    to={`/achiever/${videoModalAchiever.id}`}
+                    to={`/achiever/${videoModalAchiever.id || videoModalAchiever._id}`}
                     onClick={() => setVideoModalAchiever(null)}
                     className="btn-gold text-xs px-3.5 sm:px-4 py-2 font-bold flex items-center gap-1.5"
                   >

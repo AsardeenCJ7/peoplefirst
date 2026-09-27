@@ -10,16 +10,24 @@ import VideoPlayer from '../components/ui/VideoPlayer';
 import LikeButton from '../components/ui/LikeButton';
 import ShareButtons from '../components/ui/ShareButtons';
 import FlipBook from '../components/ui/FlipBook';
-import { getAllAchievers, getAchieverInterviewSeries } from '../data/achievers';
+import { getAllAchievers, fetchAchieversFromApi, getAchieverInterviewSeries } from '../data/achievers';
 import { useLanguage } from '../context/LanguageContext';
+import { extractYouTubeId } from '../utils/youtube';
 
 export default function AchieverDetail() {
   const { id } = useParams();
   const { t } = useLanguage();
-  const allAchievers = useMemo(() => getAllAchievers(), []);
+  const [allAchievers, setAllAchievers] = useState(() => getAllAchievers());
 
-  const currentIndex = allAchievers.findIndex((a) => String(a.id) === String(id));
-  const achiever = (currentIndex !== -1 ? allAchievers[currentIndex] : allAchievers.find((a) => String(a.id) === String(id))) || allAchievers[0];
+  useEffect(() => {
+    fetchAchieversFromApi().then((data) => {
+      if (data && data.length > 0) setAllAchievers(data);
+    });
+  }, []);
+
+  const matches = (a) => String(a?.id) === String(id) || String(a?._id) === String(id);
+  const currentIndex = allAchievers.findIndex(matches);
+  const achiever = (currentIndex !== -1 ? allAchievers[currentIndex] : allAchievers.find(matches)) || allAchievers[0];
 
   // Specific interview series episodes ONLY for this achiever
   const seriesEpisodes = useMemo(() => getAchieverInterviewSeries(achiever), [achiever]);
@@ -38,7 +46,8 @@ export default function AchieverDetail() {
 
   // Other achievers in the platform
   const otherAchievers = useMemo(() => {
-    return allAchievers.filter((a) => String(a.id) !== String(achiever?.id));
+    const targetId = achiever?.id || achiever?._id;
+    return allAchievers.filter((a) => String(a.id || a._id) !== String(targetId));
   }, [allAchievers, achiever]);
 
   useEffect(() => {
@@ -46,7 +55,7 @@ export default function AchieverDetail() {
     if (seriesEpisodes && seriesEpisodes.length > 0) {
       setActiveEpisode(seriesEpisodes[0]);
     }
-  }, [id, achiever]);
+  }, [id, achiever, seriesEpisodes]);
 
   if (!achiever) {
     return (
@@ -61,7 +70,7 @@ export default function AchieverDetail() {
     );
   }
 
-  const currentVideoId = activeEpisode?.videoId || achiever.videoId || 'dQw4w9WgXcQ';
+  const currentVideoId = extractYouTubeId(activeEpisode?.videoId || achiever.videoId || 'dQw4w9WgXcQ');
   const currentVideoTitle = activeEpisode?.title || `${achiever.name} — Full Interview`;
 
   return (
@@ -96,7 +105,7 @@ export default function AchieverDetail() {
 
           {/* Quick Like, Share & Laurels */}
           <div className="flex items-center gap-3">
-            <LikeButton initialLikes={3420} />
+            <LikeButton achieverId={achiever.id || achiever._id} initialLikes={achiever.likes || 128} />
             <ShareButtons
               url={window.location.href}
               title={`${achiever.name} - Biography & Video Interview Series | PeopleFirst`}
@@ -263,8 +272,9 @@ export default function AchieverDetail() {
                 {seriesEpisodes.map((ep, idx) => {
                   const isPlaying = (activeEpisode?.id ? activeEpisode.id === ep.id : activeEpisode?.videoId === ep.videoId) || (!activeEpisode && idx === 0);
                   const epNum = ep.episode || idx + 1;
-                  const thumb = ep.videoId 
-                    ? `https://img.youtube.com/vi/${ep.videoId}/mqdefault.jpg` 
+                  const cleanEpVideoId = extractYouTubeId(ep.videoId);
+                  const thumb = cleanEpVideoId 
+                    ? `https://img.youtube.com/vi/${cleanEpVideoId}/mqdefault.jpg` 
                     : achiever.thumbnail;
 
                   return (
@@ -369,38 +379,41 @@ export default function AchieverDetail() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {otherAchievers.slice(0, 4).map((other) => (
-                <Link
-                  key={other.id}
-                  to={`/achiever/${other.id}`}
-                  className="card p-4 bg-dark-200 border border-surface-border hover:border-primary/50 transition-all group flex flex-col justify-between"
-                >
-                  <div className="space-y-3">
-                    <div className="relative aspect-video rounded-xl overflow-hidden bg-dark-300">
-                      <img
-                        src={other.thumbnail}
-                        alt={other.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                      />
-                      <span className="absolute top-2 left-2 badge-red text-[10px]">
-                        {other.category}
-                      </span>
+              {otherAchievers.slice(0, 4).map((other) => {
+                const otherKey = other.id || other._id;
+                return (
+                  <Link
+                    key={otherKey}
+                    to={`/achiever/${otherKey}`}
+                    className="card p-4 bg-dark-200 border border-surface-border hover:border-primary/50 transition-all group flex flex-col justify-between"
+                  >
+                    <div className="space-y-3">
+                      <div className="relative aspect-video rounded-xl overflow-hidden bg-dark-300">
+                        <img
+                          src={other.thumbnail}
+                          alt={other.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        />
+                        <span className="absolute top-2 left-2 badge-red text-[10px]">
+                          {other.category}
+                        </span>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-white text-sm group-hover:text-primary transition-colors line-clamp-1">
+                          {other.name}
+                        </h4>
+                        <p className="text-text-muted text-xs line-clamp-2 mt-0.5">
+                          {other.title}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-white text-sm group-hover:text-primary transition-colors line-clamp-1">
-                        {other.name}
-                      </h4>
-                      <p className="text-text-muted text-xs line-clamp-2 mt-0.5">
-                        {other.title}
-                      </p>
+                    <div className="pt-2 mt-2 border-t border-surface-border/60 flex items-center justify-between text-[11px] text-text-muted">
+                      <span>{other.location}</span>
+                      <span className="text-gold font-semibold">View Story →</span>
                     </div>
-                  </div>
-                  <div className="pt-2 mt-2 border-t border-surface-border/60 flex items-center justify-between text-[11px] text-text-muted">
-                    <span>{other.location}</span>
-                    <span className="text-gold font-semibold">View Story →</span>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           </section>
         )}
@@ -423,7 +436,7 @@ export default function AchieverDetail() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Previous Achiever Card */}
             <Link
-              to={`/achiever/${prevAchiever.id}`}
+              to={`/achiever/${prevAchiever.id || prevAchiever._id}`}
               className="group p-5 rounded-2xl bg-dark-200 border border-surface-border hover:border-primary/50 transition-all flex items-center gap-4"
             >
               <div className="w-16 h-16 rounded-xl overflow-hidden bg-dark-300 shrink-0 relative">
@@ -447,7 +460,7 @@ export default function AchieverDetail() {
 
             {/* Next Achiever Card */}
             <Link
-              to={`/achiever/${nextAchiever.id}`}
+              to={`/achiever/${nextAchiever.id || nextAchiever._id}`}
               className="group p-5 rounded-2xl bg-dark-200 border border-surface-border hover:border-primary/50 transition-all flex items-center justify-between gap-4 text-right"
             >
               <div className="min-w-0 flex-1">

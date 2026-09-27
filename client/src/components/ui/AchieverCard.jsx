@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Play, MapPin, CheckCircle, ChevronRight } from 'lucide-react';
 
 export default function AchieverCard({ achiever, index = 0 }) {
+  const targetId = achiever?.id || achiever?._id;
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -10,7 +11,7 @@ export default function AchieverCard({ achiever, index = 0 }) {
       transition={{ delay: index * 0.08, duration: 0.4 }}
     >
       <Link
-        to={`/achiever/${achiever.id}`}
+        to={`/achiever/${targetId}`}
         className="group block card overflow-hidden hover:border-primary/40 transition-all duration-300"
       >
         {/* Image */}

@@ -2,10 +2,13 @@ import { useState } from 'react';
 import YouTube from 'react-youtube';
 import { motion } from 'framer-motion';
 import { Play, Loader } from 'lucide-react';
+import { extractYouTubeId } from '../../utils/youtube';
 
-export default function VideoPlayer({ videoId, title, thumbnail }) {
+export default function VideoPlayer({ videoId: rawVideoId, title, thumbnail }) {
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const videoId = extractYouTubeId(rawVideoId);
 
   const opts = {
     width: '100%',

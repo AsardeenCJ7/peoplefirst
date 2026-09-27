@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useRef, useState, useEffect, useMemo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Play, ArrowRight, Award, Mic2, Globe, Users, BookOpen, TrendingUp, Search, Star } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
@@ -7,16 +7,10 @@ import { useAuth } from '../context/AuthContext';
 import AchieverCard from '../components/ui/AchieverCard';
 import NewsCard from '../components/ui/NewsCard';
 import AwardCard from '../components/ui/AwardCard';
-import { getAllAchievers } from '../data/achievers';
-import { getAllNews } from '../data/news';
-import { getAllAwards } from '../data/awards';
-
-const stats = [
-  { label: 'Documented Stories', value: '500+', icon: BookOpen, color: 'text-primary' },
-  { label: 'Video Interviews', value: '100+', icon: Play, color: 'text-primary' },
-  { label: 'Awards & Laureates', value: '50+', icon: Award, color: 'text-gold' },
-  { label: 'Diaspora Countries', value: '34+', icon: Globe, color: 'text-blue-400' },
-];
+import { getAllAchievers, fetchAchieversFromApi } from '../data/achievers';
+import { getAllNews, fetchNewsFromApi } from '../data/news';
+import { getAllAwards, fetchAwardsFromApi, setCachedAwards } from '../data/awards';
+import { extractYouTubeId } from '../utils/youtube';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -30,11 +24,60 @@ const itemVariants = {
 
 export default function Home() {
   const featuredRef = useRef(null);
+  const navigate = useNavigate();
   const { t } = useLanguage();
   const { openRecommendModal } = useAuth();
-  const achievers = getAllAchievers();
-  const newsArticles = getAllNews();
-  const awards = getAllAwards();
+  const [achievers, setAchievers] = useState(() => getAllAchievers());
+  const [newsArticles, setNewsArticles] = useState(() => getAllNews());
+  const [awards, setAwards] = useState(() => getAllAwards());
+
+  useEffect(() => {
+    fetchAchieversFromApi().then(data => data && setAchievers(data));
+    fetchNewsFromApi().then(data => data && setNewsArticles(data));
+    fetchAwardsFromApi().then(data => data && setAwards(data));
+  }, []);
+
+  const handleHomeVoteChange = (awardId, voted, count, result) => {
+    if (result?.awards && Array.isArray(result.awards)) {
+      setAwards([...result.awards]);
+    } else {
+      setAwards([...getAllAwards()]);
+    }
+  };
+
+  const totalAchievers = achievers.length;
+
+  const totalInterviews = useMemo(() => {
+    return achievers.reduce((acc, a) => {
+      if (Array.isArray(a.interviewSeries) && a.interviewSeries.length > 0) {
+        return acc + a.interviewSeries.length;
+      }
+      return acc + (a.videoId ? 1 : 0);
+    }, 0);
+  }, [achievers]);
+
+  const totalAwards = awards.length;
+
+  const totalNews = newsArticles.length;
+
+  const stats = [
+    { label: 'National Achievers', value: `${totalAchievers}`, icon: Users, color: 'text-primary' },
+    { label: 'Video Interviews', value: `${totalInterviews}`, icon: Play, color: 'text-primary' },
+    { label: 'Awards & Laureates', value: `${totalAwards}`, icon: Award, color: 'text-gold' },
+    { label: 'Published Stories & Wires', value: `${totalNews}`, icon: TrendingUp, color: 'text-blue-400' },
+  ];
+
+  const featuredSideHero = useMemo(() => {
+    return (
+      achievers.find((a) => a.featured) ||
+      achievers[0] || {
+        name: 'Dr. Senaka Bibile',
+        title: 'Father of Rational Medicine Policy',
+        id: '1',
+        thumbnail: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80',
+      }
+    );
+  }, [achievers]);
 
   return (
     <div className="w-full overflow-x-hidden">
@@ -97,7 +140,7 @@ export default function Home() {
                   onSubmit={(e) => {
                     e.preventDefault();
                     const query = e.target.query.value;
-                    if (query.trim()) window.location.href = `/achievers?search=${encodeURIComponent(query)}`;
+                    if (query.trim()) navigate(`/achievers?search=${encodeURIComponent(query)}`);
                   }}
                   className="relative group"
                 >
@@ -177,32 +220,35 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <div className="relative rounded-2xl overflow-hidden shadow-card-hover group aspect-[4/5]">
+              <div className="relative rounded-2xl overflow-hidden shadow-card-hover group aspect-[4/5] bg-dark-300 border border-surface-border/50">
                 <img
-                  src={achievers[6]?.thumbnail}
-                  alt={achievers[6]?.name}
+                  src={featuredSideHero.thumbnail || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80'}
+                  alt={featuredSideHero.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  onError={(e) => {
+                    e.target.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80';
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent" />
-                <div className="absolute top-4 right-4 flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full">
+                <div className="absolute top-4 right-4 flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
                   <div className="w-2 h-2 bg-primary rounded-full animate-ping" />
-                  <span className="text-white text-xs font-bold tracking-wide">4K ARCHIVE</span>
+                  <span className="text-white text-xs font-bold tracking-wide">FEATURED BIOGRAPHY</span>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
-                  <div className="bg-black/70 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-white/10">
+                  <div className="bg-black/75 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-white/10 shadow-2xl">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="badge-red text-[10px]">Featured Story</span>
-                      <span className="text-text-muted text-xs">Documentary #142</span>
+                      <span className="badge-red text-[10px]">{featuredSideHero.category || 'National Icon'}</span>
+                      <span className="text-text-muted text-xs">Verified Heritage</span>
                     </div>
                     <h3 className="font-manrope font-bold text-white text-sm sm:text-base leading-tight mb-3">
-                      {achievers[6]?.name}: {achievers[6]?.title}
+                      {featuredSideHero.name}: {featuredSideHero.title}
                     </h3>
                     <Link
-                      to={`/achiever/${achievers[6]?.id}`}
+                      to={`/achiever/${featuredSideHero.id || featuredSideHero._id}`}
                       className="inline-flex items-center gap-1.5 text-primary text-sm font-semibold hover:gap-2.5 transition-all"
                     >
                       <Play className="w-4 h-4" fill="currentColor" />
-                      Watch Story & Read History
+                      Watch Story & Read 3D Book
                     </Link>
                   </div>
                 </div>
@@ -304,7 +350,7 @@ export default function Home() {
                 <Link to={`/achiever/${achiever.id}`} className="group block card overflow-hidden hover:border-primary/40">
                   <div className="relative aspect-video overflow-hidden bg-dark-300">
                     <img
-                      src={`https://img.youtube.com/vi/${achiever.videoId}/hqdefault.jpg`}
+                      src={`https://img.youtube.com/vi/${extractYouTubeId(achiever.videoId)}/hqdefault.jpg`}
                       alt={achiever.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       onError={(e) => { e.target.src = achiever.thumbnail; }}
@@ -352,7 +398,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {awards.slice(0, 3).map((award, i) => (
-              <AwardCard key={award.id} award={award} index={i} />
+              <AwardCard key={award.id || award._id} award={award} index={i} onVoteChange={handleHomeVoteChange} />
             ))}
           </div>
         </div>
