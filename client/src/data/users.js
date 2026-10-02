@@ -15,6 +15,8 @@ const seedUsers = [
   { id: 'u6', name: 'Ruwan Bandara',    email: 'ruwan@slt.lk',       district: 'Kurunegala', role: 'reader', status: 'active',    joined: '2026-09-05', avatar: 'https://i.pravatar.cc/150?img=8'  },
 ];
 
+const IS_PRODUCTION = import.meta.env.PROD;
+
 function getStoredUsers() {
   try { const r = localStorage.getItem(USERS_KEY); return r ? JSON.parse(r) : null; } catch { return null; }
 }
@@ -22,6 +24,11 @@ function getStoredUsers() {
 function initUsers() {
   if (inMemoryUsers && inMemoryUsers.length > 0) return inMemoryUsers;
   const stored = getStoredUsers();
+  // In production never seed dummy users — only real API data
+  if (IS_PRODUCTION) {
+    inMemoryUsers = stored || [];
+    return inMemoryUsers;
+  }
   if (!stored) { localStorage.setItem(USERS_KEY, JSON.stringify(seedUsers)); return seedUsers; }
   return stored;
 }
@@ -41,9 +48,10 @@ export async function fetchUsersFromApi() {
       return normalized;
     }
   } catch (err) {
-    console.warn('API fetch for users failed, using cache:', err.message);
+    console.warn('API fetch for users failed:', err.message);
   }
-  return getAllUsers();
+  // In production return [] so admin panel shows empty state, not dummy users
+  return IS_PRODUCTION ? [] : getAllUsers();
 }
 
 export async function saveUser(user) {

@@ -225,84 +225,107 @@ const newsData = [
 // ── ACHIEVERS ─────────────────────────────────────────────────────────────────
 const achieversData = [
   {
-    name: "M. H. M. Ashraff",
-    title: "Visionary Statesman, Founder of SLMC & Minister of Ports & Shipping",
-    category: "Politics & Leadership",
-    location: "Kalmunai, Ampara District",
-    year: "1989",
+    name: "உமர்லெவ்வை போடியார் (உமறுப்போடியார்)",
+    title: "எமது மண்ணின் சமூகமும் மார்க்கமும் வடிவமைத்த தலைவர் | நமது முதுசங்கங்கள் – 01",
+    category: "சமூகமும் மார்க்கமும்",
+    location: "ஓட்டமாவடி, கல்குடா",
+    year: "1901 – 1976",
     verified: true,
     featured: true,
-    thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
-    videoId: "dQw4w9WgXcQ",
-    bio: "Mohammed Hussain Mohamed Ashraff (1948 – 2000), affectionately known as 'Marhoom Ashraff', was one of Sri Lanka's most charismatic political visionaries, senior legal counsels, and acclaimed literary figures. Born in Sammanthurai and rooted in Kalmunai in the Ampara District, he founded the Sri Lanka Muslim Congress (SLMC) and later the National Unity Alliance (NUA), completely reshaping the democratic representation of minority communities in Sri Lanka.\n\nAs Cabinet Minister of Ports, Shipping, Rehabilitation and Reconstruction from 1994 until his untimely demise in 2000, Ashraff spearheaded a golden era of national infrastructure development. He revolutionized the Port of Colombo with the expansion of the Queen Elizabeth Quay into a world-class global transshipment hub and envisioned the strategic Oluvil Port development project in the Eastern Province.\n\nA staunch champion of higher education, Ashraff founded the South Eastern University of Sri Lanka (SEUSL) at Oluvil, bringing university education directly to underserved rural youth in the East. Under his rehabilitation ministry, over 100,000 conflict-displaced families across the Northern and Eastern provinces were resettled with permanent housing and livelihoods.\n\nBeyond politics, Ashraff was a distinguished Senior Attorney-at-Law and a celebrated Tamil poet whose anthology 'Naan Ennum Nee' remains a landmark of contemporary Sri Lankan literature.",
+    thumbnail: "/image/achiever1.jpeg",
+    videoId: "iTvo6_eh48k",
+    bio: "எமது மண்ணின் சமூக வரலாற்றை நாம் திரும்பிப் பார்க்கும்போது, சில மனிதர்கள் காலத்தைத் தாண்டியும் மக்களின் நினைவுகளில் நிலைத்து நிற்பதை காணலாம். அவர்கள் தங்களின் செல்வத்தால் உயர்ந்தவர்கள் அல்ல… சமூகத்திற்கு செய்த சேவையாலும், நேர்மையாலும், ஒழுக்கத்தாலும், மனிதநேயத்தாலும் மக்களின் மரியாதையைப் பெற்றவர்கள்.\n\nஅத்தகைய ஆளுமைகளில் ஒருவர்தான் உமர்லெவ்வை போடியார், பொதுவாக “உமறுப்போடியார்” என அழைக்கப்பட்டவர். 1901 ஆம் ஆண்டு பிறந்த அவர், 1976 ஆம் ஆண்டு ஜூன் மாதம் 30 ஆம் தேதி தனது 75வது வயதில் மறைந்தார்.\n\nதனது வாழ்நாளில் விவசாயம், மார்க்க சேவை, சமூக நீதி, கல்வி வளர்ச்சி என பல துறைகளில் அவர் அழியாத பங்களிப்புகளைச் செய்தார். People First Media Channel-இன் “நமது முதுசங்கங்கள்” ஆவணப்படுத்தல் பயணத்தின் முதல் வரலாற்றுப் பதிவாக உமறுப்போடியார் அவர்களின் வாழ்க்கை சமர்ப்பிக்கப்படுகிறது.",
     achievements: [
-      "Founder Leader of Sri Lanka Muslim Congress (SLMC) & National Unity Alliance (NUA)",
-      "Cabinet Minister of Ports, Shipping, Rehabilitation & Reconstruction (1994–2000)",
-      "Founder of the South Eastern University of Sri Lanka (SEUSL) at Oluvil",
-      "Modernized Colombo Port into a World-Class Global Transshipment Container Hub",
-      "Visionary Architect of the Oluvil Port & Lighthouse Maritime Infrastructure",
-      "Senior Counsel of the Supreme Court of Sri Lanka & Celebrated Tamil Poet ('Naan Ennum Nee')",
-      "Resettled & Rehabilitated 100,000+ Conflict-Displaced Families across North & East"
+      "ஓட்டமாவடி முஹைதீன் ஜும்ஆ பள்ளிவாயல் மரைக்கார் சபைத் தலைவராக 30+ ஆண்டுகள் முன்மாதிரி சேவை",
+      "ஓட்டமாவடியில் புகழ்பெற்ற வரலாற்று புஹாரி மஜ்லிஸை (74 வருட பாரம்பரியம்) ஆரம்பித்து வைத்த முன்னோடி",
+      "வாழைச்சேனை பிரதேசத்தில் முதல் ஜும்ஆ தொழுகை ஆரம்பிக்கப்பட வரலாற்று ஆதரவும் அனுமதியும் வழங்கியமை",
+      "பெருவெட்டை பகுதியில் 150+ ஏக்கர் காட்டு நிலங்களை மனித உழைப்பால் நெல் வயல்களாக மாற்றிய விவசாயப் புரட்சி",
+      "பள்ளிவாயல் பயன்பாட்டிற்காக 05 ஏக்கர் பரந்த நிலத்தை தானமாக வழங்கிய குடும்ப மரபு",
+      "காவத்தமுனை ஜும்ஆ பள்ளிவாயல் நிர்மாணத்திற்கு முழுமையான ஆதரவும் மரப் பொருட்களும் வழங்கியமை",
+      "கிராம சபை தலைமைத்துவ மாற்றத்திற்கும் (1965) சமூக நீதிக்கும் வித்திட்ட சமூக நீதிமான்"
     ],
-    tags: ["SLMC", "Leadership", "Politics", "Eastern Province", "Ports", "Education", "SEUSL", "National Unity"],
+    tags: ["நமது முதுசங்கங்கள்", "உமறுப்போடியார்", "ஓட்டமாவடி", "வாழைச்சேனை", "கல்குடா", "புஹாரி மஜ்லிஸ்", "விவசாயம்", "பள்ளிவாயல்"],
     interviewSeries: [
-      { id: "ep-1-1", episode: 1, title: "Part 1: The Founding of SLMC & The Democratic Awakening in the East", videoId: "dQw4w9WgXcQ", duration: "28:45", date: "2026-01-10", description: "Archival historical documentary detailing the genesis of SLMC in Kattankudy and Kalmunai, and Ashraff's parliamentary leadership." },
-      { id: "ep-1-2", episode: 2, title: "Part 2: The Port of Colombo Revolution & The Oluvil University Vision", videoId: "9bZkp7q19f0", duration: "24:18", date: "2026-02-05", description: "In-depth historical coverage of Minister Ashraff's transformation of the Sri Lanka Ports Authority and building of South Eastern University." },
-      { id: "ep-1-3", episode: 3, title: "Part 3: The National Unity Alliance & The Poet Statesman ('Naan Ennum Nee')", videoId: "kJQP7kiw5Fk", duration: "31:10", date: "2026-03-01", description: "Reflections on his literary masterwork 'Naan Ennum Nee' and his vision for an undivided, pluralistic Sri Lanka." }
+      {
+        id: "ep-1-1",
+        episode: 1,
+        title: "நமது முதுசங்கங்கள் – 01: உமர்லெவ்வை போடியார் (உமறுப்போடியார்) முழுமையான ஆவணப்படம்",
+        videoId: "iTvo6_eh48k",
+        duration: "25:00",
+        date: "2026-10-02",
+        description: "People First Media Channel வழங்கும் 'நமது முதுசங்கங்கள்' முதல் பாகம்: கல்குடா மண்ணின் சமூகமும் மார்க்கமும் வடிவமைத்த உமறுப்போடியார் அவர்களின் வாழ்க்கை ஆவணப்படம்."
+      }
     ],
     biographyPages: [
       {
-        title: "Early Life, Roots in the East & Legal Brilliance",
+        title: "அறிமுகமும் வாழ்வும்",
         icon: "📖",
         paragraphs: [
-          "Mohammed Hussain Mohamed Ashraff was born on October 23, 1948, in the historic town of Sammanthurai in the Ampara District of Sri Lanka's Eastern Province. Raised in Kalmunai in a cultured and deeply principled family, young Ashraff displayed exceptional intellectual prowess and literary eloquence from his early schooling at Wesley High School, Kalmunai.",
-          "He pursued legal studies at the Sri Lanka Law College, excelling with first-class honors, and was admitted to the Bar as an Advocate in 1974. He later completed his Master of Laws (LL.M) degree from the University of Colombo with research focused on constitutional safeguards and minority rights.",
-          "As a Senior Attorney-at-Law and State Counsel, Ashraff earned universal respect in the legal fraternity for his forensic precision, spellbinding oratory, and unwavering defense of fundamental human rights before the Supreme Court."
+          "எமது மண்ணின் சமூக வரலாற்றை நாம் திரும்பிப் பார்க்கும்போது, சில மனிதர்கள் காலத்தைத் தாண்டியும் மக்களின் நினைவுகளில் நிலைத்து நிற்பதை காணலாம். அவர்கள் தங்களின் செல்வத்தால் உயர்ந்தவர்கள் அல்ல… சமூகத்திற்கு செய்த சேவையாலும், நேர்மையாலும், ஒழுக்கத்தாலும், மனிதநேயத்தாலும் மக்களின் மரியாதையைப் பெற்றவர்கள்.",
+          "அத்தகைய ஆளுமைகளில் ஒருவர்தான் உமர்லெவ்வை போடியார், பொதுவாக “உமறுப்போடியார்” என அழைக்கப்பட்டவர். 1901 ஆம் ஆண்டு பிறந்த அவர், 1976 ஆம் ஆண்டு ஜூன் மாதம் 30 ஆம் தேதி தனது 75வது வயதில் மறைந்தார்.",
+          "தனது வாழ்நாளில் விவசாயம், மார்க்க சேவை, சமூக நீதி, கல்வி வளர்ச்சி என பல துறைகளில் அவர் அழியாத பங்களிப்புகளைச் செய்தார்."
         ]
       },
       {
-        title: "Political Awakening & The Genesis of SLMC",
-        icon: "🌟",
-        paragraphs: [
-          "During the turbulent socio-political shifts of the late 1970s and 1980s, the Muslim community of the Northern and Eastern provinces faced severe geopolitical marginalization, caught between escalating armed militancy and state apathy.",
-          "Recognizing the urgent necessity for a distinct, democratic political identity, Ashraff alongside dedicated community leaders founded the Sri Lanka Muslim Congress (SLMC) in Kattankudy in 1981, formally launching it as a national political party in 1986 with its iconic 'Tree' symbol.",
-          "In the 1989 Parliamentary General Elections, under Ashraff's charismatic leadership, the SLMC achieved a historic breakthrough by securing 4 parliamentary seats, elevating the voice of the Eastern Province directly into the national legislature."
-        ]
-      },
-      {
-        title: "Ministerial Mastery: Ports, Shipping & SEUSL",
-        icon: "⚓",
-        paragraphs: [
-          "In 1994, following the election of the People's Alliance government, Ashraff was appointed Cabinet Minister of Ports, Shipping, Rehabilitation and Reconstruction. His six-year tenure at the helm of the Ports Authority is widely heralded as a golden era in Sri Lankan maritime history.",
-          "He revolutionized container terminal throughput at the Port of Colombo, commissioning the Queen Elizabeth Quay expansion, introducing modern gantry cranes, and establishing performance-linked worker welfare schemes that catapulted Colombo into the top 30 container ports globally.",
-          "Believing passionately that higher education was the ultimate catalyst for regional empowerment, Ashraff founded the South Eastern University of Sri Lanka (SEUSL) at Oluvil in 1995. Today, SEUSL stands as a thriving national academic institution educating thousands of students across engineering, management, technology, and arts."
-        ]
-      },
-      {
-        title: "Reconstruction, Pluralism & National Unity Alliance",
+        title: "குடும்பப் பின்னணி",
         icon: "🏛️",
         paragraphs: [
-          "As Minister of Rehabilitation and Reconstruction, Ashraff oversaw the monumental task of rebuilding war-ravaged communities across the North and East. Over 100,000 displaced families were provided with permanent housing, drinking water schemes, rural road networks, and livelihood grants without ethnic discrimination.",
-          "Driven by a profound vision for an inclusive Sri Lanka, Ashraff founded the National Unity Alliance (NUA) in 1999 under the slogan 'Sri Lankan First'. His goal was to build a broad multi-ethnic coalition uniting Muslims, Tamils, and Sinhalese under a single democratic platform.",
-          "He articulated a vision of shared sovereignty, democratic decentralization, and harmonious coexistence, arguing that true national security could only be achieved through social justice and equal dignity for all communities."
+          "உமறுப்போடியார் அவர்கள் காத்தான்குடி பகுதியைச் சேர்ந்த சின்னத் தொப்பியர் ஆதம்பாவா அவர்களின் வம்சாவளியைச் சேர்ந்தவர். அவரது தந்தையின் பெயர் முஹம்மது தம்பி. அவரது வாப்பாவின் வாப்பா, அதாவது மூத்தப்பாவின் பெயரும் உமறு போடியார் ஆகும்.",
+          "அவரது மூத்தப்பாவிற்கு மொத்தம் 12 சகோதரர்கள் (10 ஆண்களும், 02 பெண்களும்) இருந்தனர். மார்க்கப் பணியிலும், சமூக சேவையிலும் முன்னிலையில் இருந்த இந்த மரபுக் குடும்பத்தின் பரம்பரையினர் கல்குடா மட்டுமன்றி பொலன்னறுவை மாவட்டத்தின் கல்லல்ல, மாணிக்கம்பிட்டி, முஸ்லிம் கொலனி, தம்பாளை போன்ற பகுதிகளிலும் பரந்து வாழ்கின்றனர்.",
+          "உமறுப்போடியார் அவர்கள் வாழைச்சேனை பகுதியைச் சேர்ந்த மீரா நாச்சி அவர்களைத் திருமணம் செய்து கொண்டார். இவர்களுக்கு 09 பிள்ளைகள் (07 பெண்களும், 02 ஆண்களும்) ஆவர். சமூகத்தில் பெருமதிப்புடன் அறியப்பட்ட குடும்பமாக இவர்கள் திகழ்ந்தனர்."
         ]
       },
       {
-        title: "The Poet-Statesman ('Naan Ennum Nee') & Enduring Legacy",
-        icon: "📜",
+        title: "முன்னோடி விவசாயமும் நிலதானமும்",
+        icon: "🌾",
         paragraphs: [
-          "Beyond his political and legal achievements, Ashraff was a gifted Tamil poet and philosopher. His celebrated poetic anthology 'Naan Ennum Nee' (I and You) is revered for its profound spiritual metaphors, social consciousness, and lyrical beauty.",
-          "On September 16, 2000, tragedy struck when the Sri Lanka Air Force Mi-17 helicopter carrying Minister Ashraff crashed into the Bible Rock mountain in Aranayake, claiming his life and the lives of 14 companions on the eve of general elections.",
-          "The nation went into profound mourning. Ashraff's legacy lives on in the institutions he built — the South Eastern University of Sri Lanka, the modern Colombo Port, and the enduring democratic voice of the Eastern Province. He remains forever etched in the annals of Sri Lankan history as a leader of the people."
+          "உமறுப்போடியார் அவர்களின் முக்கியத் தொழில் விவசாயம். நிலத்தை வளமாக மாற்றிய ஒரு முன்னோடி விவசாய மரபைக் கொண்ட குடும்பமாக இது விளங்கியது. இவரது மூத்தப்பா உமறுப்போடியார் அவர்கள் பெருவெட்டை பகுதியில் சுமார் 150 ஏக்கருக்கும் மேற்பட்ட காட்டு நிலங்களை இயந்திர வசதிகள் இல்லாத காலத்தில் மனித உழைப்பு, விடாமுயற்சி, உறுதியால் திருத்தி நெல் வயல்களாக மாற்றியவர்.",
+          "பின்னர், இவரது பேரன் உமறு மரைக்காயர் அவர்கள் மரபு ரீதியாக விவசாயத் தொழிலை முன்னெடுத்தார். அன்றைய காலத்தில் இவ்வளவு பெரிய நிலப்பரப்பை அபிவிருத்தி செய்தது, இக்குடும்பத்தின் கடின உழைப்பையும் முன்னோக்குப் பார்வையையும் வெளிப்படுத்துகிறது.",
+          "மேலும், ஓட்டமாவடி பகுதியில் இவர்களுக்கு பரந்தளவில் வளவுகள் இருந்தன. அவற்றில் இருந்து 05 ஏக்கர் நிலம் பள்ளிவாயல் பயன்பாட்டிற்காக இவரது முன்னோரால் (மூத்த வாப்பா) தானமாக வழங்கப்பட்டது."
         ]
       },
       {
-        title: "Public Tributes & National Voice",
-        icon: "💬",
+        title: "பள்ளிவாயல் தலைமைத்துவமும் நேர்மையும்",
+        icon: "🕌",
         paragraphs: [
-          "Statues, memorial halls, and academic chairs honoring M. H. M. Ashraff stand across Kalmunai, Sammanthurai, Oluvil, Colombo, and universities islandwide.",
-          "Every year, citizens from all ethnic and religious communities gather to pay homage to the visionary leader who proved that regional development and national unity go hand in hand.",
-          "Leave your heartfelt tributes, memories, and reflections on the life and monumental contributions of Marhoom M. H. M. Ashraff below."
+          "உமறுப்போடியார் அவர்கள் ஓட்டமாவடி முஹைதீன் ஜும்ஆ பள்ளிவாயல் மரைக்கார் சபையின் தலைவராக 30 ஆண்டுகளுக்கும் மேலாக பணியாற்றினார். அவரது தலைமையில் பள்ளிவாயல் சமூக நிர்வாகத்தின் முக்கிய மையமாகச் செயல்பட்டது. நோன்பு கால ஒழுங்குமுறைகள் மற்றும் சந்தை மீன் விலைக் கட்டுப்பாடு வரை சமூக ஒழுங்கு காக்கப்பட்டது.",
+          "பள்ளிவாயலின் பணத்தை தனது வீட்டில் வைக்காமல், MK. அஹமது முஹைதீன் ஹாஜியார் அவர்களின் கடையில் பிரத்தியேக இரும்பு அலுமாரியில் பாதுகாத்து வந்தார். பள்ளிவாயலிலிருந்து வெளியே வரும்போது மிதியடியில் ஒட்டியிருந்த மண்ணைத் தட்டிவிட்டு, 'இந்த பள்ளிவாயல் மண் கூட என்னுடன் சேரக்கூடாது' என்ற அதீத பேணுதலுடன் நடந்தார்.",
+          "மரைக்கார் சபைத் தலைவர் பதவியிலிருந்து விலகும் போது கணக்குகளை முழுமையாக ஒப்படைத்தார். கணக்காய்வு அதிகாரி நேர்மையைப் பாராட்டி தொடருமாறு கோரியும், பதவி என்பது தனக்கான அதிகாரம் அல்ல, அது ஒரு பொறுப்பு என்பதை நிரூபித்து பதவியை விட்டு விலகினார்."
+        ]
+      },
+      {
+        title: "மார்க்கக் கல்வி, புஹாரி மஜ்லிஸ் & காவத்தமுனை",
+        icon: "📚",
+        paragraphs: [
+          "அந்தக் காலங்களில் புஹாரி மஜ்லிஸில் கலந்து கொள்ள மக்கள் காத்தான்குடிக்குச் செல்ல வேண்டிய சிரமத்தைப் போக்க, 'மையத்துப்புட்டி ஆலிம்' என அழைக்கப்பட்ட ஆதம்பாவா அவர்களை அழைத்து ஓட்டமாவடியிலேயே புஹாரி மஜ்லிஸை ஆரம்பிக்க உமறுப்போடியார் ஏற்பாடு செய்தார். இன்று 74வது வருடத்தை எட்டியுள்ள அந்த மார்க்க மரபு இன்றும் தொடர்கிறது.",
+          "மாணவர்கள் குர்ஆன் ஓதுவதற்காக தனது சொந்த வளவில் ஒரு கொட்டிலையும் அமைத்துக் கொடுத்தார்.",
+          "1949 காலப்பகுதியில் காவத்தமுனையில் பள்ளிவாயல் அமைக்க மரங்களும் பொருள் உதவிகளும் வழங்கினார். பின்னர் அது காவத்தமுனை ஜும்ஆ பள்ளிவாயலாக உயர்ந்த போது, உமறுப்போடியார் அவர்களின் இரண்டாவது மகன் மௌலவி யூ. அஹமது லெவ்வை (பஹ்ஜி) அவர்களே முதல் குத்பாவை நிகழ்த்தினார்."
+        ]
+      },
+      {
+        title: "வாழைச்சேனை ஜும்ஆ & உலமாக்களுடனான உறவு",
+        icon: "🤝",
+        paragraphs: [
+          "அக்காலத்தில் ஓட்டமாவடி பெரிய ஜும்ஆ பள்ளிவாயலில் மட்டுமே ஜும்ஆ நடைபெற்றது. வாழைச்சேனை மக்கள் அங்கு வந்து தொழும் சிரமத்தை உணர்ந்து, அவர்கள் விடுத்த கோரிக்கையை ஏற்று வாழைச்சேனையில் ஜும்ஆ ஆரம்பிக்க உமறுப்போடியார் உறுதியான ஆதரவை வழங்கி வழிவகுத்தார். இது கல்குடா வரலாற்றில் பொன்னெழுத்துக்களால் பொறிக்கப்பட வேண்டிய ஒன்றாகும்.",
+          "மார்க்க அறிஞர் ஒகுது லெவ்வை அவர்களுடனும், கிண்ணியாவிலிருந்து வந்த மார்க்க அறிஞரும் அரபு எழுத்தணிக் கலைஞருமான அப்துஸ்ஸமது ஆலிம் அவர்களுடனும் இணைந்து பணியாற்றினார். ஆலிம் அவர்களை ஓட்டமாவடியில் குடியமர்த்தி குர்ஆன் மத்ரஸா உருவாக்க துணை நின்றார். உமறுப்போடியாரின் பிள்ளைகளும் அவரிடமே கல்வி பயின்றனர்."
+        ]
+      },
+      {
+        title: "சமூக நீதி, மனிதநேயம் & சமூக நிர்வாகம்",
+        icon: "⚖️",
+        paragraphs: [
+          "உமறுப்போடியார் சமூகத்தில் நடுநிலை நீதிமானாகவும் சமரசகராகவும் விளங்கினார். குடும்பப் பிரச்சனைகள், நில மற்றும் கடன் தகராறுகளை சுமுகமாகத் தீர்த்து வைத்தார். ஏழைகள், நோயாளிகள் மற்றும் திருமண உதவிகளுக்கு அவரது இல்லக் கதவுகள் எப்போதும் திறந்திருந்தன.",
+          "1965 ஆம் ஆண்டு கிராம சபைக்கு புதிய, செயல்பாடு மிக்க தலைவர் தேவை என்பதை உணர்ந்து, ஏ. இஸ்மா லெவ்வை (இஸ்மான் குட்டி சேர்மன்) அவர்களை முன்மொழிந்து வெற்றி பெறச் செய்து சிறந்த மக்கள் நிர்வாகத்திற்கு வித்திட்டார்.",
+          "ஒரு மனிதன் தனது செல்வத்தால் அல்ல, சமூகத்திற்கு செய்த பங்களிப்பால் உயர்கிறான். உமர்லெவ்வை போடியார் அவர்கள் ஒரு குடும்பத் தலைவர் மட்டுமல்ல — சமூகத் தூண், மார்க்க ஒளிக்கோல், நேர்மையான தலைமைத்துவத்தின் வரலாற்றுச் சின்னம்."
+        ]
+      },
+      {
+        title: "People First Media – நமது முதுசங்கங்கள்",
+        icon: "🎥",
+        paragraphs: [
+          "மக்களுக்காக ஊடகம் – உண்மைக்காக சேவை என்ற தாரக மந்திரத்துடன் செயல்படும் People First Media Channel, நமது மண்ணின் முன்னோடிகளின் வரலாற்றுச் சுவடுகளை ஆவணப்படுத்தும் உன்னத முயற்சியாக 'நமது முதுசங்கங்கள்' தொடரை முன்னெடுக்கிறது.",
+          "தலைவர்: I. M. Jamaldeen | பிரதம நிறைவேற்று அதிகாரி (CEO): Abdul Ahad Ahmed Afri",
+          "நமது முதுசங்கங்கள் – 01: உமர்லெவ்வை போடியார் (உமறுப்போடியார்) – அடுத்த முதுசம் தொடரும்…"
         ]
       }
     ]

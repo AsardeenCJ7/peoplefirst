@@ -451,6 +451,8 @@ function initAwards() {
 
 import api from '../services/api';
 
+const IS_PRODUCTION = import.meta.env.PROD;
+
 let inMemoryAwards = null;
 
 export function setCachedAwards(awardsList) {
@@ -468,9 +470,13 @@ export function getAllAwards() {
   if (inMemoryAwards && inMemoryAwards.length > 0) {
     return inMemoryAwards;
   }
+  // In production: don't fall back to seed awards — return [] so UI shows empty state
+  if (IS_PRODUCTION) {
+    inMemoryAwards = [];
+    return [];
+  }
   const awards = initAwards();
   inMemoryAwards = awards;
-  // Auto-check if deadline expired and resolve winners if active
   const cfg = getVotingConfig();
   if (cfg.isActive && cfg.autoDecideWinners && Date.now() >= new Date(cfg.deadline).getTime()) {
     checkAndResolveWinners();
@@ -493,9 +499,10 @@ export async function fetchAwardsFromApi(params = {}) {
       return normalized;
     }
   } catch (err) {
-    console.warn('API fetch for awards failed, using cache:', err.message);
+    console.warn('API fetch for awards failed:', err.message);
   }
-  return getAllAwards();
+  // In production return [] so pages show empty state, not seed data
+  return IS_PRODUCTION ? [] : getAllAwards();
 }
 
 export async function saveAward(awardData) {

@@ -71,10 +71,11 @@ export default function Home() {
     return (
       achievers.find((a) => a.featured) ||
       achievers[0] || {
-        name: 'Dr. Senaka Bibile',
-        title: 'Father of Rational Medicine Policy',
+        name: 'உமர்லெவ்வை போடியார் (உமறுப்போடியார்)',
+        title: 'எமது மண்ணின் சமூகமும் மார்க்கமும் வடிவமைத்த தலைவர் | நமது முதுசங்கங்கள் – 01',
+        category: 'சமூகமும் மார்க்கமும்',
         id: '1',
-        thumbnail: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80',
+        thumbnail: '/image/achiever1.jpeg',
       }
     );
   }, [achievers]);
@@ -222,11 +223,11 @@ export default function Home() {
             >
               <div className="relative rounded-2xl overflow-hidden shadow-card-hover group aspect-[4/5] bg-dark-300 border border-surface-border/50">
                 <img
-                  src={featuredSideHero.thumbnail || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80'}
+                  src={featuredSideHero.thumbnail || '/image/achiever1.jpeg'}
                   alt={featuredSideHero.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   onError={(e) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80';
+                    e.target.src = '/image/achiever1.jpeg';
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent" />
@@ -243,13 +244,31 @@ export default function Home() {
                     <h3 className="font-manrope font-bold text-white text-sm sm:text-base leading-tight mb-3">
                       {featuredSideHero.name}: {featuredSideHero.title}
                     </h3>
-                    <Link
-                      to={`/achiever/${featuredSideHero.id || featuredSideHero._id}`}
-                      className="inline-flex items-center gap-1.5 text-primary text-sm font-semibold hover:gap-2.5 transition-all"
-                    >
-                      <Play className="w-4 h-4" fill="currentColor" />
-                      Watch Story & Read 3D Book
-                    </Link>
+                    <div className="flex flex-wrap items-center gap-2 pt-1">
+                      <Link
+                        to={`/achiever/${featuredSideHero.id || featuredSideHero._id}`}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary hover:bg-primary-light text-white text-xs font-bold transition-all shadow-md"
+                      >
+                        <Play className="w-3.5 h-3.5" fill="currentColor" />
+                        Watch Video
+                      </Link>
+                      <Link
+                        to={`/achiever/${featuredSideHero.id || featuredSideHero._id}#book`}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold backdrop-blur-sm transition-all border border-white/15"
+                      >
+                        <BookOpen className="w-3.5 h-3.5 text-gold" />
+                        Read 3D Book
+                      </Link>
+                      <a
+                        href={`https://youtu.be/${featuredSideHero.videoId || 'iTvo6_eh48k'}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-red-600/80 hover:bg-red-600 text-white text-xs font-semibold transition-all"
+                        title="Watch on YouTube"
+                      >
+                        YouTube
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

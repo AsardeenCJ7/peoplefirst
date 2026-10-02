@@ -1,0 +1,21 @@
+# Local development files — exclude from Firebase deployment
+.env
+# NOTE: .env.production is intentionally NOT excluded — Firebase Functions v2
+# reads it automatically to populate process.env at runtime.
+*.local
+server.js
+seed.js
+reset_users.js
+
+# Uploaded files — these are NOT persistent in Cloud Functions anyway
+uploads/
+
+# Dev tooling
+node_modules/
+.git/
+firebase-debug.log
+firebase-debug.*.log
+
+# Test / coverage output
+coverage/
+.nyc_output/

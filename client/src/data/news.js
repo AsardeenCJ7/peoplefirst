@@ -432,6 +432,10 @@ export function getStoredNews() {
   return [];
 }
 
+// In production, never fall back to hardcoded dummy articles.
+// Return [] so pages show an empty/loading state instead of fake data.
+const IS_PRODUCTION = import.meta.env.PROD;
+
 export function getAllNews() {
   if (inMemoryNews && inMemoryNews.length > 0) {
     return inMemoryNews;
@@ -441,7 +445,8 @@ export function getAllNews() {
     inMemoryNews = stored;
     return stored;
   }
-  return sortArticlesByDateTime(defaultNewsArticles, 'desc');
+  // Only fall back to dummy data in local development
+  return IS_PRODUCTION ? [] : sortArticlesByDateTime(defaultNewsArticles, 'desc');
 }
 
 export async function fetchNewsFromApi(params = {}) {
@@ -459,9 +464,10 @@ export async function fetchNewsFromApi(params = {}) {
       return sorted;
     }
   } catch (err) {
-    console.warn('API fetch for news failed, using cache:', err.message);
+    console.warn('API fetch for news failed:', err.message);
   }
-  return getAllNews();
+  // In production return [] so pages show empty state, not dummy data
+  return IS_PRODUCTION ? [] : getAllNews();
 }
 
 export async function saveNewsArticle(articleData) {
